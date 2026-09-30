@@ -50,8 +50,12 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      derivAppId: process.env.NUXT_DERIV_APP_ID || '1089',
+      // App ID identifies the app for authenticated REST calls. The public
+      // market-data WebSocket does not take one.
+      derivAppId: process.env.NUXT_DERIV_APP_ID || '',
       derivToken: process.env.NUXT_DERIV_TOKEN || '',
+      derivWsUrl:
+        process.env.NUXT_DERIV_WS_URL || 'wss://api.derivws.com/trading/v1/options/ws/public',
     },
   },
 })

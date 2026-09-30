@@ -1,15 +1,36 @@
 <template>
-  <header class="nav" :class="{ 'nav--solid': scrolled || open }">
+    <header class="nav" :class="{ 'nav--solid': scrolled }">
     <div class="nav-progress" :style="{ transform: `scaleX(${progress})` }" />
 
     <div class="container nav-inner">
-      <NuxtLink to="/" class="brand" :aria-label="`${BRAND.legalName} home`">
-        <img :src="BRAND.logo" alt="" class="brand-img logo-plate" />
-        <span class="brand-text">
-          <span class="brand-name">{{ BRAND.name }}</span>
-          <span class="brand-sub">Technologies</span>
-        </span>
-      </NuxtLink>
+      <!--
+        `display: contents` on desktop, so the three parts sit directly in the
+        flex row. Below 1024px it becomes a real block and the header stacks
+        into two rows, keeping the same links visible instead of hiding them
+        behind a burger.
+      -->
+      <div class="nav-top">
+        <NuxtLink to="/" class="brand" :aria-label="`${BRAND.legalName} home`">
+          <img :src="BRAND.logo" alt="" class="brand-img logo-plate" />
+          <span class="brand-text">
+            <span class="brand-name">{{ BRAND.name }}</span>
+            <span class="brand-sub">Technologies</span>
+          </span>
+        </NuxtLink>
+
+        <div class="nav-actions">
+          <NuxtLink
+            to="/rates"
+            class="rate-pill"
+            :title="hasLiveRate ? 'Live Deriv rate' : 'Cached rate'"
+          >
+            <span class="live-dot" :class="{ 'live-dot--off': !hasLiveRate }" />
+            <span class="rate-value">$1 = ₦{{ liveRate.toLocaleString('en-NG') }}</span>
+          </NuxtLink>
+          <NuxtLink to="/login" class="btn btn-ghost nav-auth">Log in</NuxtLink>
+          <NuxtLink to="/register" class="btn btn-primary nav-cta">Get started</NuxtLink>
+        </div>
+      </div>
 
       <nav class="nav-links" aria-label="Main">
         <NuxtLink
@@ -22,53 +43,7 @@
           {{ link.label }}
         </NuxtLink>
       </nav>
-
-      <div class="nav-actions">
-        <NuxtLink to="/rates" class="rate-pill" :title="connected ? 'Live Deriv rate' : 'Cached rate'">
-          <span class="live-dot" :class="{ 'live-dot--off': !connected }" />
-          <span class="rate-value">$1 = ₦{{ liveRate.toLocaleString('en-NG') }}</span>
-        </NuxtLink>
-        <NuxtLink to="/login" class="btn btn-ghost nav-auth">Log in</NuxtLink>
-        <NuxtLink to="/register" class="btn btn-primary nav-cta">Get started</NuxtLink>
-        <button class="burger" :aria-expanded="open" aria-label="Toggle menu" @click="open = !open">
-          <AppIcon :name="open ? 'close' : 'menu'" :size="20" />
-        </button>
-      </div>
     </div>
-
-    <!--
-      Teleported to <body> on purpose: the header carries a backdrop-filter,
-      which makes it the containing block for position:fixed descendants and
-      would collapse this sheet into the 68px header box.
-    -->
-    <Teleport to="body">
-      <Transition name="sheet">
-        <div v-if="open" class="sheet" @click.self="close">
-          <nav class="sheet-links" aria-label="Mobile">
-            <NuxtLink
-              v-for="link in NAV_LINKS"
-              :key="link.to"
-              :to="link.to"
-              class="sheet-link"
-              :class="{ 'sheet-link--active': isActive(link.to) }"
-              @click="close"
-            >
-              {{ link.label }}
-              <AppIcon name="arrow" :size="16" />
-            </NuxtLink>
-          </nav>
-          <div class="sheet-actions">
-            <NuxtLink to="/login" class="btn btn-ghost btn-block" @click="close">Log in</NuxtLink>
-            <NuxtLink to="/register" class="btn btn-primary btn-block" @click="close">
-              Create free account
-            </NuxtLink>
-          </div>
-          <p class="sheet-foot">
-            <AppIcon name="headset" :size="15" /> Support available 24/7
-          </p>
-        </div>
-      </Transition>
-    </Teleport>
   </header>
 </template>
 
@@ -77,14 +52,12 @@ import { BRAND } from '~/data/site'
 import { NAV_LINKS } from '~/constants/navigation'
 
 const route = useRoute()
-const { liveRate, connected } = useDerivRate()
+const { liveRate, hasLiveRate } = useDerivRate()
 
 const scrolled = ref(false)
 const progress = ref(0)
-const open = ref(false)
 
 const isActive = (to: string) => route.path === to || route.path.startsWith(`${to}/`)
-const close = () => (open.value = false)
 
 const onScroll = () => {
   const y = window.scrollY
@@ -92,11 +65,6 @@ const onScroll = () => {
   const max = document.documentElement.scrollHeight - window.innerHeight
   progress.value = max > 0 ? Math.min(y / max, 1) : 0
 }
-
-watch(() => route.fullPath, close)
-watch(open, value => {
-  document.documentElement.style.overflow = value ? 'hidden' : ''
-})
 
 onMounted(() => {
   onScroll()
@@ -107,7 +75,6 @@ onMounted(() => {
 onBeforeUnmount(() => {
   window.removeEventListener('scroll', onScroll)
   window.removeEventListener('resize', onScroll)
-  document.documentElement.style.overflow = ''
 })
 </script>
 
@@ -144,6 +111,12 @@ onBeforeUnmount(() => {
   display: flex;
   align-items: center;
   gap: 28px;
+}
+
+/* On desktop the wrapper is transparent to layout, so the brand, links and
+   actions share one flex row exactly as before. */
+.nav-top {
+  display: contents;
 }
 
 .brand {
@@ -238,91 +211,69 @@ onBeforeUnmount(() => {
   font-size: 13.5px;
 }
 
-.burger {
-  display: none;
-  width: 40px;
-  height: 40px;
-  border-radius: var(--r-md);
-  border: 1px solid var(--hairline);
-  background: rgba(255, 255, 255, 0.03);
-  color: var(--text);
-  place-items: center;
-}
-
-/* Teleported to <body>, so this is positioned against the viewport. */
-.sheet {
-  position: fixed;
-  inset: var(--nav-h) 0 0;
-  z-index: 99;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 12px clamp(20px, 5vw, 40px) calc(32px + env(safe-area-inset-bottom, 0px));
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  background: rgba(9, 9, 13, 0.96);
-  backdrop-filter: blur(26px) saturate(160%);
-  -webkit-backdrop-filter: blur(26px) saturate(160%);
-  border-top: 1px solid var(--hairline);
-}
-.sheet-links {
-  display: flex;
-  flex-direction: column;
-}
-.sheet-link {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 18px 4px;
-  font-family: var(--font-display);
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  color: var(--muted);
-  border-bottom: 1px solid var(--hairline);
-}
-.sheet-link--active {
-  color: var(--text);
-}
-.sheet-link--active :deep(.icon) {
-  color: var(--primary);
-}
-.sheet-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.sheet-foot {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: auto;
-  font-size: 13px;
-  color: var(--muted-2);
-}
-
-.sheet-enter-active,
-.sheet-leave-active {
-  transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
-}
-.sheet-enter-from,
-.sheet-leave-to {
-  opacity: 0;
-  transform: translateY(-12px);
-}
-
 @media (max-width: 1024px) {
-  .nav-links,
+  /* Two rows: brand + actions on top, the same nav links underneath. No burger,
+     so every destination stays one tap away and matches the desktop order. */
+  .nav-inner {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    gap: 0;
+  }
+  .nav-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .nav-links {
+    flex: none;
+    margin-top: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+    /* Bleed to the screen edges so a scrolled link is not clipped by the
+       container padding. */
+    margin-inline: calc(clamp(20px, 5vw, 40px) * -1);
+    padding-inline: clamp(20px, 5vw, 40px);
+  }
+  .nav-links::-webkit-scrollbar {
+    display: none;
+  }
+  .nav-link {
+    padding: 6px 12px;
+    font-size: 13.5px;
+    white-space: nowrap;
+  }
   .nav-auth {
     display: none;
   }
-  .burger {
-    display: grid;
+}
+
+@media (max-width: 560px) {
+  /* Tighten the row 1 controls rather than dropping the wordmark: the brand
+     stays, the secondary login link and the padding go. */
+  .rate-pill {
+    padding: 5px 10px;
+    gap: 5px;
+    font-size: 11.5px;
+  }
+  .nav-cta {
+    padding: 8px 14px;
+    font-size: 12.5px;
+  }
+  .brand-name {
+    font-size: 15.5px;
+  }
+  .brand-img {
+    height: 32px;
+    width: 32px;
   }
 }
-@media (max-width: 560px) {
-  .rate-pill,
-  .brand-text {
+
+@media (max-width: 380px) {
+  .rate-pill {
     display: none;
   }
 }

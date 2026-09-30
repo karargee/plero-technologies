@@ -13,13 +13,13 @@
         <div class="fx-card glass">
           <div class="fx-top">
             <p class="fx-label">USD / NGN</p>
-            <span class="tag" :class="connected ? 'tag-green' : 'tag-yellow'">
-              <span class="live-dot" :class="{ 'live-dot--off': !connected }" />
-              {{ connected ? 'Streaming' : 'Reconnecting' }}
+            <span class="tag" :class="hasLiveRate ? 'tag-green' : 'tag-yellow'">
+              <span class="live-dot" :class="{ 'live-dot--off': !hasLiveRate }" />
+              {{ hasLiveRate ? 'Live' : 'Cached' }}
             </span>
           </div>
           <p class="fx-rate">₦<span>{{ liveRate.toLocaleString('en-NG') }}</span></p>
-          <p class="fx-sub">per $1 · source: Deriv exchange feed</p>
+          <p class="fx-sub">per $1 · source: {{ rateLabel }}</p>
           <dl class="fx-meta">
             <div><dt>Margin</dt><dd>0%</dd></div>
             <div><dt>Spread</dt><dd>built into rate</dd></div>
@@ -27,6 +27,10 @@
           </dl>
         </div>
       </div>
+    </section>
+
+    <section class="container">
+      <TradeView />
     </section>
 
     <section class="container">
@@ -83,7 +87,11 @@
 import { CATEGORIES, CARDS } from '~/data/cards'
 import type { Card } from '~/types'
 
-const { liveRate, connected, format } = useDerivRate()
+const { liveRate, hasLiveRate, rateSource, format } = useDerivRate()
+
+const rateLabel = computed(() =>
+  rateSource.value === 'deriv' ? 'Deriv exchange feed' : rateSource.value,
+)
 
 const category = ref<string>('All')
 const query = ref('')
