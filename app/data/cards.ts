@@ -10,7 +10,7 @@ export const CARDS: Card[] = [
     name: 'Deriv USD',
     short: 'Deriv',
     logo: 'D',
-    color: '#ff444f',
+    color: 'var(--primary)',
     buyRate: 0.95,
     sellRate: 0.9,
     category: 'Trading',

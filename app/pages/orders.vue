@@ -45,8 +45,8 @@ definePageMeta({ layout: 'app' })
 
 const STATUS_COLORS: Record<OrderStatus, { color: string; bg: string }> = {
   completed: { color: '#10b981', bg: 'rgba(16,185,129,0.13)' },
-  processing: { color: '#8b5cf6', bg: 'rgba(139,92,246,0.14)' },
-  pending: { color: '#f5a524', bg: 'rgba(245,165,36,0.13)' },
+  processing: { color: 'var(--violet)', bg: 'rgb(var(--violet-rgb) / 0.14)' },
+  pending: { color: 'var(--gold)', bg: 'rgba(245,165,36,0.13)' },
   failed: { color: '#ef4444', bg: 'rgba(239,68,68,0.13)' },
 }
 
@@ -69,7 +69,7 @@ const stats = computed(() => [
   {
     label: 'In flight',
     value: ORDERS.filter(o => o.status === 'pending' || o.status === 'processing').length,
-    color: '#f5a524',
+    color: 'var(--gold)',
   },
 ])
 </script>

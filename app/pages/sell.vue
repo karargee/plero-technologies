@@ -58,7 +58,7 @@
         <b>₦{{ payout }}</b>
       </div>
 
-      <button class="btn btn-red btn-block btn-lg" type="button" :disabled="!amount" @click="step = 3">
+      <button class="btn btn-primary btn-block btn-lg" type="button" :disabled="!amount" @click="step = 3">
         Continue
         <AppIcon name="arrow" :size="17" />
       </button>
@@ -83,7 +83,7 @@
         Tap to attach a photo
       </button>
 
-      <button class="btn btn-red btn-block btn-lg" type="button" :disabled="!code.trim()" @click="submitted = true">
+      <button class="btn btn-primary btn-block btn-lg" type="button" :disabled="!code.trim()" @click="submitted = true">
         Submit for review
       </button>
     </div>
@@ -263,7 +263,7 @@ const back = () => {
   padding: 15px 17px;
   border-radius: var(--r-md);
   background: var(--accent-soft);
-  border: 1px solid rgba(0, 167, 158, 0.24);
+  border: 1px solid rgb(var(--accent-rgb) / 0.24);
   font-size: 14.5px;
   color: var(--muted);
 }

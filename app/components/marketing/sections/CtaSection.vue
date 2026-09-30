@@ -5,7 +5,7 @@
       <h2 class="cta-title">{{ title }}</h2>
       <p class="cta-lede">{{ lede }}</p>
       <div class="btn-row cta-actions">
-        <NuxtLink to="/register" class="btn btn-red btn-lg">
+        <NuxtLink to="/register" class="btn btn-primary btn-lg">
           {{ primaryLabel }}
           <AppIcon name="arrow" :size="17" />
         </NuxtLink>
@@ -39,7 +39,7 @@ withDefaults(
   border-top: 1px solid var(--hairline);
   padding-block: clamp(72px, 10vw, 128px);
   text-align: center;
-  background: radial-gradient(ellipse 60% 100% at 50% 0%, rgba(255, 68, 79, 0.09), transparent 65%);
+  background: radial-gradient(ellipse 60% 100% at 50% 0%, rgb(var(--primary-rgb) / 0.09), transparent 65%);
 }
 .orb {
   width: 640px;
@@ -47,7 +47,7 @@ withDefaults(
   bottom: -220px;
   left: 50%;
   transform: translateX(-50%);
-  background: radial-gradient(circle, rgba(124, 58, 237, 0.16), transparent 70%);
+  background: radial-gradient(circle, rgb(var(--primary-2-rgb) / 0.16), transparent 70%);
 }
 .cta-inner {
   position: relative;

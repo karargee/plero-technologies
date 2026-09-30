@@ -103,7 +103,7 @@ useHead({ title: 'About — Plero Technologies' })
   height: 420px;
   top: -220px;
   left: -140px;
-  background: radial-gradient(circle, rgba(255, 68, 79, 0.14), transparent 70%);
+  background: radial-gradient(circle, rgb(var(--primary-rgb) / 0.14), transparent 70%);
 }
 .head-inner {
   position: relative;
@@ -216,7 +216,7 @@ useHead({ title: 'About — Plero Technologies' })
   height: 9px;
   border-radius: 50%;
   background: var(--primary);
-  box-shadow: 0 0 0 4px rgba(255, 68, 79, 0.16);
+  box-shadow: 0 0 0 4px rgb(var(--primary-rgb) / 0.16);
 }
 .tl-year {
   font-family: var(--font-mono);

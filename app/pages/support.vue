@@ -42,7 +42,7 @@
           </p>
           <form class="track" @submit.prevent="tracked = true">
             <input v-model="orderRef" class="input-field" placeholder="#PL1042" :disabled="tracked" />
-            <button class="btn btn-red btn-block" type="submit">
+            <button class="btn btn-primary btn-block" type="submit">
               {{ tracked ? 'Tracked' : 'Check order' }}
             </button>
           </form>
@@ -77,7 +77,7 @@ useHead({ title: 'Support — Plero Technologies' })
 <style scoped>
 .head {
   padding-block: clamp(40px, 6vw, 80px);
-  background: radial-gradient(ellipse 70% 100% at 20% 0%, rgba(0, 167, 158, 0.08), transparent 60%);
+  background: radial-gradient(ellipse 70% 100% at 20% 0%, rgb(var(--accent-rgb) / 0.08), transparent 60%);
   border-bottom: 1px solid var(--hairline);
 }
 .head-title {

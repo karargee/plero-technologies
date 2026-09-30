@@ -4,7 +4,7 @@
 
     <div class="container nav-inner">
       <NuxtLink to="/" class="brand" :aria-label="`${BRAND.legalName} home`">
-        <img :src="BRAND.logo" alt="" class="brand-img" />
+        <img :src="BRAND.logo" alt="" class="brand-img logo-plate" />
         <span class="brand-text">
           <span class="brand-name">{{ BRAND.name }}</span>
           <span class="brand-sub">Technologies</span>
@@ -29,37 +29,46 @@
           <span class="rate-value">$1 = ₦{{ liveRate.toLocaleString('en-NG') }}</span>
         </NuxtLink>
         <NuxtLink to="/login" class="btn btn-ghost nav-auth">Log in</NuxtLink>
-        <NuxtLink to="/register" class="btn btn-red nav-cta">Get started</NuxtLink>
+        <NuxtLink to="/register" class="btn btn-primary nav-cta">Get started</NuxtLink>
         <button class="burger" :aria-expanded="open" aria-label="Toggle menu" @click="open = !open">
           <AppIcon :name="open ? 'close' : 'menu'" :size="20" />
         </button>
       </div>
     </div>
 
-    <Transition name="sheet">
-      <div v-if="open" class="sheet">
-        <nav class="sheet-links" aria-label="Mobile">
-          <NuxtLink
-            v-for="link in NAV_LINKS"
-            :key="link.to"
-            :to="link.to"
-            class="sheet-link"
-            :class="{ 'sheet-link--active': isActive(link.to) }"
-            @click="close"
-          >
-            {{ link.label }}
-            <AppIcon name="arrow" :size="16" />
-          </NuxtLink>
-        </nav>
-        <div class="sheet-actions">
-          <NuxtLink to="/login" class="btn btn-ghost btn-block" @click="close">Log in</NuxtLink>
-          <NuxtLink to="/register" class="btn btn-red btn-block" @click="close">Create free account</NuxtLink>
+    <!--
+      Teleported to <body> on purpose: the header carries a backdrop-filter,
+      which makes it the containing block for position:fixed descendants and
+      would collapse this sheet into the 68px header box.
+    -->
+    <Teleport to="body">
+      <Transition name="sheet">
+        <div v-if="open" class="sheet" @click.self="close">
+          <nav class="sheet-links" aria-label="Mobile">
+            <NuxtLink
+              v-for="link in NAV_LINKS"
+              :key="link.to"
+              :to="link.to"
+              class="sheet-link"
+              :class="{ 'sheet-link--active': isActive(link.to) }"
+              @click="close"
+            >
+              {{ link.label }}
+              <AppIcon name="arrow" :size="16" />
+            </NuxtLink>
+          </nav>
+          <div class="sheet-actions">
+            <NuxtLink to="/login" class="btn btn-ghost btn-block" @click="close">Log in</NuxtLink>
+            <NuxtLink to="/register" class="btn btn-primary btn-block" @click="close">
+              Create free account
+            </NuxtLink>
+          </div>
+          <p class="sheet-foot">
+            <AppIcon name="headset" :size="15" /> Support available 24/7
+          </p>
         </div>
-        <p class="sheet-foot">
-          <AppIcon name="headset" :size="15" /> Support available 24/7
-        </p>
-      </div>
-    </Transition>
+      </Transition>
+    </Teleport>
   </header>
 </template>
 
@@ -149,6 +158,8 @@ onBeforeUnmount(() => {
   object-fit: cover;
   border-radius: 10px;
   border: 1px solid var(--hairline);
+  position: relative;
+  z-index: 1;
 }
 .brand-text {
   display: flex;
@@ -206,7 +217,7 @@ onBeforeUnmount(() => {
   padding: 6px 13px;
   border-radius: var(--r-full);
   background: var(--accent-soft);
-  border: 1px solid rgba(0, 167, 158, 0.22);
+  border: 1px solid rgb(var(--accent-rgb) / 0.22);
   color: #2fd4c8;
   font-size: 12.5px;
   font-weight: 600;
@@ -238,17 +249,21 @@ onBeforeUnmount(() => {
   place-items: center;
 }
 
+/* Teleported to <body>, so this is positioned against the viewport. */
 .sheet {
   position: fixed;
   inset: var(--nav-h) 0 0;
-  background: rgba(8, 8, 10, 0.96);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  padding: 20px clamp(20px, 5vw, 40px) 40px;
+  z-index: 99;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  padding: 12px clamp(20px, 5vw, 40px) calc(32px + env(safe-area-inset-bottom, 0px));
   overflow-y: auto;
+  overscroll-behavior: contain;
+  background: rgba(9, 9, 13, 0.96);
+  backdrop-filter: blur(26px) saturate(160%);
+  -webkit-backdrop-filter: blur(26px) saturate(160%);
+  border-top: 1px solid var(--hairline);
 }
 .sheet-links {
   display: flex;

@@ -64,7 +64,7 @@
         </span>
       </label>
 
-      <button type="submit" class="btn btn-red btn-block btn-lg" :disabled="loading">
+      <button type="submit" class="btn btn-primary btn-block btn-lg" :disabled="loading">
         {{ loading ? 'Creating account…' : 'Create free account' }}
         <AppIcon v-if="!loading" name="arrow" :size="17" />
       </button>

@@ -14,7 +14,7 @@
     </div>
 
     <NuxtLink to="/orders" class="btn btn-soft btn-block">Track this order</NuxtLink>
-    <NuxtLink to="/home" class="btn btn-red btn-block">Back to dashboard</NuxtLink>
+    <NuxtLink to="/home" class="btn btn-primary btn-block">Back to dashboard</NuxtLink>
   </div>
 </template>
 

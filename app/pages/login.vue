@@ -52,7 +52,7 @@
         <a href="#" class="link">Forgot password?</a>
       </div>
 
-      <button type="submit" class="btn btn-red btn-block btn-lg" :disabled="loading">
+      <button type="submit" class="btn btn-primary btn-block btn-lg" :disabled="loading">
         {{ loading ? 'Signing in…' : 'Sign in' }}
         <AppIcon v-if="!loading" name="arrow" :size="17" />
       </button>

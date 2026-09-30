@@ -43,8 +43,8 @@ const formatted = computed(() =>
   margin: 18px 20px 0;
   padding: 24px;
   border-radius: var(--r-xl);
-  background: linear-gradient(140deg, #ff5a64, var(--primary) 45%, #a3212a);
-  box-shadow: 0 20px 50px -24px rgba(255, 68, 79, 0.7);
+  background: linear-gradient(140deg, var(--primary-light), var(--primary) 45%, var(--primary-deep));
+  box-shadow: 0 20px 50px -24px rgb(var(--primary-rgb) / 0.7);
 }
 .balance-top {
   display: flex;

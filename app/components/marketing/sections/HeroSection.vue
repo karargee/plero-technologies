@@ -22,7 +22,7 @@
         </p>
 
         <div class="btn-row fade-up" style="animation-delay: 0.18s">
-          <NuxtLink to="/register" class="btn btn-red btn-lg">
+          <NuxtLink to="/register" class="btn btn-primary btn-lg">
             Start trading free
             <AppIcon name="arrow" :size="17" />
           </NuxtLink>
@@ -110,14 +110,14 @@ const featured = getFeaturedCards()
   height: 620px;
   top: -280px;
   left: -140px;
-  background: radial-gradient(circle, rgba(255, 68, 79, 0.22), transparent 70%);
+  background: radial-gradient(circle, rgb(var(--primary-rgb) / 0.22), transparent 70%);
 }
 .orb-b {
   width: 560px;
   height: 560px;
   top: -120px;
   right: -160px;
-  background: radial-gradient(circle, rgba(124, 58, 237, 0.2), transparent 70%);
+  background: radial-gradient(circle, rgb(var(--primary-2-rgb) / 0.2), transparent 70%);
 }
 
 .hero-inner {
@@ -140,7 +140,7 @@ const featured = getFeaturedCards()
   padding: 7px 15px;
   border-radius: var(--r-full);
   background: var(--accent-soft);
-  border: 1px solid rgba(0, 167, 158, 0.22);
+  border: 1px solid rgb(var(--accent-rgb) / 0.22);
   color: #2fd4c8;
   font-size: 12.5px;
   font-weight: 600;
@@ -329,13 +329,27 @@ const featured = getFeaturedCards()
   .quote-rate {
     font-size: 36px;
   }
-  /* Drift reads as jitter on a small screen. */
-  .quote-card,
-  .float-card {
-    animation: none;
+  /* Keep the drift on mobile, just with less travel and a longer, calmer cycle
+     so it reads as motion instead of jitter. */
+  .quote-card {
+    animation: float-subtle 9s var(--ease) infinite;
   }
   .float-card {
-    display: none;
+    display: flex;
+    align-self: flex-end;
+    padding: 12px 14px;
+    gap: 10px;
+    animation: float-subtle 7.5s var(--ease) 0.6s infinite;
+  }
+  .float-value {
+    font-size: 14px;
+  }
+  .float-label {
+    font-size: 11px;
+  }
+  /* Stagger the two cards so they do not rise in lockstep. */
+  .quote-card {
+    animation-delay: 0.9s;
   }
 }
 </style>

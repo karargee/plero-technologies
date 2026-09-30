@@ -63,7 +63,7 @@
     </section>
 
     <section class="block">
-      <NuxtLink :to="side === 'sell' ? '/sell' : '/buy'" class="btn btn-red btn-block btn-lg">
+      <NuxtLink :to="side === 'sell' ? '/sell' : '/buy'" class="btn btn-primary btn-block btn-lg">
         {{ side === 'sell' ? `Sell ${card.name}` : `Buy ${card.name}` }}
         <AppIcon name="arrow" :size="17" />
       </NuxtLink>
@@ -76,7 +76,7 @@
     <p class="muted">Check the full list, or ask support whether we can take it.</p>
     <div class="btn-row">
       <NuxtLink to="/cards" class="btn btn-soft">All gift cards</NuxtLink>
-      <NuxtLink to="/support" class="btn btn-red">Ask support</NuxtLink>
+      <NuxtLink to="/support" class="btn btn-primary">Ask support</NuxtLink>
     </div>
   </div>
 </template>

@@ -32,7 +32,7 @@ const active = computed(() => TAB_BY_PATH[route.path] ?? 'home')
   display: flex;
   justify-content: center;
   background:
-    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(255, 68, 79, 0.09), transparent 65%),
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgb(var(--primary-rgb) / 0.09), transparent 65%),
     var(--bg);
 }
 
@@ -48,7 +48,7 @@ const active = computed(() => TAB_BY_PATH[route.path] ?? 'home')
   .app-shell {
     padding-block: clamp(24px, 5vh, 56px);
     background:
-      radial-gradient(ellipse 60% 45% at 50% 0%, rgba(255, 68, 79, 0.1), transparent 65%),
+      radial-gradient(ellipse 60% 45% at 50% 0%, rgb(var(--primary-rgb) / 0.1), transparent 65%),
       linear-gradient(180deg, var(--bg-alt), var(--bg) 40%);
   }
 

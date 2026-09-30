@@ -68,7 +68,7 @@ const stats = [
   font-family: var(--font-display);
   font-size: 24px;
   font-weight: 700;
-  box-shadow: 0 0 0 6px rgba(255, 68, 79, 0.12);
+  box-shadow: 0 0 0 6px rgb(var(--primary-rgb) / 0.12);
 }
 .name {
   font-size: 20px;

@@ -110,7 +110,7 @@ useHead({ title: 'Live Rates — Plero Technologies' })
 <style scoped>
 .head {
   padding-block: clamp(40px, 6vw, 76px) clamp(28px, 4vw, 44px);
-  background: radial-gradient(ellipse 70% 100% at 20% 0%, rgba(0, 167, 158, 0.08), transparent 60%);
+  background: radial-gradient(ellipse 70% 100% at 20% 0%, rgb(var(--accent-rgb) / 0.08), transparent 60%);
   border-bottom: 1px solid var(--hairline);
 }
 .head-inner {

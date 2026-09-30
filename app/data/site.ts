@@ -206,10 +206,10 @@ export const MILESTONES: Milestone[] = [
 /* ── Support ───────────────────────────────────────────── */
 
 export const SUPPORT_CHANNELS: SupportChannel[] = [
-  { label: 'Live chat', value: 'Median reply 40 seconds', icon: 'headset', color: '#00a79e', href: '#' },
+  { label: 'Live chat', value: 'Median reply 40 seconds', icon: 'headset', color: 'var(--accent)', href: '#' },
   { label: 'WhatsApp', value: BRAND.supportPhone, icon: 'whatsapp', color: '#22c55e', href: '#' },
   { label: 'Email', value: BRAND.supportEmail, icon: 'mail', color: '#6366f1', href: `mailto:${BRAND.supportEmail}` },
-  { label: 'Phone', value: 'Mon–Sun, 8am–10pm WAT', icon: 'phone', color: '#f5a524', href: `tel:${BRAND.supportPhone.replace(/\s/g, '')}` },
+  { label: 'Phone', value: 'Mon–Sun, 8am–10pm WAT', icon: 'phone', color: 'var(--gold)', href: `tel:${BRAND.supportPhone.replace(/\s/g, '')}` },
 ]
 
 export const SERVICE_LEVELS: ServiceLevel[] = [

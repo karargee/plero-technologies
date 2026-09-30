@@ -6,17 +6,33 @@
   --font-display: "Inter Tight", "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
 
-  /* Brand */
-  --primary: #ff444f;
-  --primary-dark: #e03038;
-  --primary-light: #ff7a83;
-  --primary-soft: rgba(255, 68, 79, 0.12);
-  --primary-glow: rgba(255, 68, 79, 0.28);
-  --accent: #00a79e;
-  --accent-soft: rgba(0, 167, 158, 0.12);
-  --gold: #f5a524;
-  --violet: #8b5cf6;
+  /* Brand
+     Derived from the Plero logo: deep indigo ink #26256a (hsl 244 65% 28%)
+     on a white plate. Everything below stays in that 240-275deg family so the
+     white logo tile reads as part of the page rather than pasted onto it. */
+  --brand-deep: #26256a;
+  --brand-plate: #ffffff;
+
+  --primary: #6f6bf2;
+  --primary-dark: #4b46d6;
+  --primary-deep: #3b2fb8;
+  --primary-light: #a5a2fb;
+  --primary-2: #b45cf0;
+  --primary-soft: rgba(111, 107, 242, 0.14);
+  --primary-glow: rgba(111, 107, 242, 0.34);
+
+  --accent: #14b892;
+  --accent-soft: rgba(20, 184, 146, 0.13);
+  --gold: #f0a92b;
+  --violet: #9d6bf5;
   --danger: #ef4444;
+
+  /* Channel triplets, for tints that need a custom alpha. */
+  --primary-rgb: 111 107 242;
+  --primary-light-rgb: 165 162 251;
+  --primary-2-rgb: 180 92 240;
+  --accent-rgb: 20 184 146;
+  --violet-rgb: 157 107 245;
 
   /* Surfaces */
   --bg: #08080a;
@@ -270,7 +286,7 @@ svg {
     from var(--glass-angle),
     transparent 0%,
     var(--primary) 16%,
-    var(--violet) 30%,
+    var(--primary-2) 30%,
     transparent 48%,
     var(--accent) 74%,
     transparent 100%
@@ -348,6 +364,18 @@ svg {
   animation: glass-shine 7s linear infinite;
 }
 
+/* Same drift at a fraction of the amplitude, for small screens where the full
+   10px travel reads as jitter rather than motion. */
+@keyframes float-subtle {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
 @keyframes float {
   0%,
   100% {
@@ -366,8 +394,19 @@ svg {
   z-index: 0;
 }
 
-/* ── Buttons ────────────────────────────────────────────── */
+/* The logo artwork is deep indigo on an opaque white plate. On a near-black
+   page that plate needs a rim and a tinted shadow, otherwise the mark reads as
+   a hole punched in the surface rather than part of the brand. */
+.logo-plate {
+  object-fit: cover;
+  background: var(--brand-plate);
+  border-radius: 10px;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.14),
+    0 6px 18px -8px rgb(var(--primary-rgb) / 0.55);
+}
 
+/* ── Buttons ────────────────────────────────────────────── */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -387,13 +426,15 @@ svg {
   transform: scale(0.98);
 }
 
-.btn-red,
+/* The primary CTA. `.btn-primary` is a legacy alias kept so older markup still
+   resolves, but the brand is indigo now, not red. */
+.btn-primary,
 .btn-primary {
   background: linear-gradient(135deg, var(--primary-light), var(--primary) 45%, var(--primary-dark));
   color: #fff;
   box-shadow: 0 8px 24px -8px var(--primary-glow);
 }
-.btn-red:hover,
+.btn-primary:hover,
 .btn-primary:hover {
   box-shadow: 0 14px 34px -10px var(--primary-glow);
   filter: brightness(1.06);
@@ -512,7 +553,7 @@ svg {
   color: var(--gold);
 }
 .tag-purple {
-  background: rgba(139, 92, 246, 0.14);
+  background: rgb(var(--violet-rgb) / 0.14);
   color: #a78bfa;
 }
 .tag-gray {
@@ -529,7 +570,7 @@ svg {
   font-weight: 600;
 }
 .badge-purple {
-  background: rgba(139, 92, 246, 0.14);
+  background: rgb(var(--violet-rgb) / 0.14);
   color: #a78bfa;
 }
 

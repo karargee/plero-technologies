@@ -94,7 +94,7 @@ useHead({ title: 'How it works — Plero Technologies' })
   height: 420px;
   top: -220px;
   right: -120px;
-  background: radial-gradient(circle, rgba(0, 167, 158, 0.14), transparent 70%);
+  background: radial-gradient(circle, rgb(var(--accent-rgb) / 0.14), transparent 70%);
 }
 .head-inner {
   position: relative;

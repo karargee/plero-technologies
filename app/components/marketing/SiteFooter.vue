@@ -4,7 +4,7 @@
       <div class="footer-top">
         <div class="footer-brand">
           <NuxtLink to="/" class="brand-row">
-            <img :src="BRAND.logo" alt="" class="footer-logo" />
+            <img :src="BRAND.logo" alt="" class="footer-logo logo-plate" />
             <span class="brand-name">{{ BRAND.legalName }}</span>
           </NuxtLink>
           <p class="footer-desc">
@@ -37,7 +37,7 @@
               placeholder="you@email.com"
               :disabled="subscribed"
             />
-            <button type="submit" class="btn btn-red subscribe-btn" :aria-label="subscribed ? 'Subscribed' : 'Subscribe'">
+            <button type="submit" class="btn btn-primary subscribe-btn" :aria-label="subscribed ? 'Subscribed' : 'Subscribe'">
               <AppIcon :name="subscribed ? 'check' : 'send'" :size="17" />
             </button>
           </form>

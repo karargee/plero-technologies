@@ -7,7 +7,7 @@
       </NuxtLink>
 
       <div class="aside-body">
-        <img :src="BRAND.logo" alt="" class="aside-logo" />
+        <img :src="BRAND.logo" alt="" class="aside-logo logo-plate" />
         <h1 class="aside-title">
           {{ headline }}<br /><span class="grad">{{ accent }}</span>
         </h1>
@@ -79,7 +79,7 @@ const { rate, connected } = useDerivRate()
   bottom: -260px;
   left: -120px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 68, 79, 0.18), transparent 70%);
+  background: radial-gradient(circle, rgb(var(--primary-rgb) / 0.18), transparent 70%);
 }
 .aside-back {
   position: relative;
@@ -149,7 +149,7 @@ const { rate, connected } = useDerivRate()
   padding: 9px 16px;
   border-radius: var(--r-full);
   background: var(--accent-soft);
-  border: 1px solid rgba(0, 167, 158, 0.22);
+  border: 1px solid rgb(var(--accent-rgb) / 0.22);
   color: #2fd4c8;
   font-size: 13.5px;
   font-weight: 600;
