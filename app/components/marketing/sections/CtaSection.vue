@@ -1,10 +1,10 @@
 <template>
-  <section class="cta">
+  <section class="cta" ref="sectionRef">
     <span class="glow-orb orb" aria-hidden="true" />
     <div class="container cta-inner">
-      <h2 class="cta-title">{{ title }}</h2>
-      <p class="cta-lede">{{ lede }}</p>
-      <div class="btn-row cta-actions">
+      <h2 class="cta-title reveal">{{ title }}</h2>
+      <p class="cta-lede reveal" style="transition-delay:0.1s">{{ lede }}</p>
+      <div class="btn-row cta-actions reveal" style="transition-delay:0.2s">
         <NuxtLink to="/register" class="btn btn-primary btn-lg">
           {{ primaryLabel }}
           <AppIcon name="arrow" :size="17" />
@@ -16,6 +16,9 @@
 </template>
 
 <script setup lang="ts">
+const sectionRef = ref<HTMLElement | null>(null)
+useReveal(sectionRef)
+
 withDefaults(
   defineProps<{
     title: string

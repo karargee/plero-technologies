@@ -1,7 +1,7 @@
 <template>
-  <section class="ssc">
+  <section class="ssc" ref="sectionRef">
     <div class="ssc__inner container">
-      <h2 class="ssc__header">Get started in 3 simple steps</h2>
+      <h2 class="ssc__header reveal">Get started in 3 simple steps</h2>
       <div class="ssc__track" ref="trackRef">
         <div
           v-for="(step, i) in STEPS"
@@ -28,7 +28,9 @@
 import { STEPS } from '~/data/site'
 
 const COLORS = ['light', 'coral', 'dark']
+const sectionRef = ref<HTMLElement | null>(null)
 const trackRef = ref<HTMLElement | null>(null)
+useReveal(sectionRef)
 </script>
 
 <style scoped>

@@ -1,7 +1,7 @@
 <template>
-  <section class="fs">
+  <section class="fs" ref="sectionRef">
     <div class="fs__inner container">
-      <h2 class="fs__header">Everything you need to trade smarter</h2>
+      <h2 class="fs__header reveal">Everything you need to trade smarter</h2>
       <div class="fs__layout">
         <!-- Sticky visual panel -->
         <div class="fs__media-col" aria-hidden="true">
@@ -26,7 +26,7 @@
           <div
             v-for="(feature, i) in FEATURES"
             :key="feature.title"
-            class="fs__item"
+            class="fs__item reveal"
             :ref="el => setItemRef(el, i)"
             :class="{ 'fs__item--active': activeIndex === i }"
           >
@@ -51,6 +51,9 @@
 
 <script setup lang="ts">
 import { FEATURES } from '~/data/site'
+
+const sectionRef = ref<HTMLElement | null>(null)
+useReveal(sectionRef)
 
 const activeIndex = ref(0)
 const itemRefs = ref<(Element | null)[]>([])

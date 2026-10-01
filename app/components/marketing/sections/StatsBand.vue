@@ -1,12 +1,12 @@
 <template>
-  <section class="stats">
+  <section class="stats" ref="sectionRef">
     <div class="container stats__inner">
-      <div class="stats__text">
+      <div class="stats__text reveal">
         <h2 class="stats__title">Trade with confidence</h2>
         <p class="stats__sub">Plero is built on live market data and verified settlement — no guesswork, no agents.</p>
       </div>
 
-      <div class="stats__card">
+      <div class="stats__card reveal" style="transition-delay:0.15s">
         <div class="stats__track">
           <div class="stats__fade stats__fade--top" aria-hidden="true" />
           <div class="stats__fade stats__fade--bottom" aria-hidden="true" />
@@ -28,6 +28,9 @@
 
 <script setup lang="ts">
 import { HOME_STATS } from '~/data/site'
+
+const sectionRef = ref<HTMLElement | null>(null)
+useReveal(sectionRef)
 
 const activeIndex = ref(0)
 

@@ -1,5 +1,5 @@
 <template>
-  <section class="section">
+  <section class="section" ref="sectionRef">
     <span class="neon-orb neon-orb--1" style="width:520px;height:520px;top:6%;left:-160px" aria-hidden="true" />
     <span class="neon-orb neon-orb--2" style="width:460px;height:460px;bottom:4%;right:-140px" aria-hidden="true" />
 
@@ -15,7 +15,7 @@
         </p>
       </div>
 
-      <div ref="gridRef" class="bento">
+      <div ref="gridRef" class="bento reveal" style="transition-delay:0.15s">
         <!-- Deriv USD: the flagship tile -->
         <article v-if="derivCard" class="glass glass-hover neon-border tile tile--hero">
           <span class="glow-spot" aria-hidden="true" />
@@ -162,6 +162,9 @@ const spark = Array.from({ length: 22 }, (_, i) => {
 })
 
 const { el: gridRef, bind } = useSpotlight()
+const sectionRef = ref<HTMLElement | null>(null)
+useReveal(sectionRef)
+
 onMounted(() => {
   for (const node of gridRef.value?.querySelectorAll('.glass-hover') ?? []) {
     bind(node as HTMLElement)

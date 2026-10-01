@@ -1,11 +1,11 @@
 <template>
-  <section class="tp section--alt">
+  <section class="tp section--alt" ref="sectionRef">
     <div class="container">
-      <div class="tp__head">
+      <div class="tp__head reveal">
         <h2 class="tp__title">What our traders say</h2>
       </div>
 
-      <div class="tp__bleed">
+      <div class="tp__bleed reveal" style="transition-delay:0.12s">
         <div class="tp__carousel" ref="trackRef">
           <a
             v-for="item in TESTIMONIALS"
@@ -42,6 +42,9 @@
 
 <script setup lang="ts">
 import { TESTIMONIALS } from '~/data/site'
+
+const sectionRef = ref<HTMLElement | null>(null)
+useReveal(sectionRef)
 
 const trackRef = ref<HTMLElement | null>(null)
 const atStart = ref(true)
