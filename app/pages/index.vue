@@ -93,36 +93,7 @@
           </div>
         </div>
 
-        <!-- Category Tabs -->
-        <div class="cat-tabs">
-          <button v-for="c in CATEGORIES" :key="c" class="cat-tab" :class="{active: cat===c}" @click="cat=c">{{ c }}</button>
-        </div>
 
-        <!-- Cards Grid -->
-        <div class="cards-grid">
-          <NuxtLink v-for="card in filtered" :key="card.id" :to="`/card/${card.id}`" class="card-tile">
-            <div class="ct-top">
-              <div class="ct-logo" :style="`background:${card.color}18;border:1px solid ${card.color}30`">{{ card.logo }}</div>
-              <span class="ct-instant" v-if="card.instant">⚡ Instant</span>
-            </div>
-            <p class="ct-name">{{ card.name }}</p>
-            <p class="ct-cat">{{ card.category }}</p>
-            <div class="ct-rates">
-              <div>
-                <p class="ct-rl">We Buy</p>
-                <p class="ct-rv green">₦{{ Math.round(card.sellRate * liveRate) }}</p>
-              </div>
-              <div style="text-align:right">
-                <p class="ct-rl">We Sell</p>
-                <p class="ct-rv yellow">₦{{ Math.round(card.buyRate * liveRate) }}</p>
-              </div>
-            </div>
-            <div class="ct-footer">
-              <span class="ct-min">Min ${{ card.denominations[0] }}</span>
-              <span class="ct-trade">Trade →</span>
-            </div>
-          </NuxtLink>
-        </div>
       </div>
     </section>
 
@@ -181,12 +152,10 @@
 </template>
 
 <script setup>
-import { CARDS, CATEGORIES } from '~/data/cards'
+import { CARDS } from '~/data/cards'
 
 const { liveRate } = useDerivRate()
-const cat = ref('All')
 const derivCard = computed(() => CARDS.find(c => c.id === 'deriv'))
-const filtered = computed(() => cat.value === 'All' ? CARDS : CARDS.filter(c => c.category === cat.value))
 
 const stats = [
   { val: '50,000+', label: 'Active Traders' },
