@@ -12,13 +12,13 @@
         </p>
 
         <h1 class="hero-title fade-up" style="animation-delay: 0.06s">
-          Turn unused gift cards<br class="br-wide" />
-          into <span class="grad-text">cash in minutes.</span>
+          Trade your<br class="br-wide" />
+          <span class="grad-text">digital assets.</span>
         </h1>
 
         <p class="hero-lede fade-up" style="animation-delay: 0.12s">
-          Plero is the exchange layer for Nigerian gift cards. Live market pricing, verified
-          settlement, and payouts straight to your bank — no agents, no queues, no guesswork.
+          Plero is the fastest way to convert gift cards, Deriv USD and crypto into naira.
+          Live market rates, verified settlement, and payouts straight to your bank in minutes.
         </p>
 
         <div class="btn-row fade-up" style="animation-delay: 0.18s">
