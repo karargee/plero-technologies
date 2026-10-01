@@ -122,12 +122,10 @@
   --nav-h: 68px;
 }
 
-/* Below 1024px the header becomes two rows (brand + actions, then the nav
-   links), so it needs more height. Everything that offsets for the fixed
-   header reads --nav-h, so this one value moves the whole page down. */
+/* Below 1024px the nav collapses to hamburger — single row, same height. */
 @media (max-width: 1024px) {
   :root {
-    --nav-h: 108px;
+    --nav-h: 68px;
   }
 }
 
