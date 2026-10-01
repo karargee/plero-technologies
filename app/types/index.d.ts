@@ -18,7 +18,7 @@ export interface Card {
   instant: boolean
 }
 
-export type CardCategory = 'Trading' | 'Voucher' | 'Shopping' | 'Entertainment' | 'Gaming'
+export type CardCategory = 'Trading' | 'Crypto' | 'Voucher' | 'Shopping' | 'Entertainment' | 'Gaming'
 
 export interface NavLink {
   label: string
