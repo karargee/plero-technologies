@@ -27,7 +27,7 @@ type Listener = (message: DerivMessage) => void
 /** Re-run on every (re)connect so subscriptions survive a dropped socket. */
 type OpenHook = () => void
 
-const SOCKET_URL = 'wss://api.derivws.com/trading/v1/options/ws/public'
+const SOCKET_URL = 'wss://ws.binaryws.com/websockets/v3'
 const MAX_RETRY_DELAY = 30_000
 
 interface Connection {
@@ -65,10 +65,9 @@ export function useDerivSocket() {
   const ensure = (): Connection => {
     if (connection) return connection
 
-    // The public endpoint takes no app_id; a PAT is only accepted by the
-    // authenticated demo/real endpoints, which are reached with an OTP.
-    const url: string = config.public.derivWsUrl || SOCKET_URL
-    const authenticated = /\/ws\/(demo|real)/.test(url)
+    const appId = config.public.derivAppId || '1089'
+    const baseUrl = SOCKET_URL
+    const url: string = `${baseUrl}?app_id=${appId}`
 
     const state: Connection = {
       socket: null,
@@ -98,6 +97,7 @@ export function useDerivSocket() {
     connection = state
 
     const token = config.public.derivToken || ''
+    const authenticated = !!token
 
     const scheduleReconnect = (immediate = false) => {
       if (state.stopped) return
@@ -157,7 +157,7 @@ export function useDerivSocket() {
         state.retries = 0
         state.setConnected(true)
         lastError.value = null
-        if (token && authenticated) current.send(JSON.stringify({ authorize: token }))
+        if (authenticated) current.send(JSON.stringify({ authorize: token }))
 
         // Re-issue every subscription, then flush anything queued while the
         // socket was down.
