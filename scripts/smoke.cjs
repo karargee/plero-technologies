@@ -1,8 +1,9 @@
 // Smoke-tests the built server: routes, head tags, and rendered section markup.
-const BASE = 'http://127.0.0.1:3111'
-const ROOT = path.join(__dirname, '..')
 const fs = require('fs')
 const path = require('path')
+
+const BASE = 'http://127.0.0.1:3111'
+const ROOT = path.join(__dirname, '..')
 
 const get = async (p) => {
   const r = await fetch(BASE + p)
