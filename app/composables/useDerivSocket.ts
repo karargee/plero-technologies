@@ -96,9 +96,12 @@ export function useDerivSocket() {
     }
     connection = state
 
-    const token = config.public.derivToken || ''
-    const authenticated = !!token
-
+    // No client-side authorize. The PAT lives in private runtimeConfig and is
+    // only readable server-side; sending it from the browser would publish it in
+    // the bundle. Market data on this socket is public, so nothing here needs
+    // authentication. `balance` / `accountId` stay empty by design — a public
+    // page should not display the business account balance. If an internal view
+    // ever needs it, expose a server route rather than a browser token.
     const scheduleReconnect = (immediate = false) => {
       if (state.stopped) return
       state.retries += 1
@@ -157,7 +160,6 @@ export function useDerivSocket() {
         state.retries = 0
         state.setConnected(true)
         lastError.value = null
-        if (authenticated) current.send(JSON.stringify({ authorize: token }))
 
         // Re-issue every subscription, then flush anything queued while the
         // socket was down.

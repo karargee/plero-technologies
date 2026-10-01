@@ -58,9 +58,15 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
+    // Payment-scoped Deriv PAT. Private on purpose: anything under `public` is
+    // serialised into the client bundle and readable by every visitor, so only
+    // server/ routes may read this.
+    derivToken: process.env.NUXT_DERIV_TOKEN || '',
     public: {
+      // An app ID is not a secret — it only identifies the app. Safe to ship.
       derivAppId: process.env.NUXT_DERIV_APP_ID || '1089',
-      derivToken: process.env.NUXT_DERIV_TOKEN || '',
+      derivWsUrl:
+        process.env.NUXT_DERIV_WS_URL || 'wss://api.derivws.com/trading/v1/options/ws/public',
     },
   },
 })

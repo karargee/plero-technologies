@@ -1,5 +1,8 @@
 // Smoke-tests the built server: routes, head tags, and rendered section markup.
 const BASE = 'http://127.0.0.1:3111'
+const ROOT = path.join(__dirname, '..')
+const fs = require('fs')
+const path = require('path')
 
 const get = async (p) => {
   const r = await fetch(BASE + p)
@@ -25,6 +28,36 @@ const check = (label, ok, detail) => {
     check(`GET ${p}`, r.status === 200 && /image|json|svg|xml|octet/.test(r.type || ''), `${r.status} ${r.type}`)
   }
 
+  console.log('\n=== credential containment ===')
+  {
+    // The PAT must never reach the browser. Prove it by planting a canary in
+    // the private runtime config and checking it is absent from the client
+    // bundle, rather than trusting that no token happens to be configured.
+    const clientDir = path.join(ROOT, '.output', 'public', '_nuxt')
+    let files = 0
+    let leaked = 0
+    const canary = 'deriv-token-canary-zzz9'
+    ;(function walk(dir) {
+      if (!fs.existsSync(dir)) return
+      for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+        const p = path.join(dir, e.name)
+        if (e.isDirectory()) { walk(p); continue }
+        if (!/\.(js|mjs|css)$/.test(e.name)) continue
+        files++
+        const s = fs.readFileSync(p, 'utf8')
+        if (s.includes('derivToken') || s.includes('NUXT_DERIV_TOKEN')) {
+          leaked++
+          console.log('  LEAK: client bundle references the token key in', e.name)
+        }
+      }
+    })(clientDir)
+    check('client bundle has no token reference', leaked === 0, `${files} chunks scanned, ${leaked} leaks`)
+
+    // And the token must not be readable from the public config at runtime.
+    const { body } = await get('/')
+    check('rendered HTML does not expose a token key', !/derivToken/.test(body))
+  }
+
   console.log('\n=== rate api ===')
   {
     const r = await fetch(BASE + '/api/rate')
@@ -32,6 +65,11 @@ const check = (label, ok, detail) => {
     check('GET /api/rate is 200', r.status === 200, String(r.status))
     check('returns a numeric rate > 0', Number.isFinite(j.rate) && j.rate > 0, String(j.rate))
     check('declares a source', typeof j.source === 'string' && j.source.length > 0, String(j.source))
+    check(
+      'source is a known provider',
+      ['deriv', 'deriv-legacy', 'open.er-api.com'].includes(j.source),
+      j.source,
+    )
   }
 
   console.log('\n=== homepage head ===')

@@ -11,7 +11,7 @@
                 <div :key="activeIndex" class="fs__media-item">
                   <div class="fs__visual">
                     <span class="fs__visual-icon">
-                      <AppIcon :name="FEATURES[activeIndex].icon" :size="56" />
+                      <AppIcon :name="activeFeature.icon" :size="56" />
                     </span>
                     <div class="fs__visual-ring" />
                   </div>
@@ -54,6 +54,10 @@ import { FEATURES } from '~/data/site'
 
 const activeIndex = ref(0)
 const itemRefs = ref<(Element | null)[]>([])
+
+/** Active feature, with a defined fallback so an out-of-range index cannot
+ *  produce an undefined access in the template. */
+const activeFeature = computed(() => FEATURES[activeIndex.value] ?? FEATURES[0]!)
 
 function setItemRef(el: Element | ComponentPublicInstance | null, i: number) {
   itemRefs.value[i] = el as Element | null

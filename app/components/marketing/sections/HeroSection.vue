@@ -201,9 +201,16 @@ onMounted(() => bind(quoteRef.value))
   object-fit: cover;
   object-position: center;
   border-radius: var(--r-xl);
-  opacity: 0.55;
-  mask-image: radial-gradient(ellipse 85% 85% at 60% 50%, #000 40%, transparent 80%);
-  -webkit-mask-image: radial-gradient(ellipse 85% 85% at 60% 50%, #000 40%, transparent 80%);
+  opacity: 0.35;
+  mix-blend-mode: luminosity;
+  mask-image:
+    radial-gradient(ellipse 90% 90% at 60% 50%, #000 30%, transparent 75%),
+    linear-gradient(to bottom, #000 60%, transparent 100%);
+  -webkit-mask-image:
+    radial-gradient(ellipse 90% 90% at 60% 50%, #000 30%, transparent 75%),
+    linear-gradient(to bottom, #000 60%, transparent 100%);
+  mask-composite: intersect;
+  -webkit-mask-composite: source-in;
   z-index: 0;
   pointer-events: none;
 }
