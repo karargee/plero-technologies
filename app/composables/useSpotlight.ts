@@ -27,8 +27,8 @@ export function useSpotlight<T extends HTMLElement = HTMLElement>(enabled = true
   }
 
   const bind = (target: HTMLElement | null) => {
-    if (!enabled) return
-    if (target?.matches('(hover: hover) and (pointer: fine)')) {
+    if (!enabled || !target) return
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
       target.addEventListener('pointermove', onMove)
     }
   }
