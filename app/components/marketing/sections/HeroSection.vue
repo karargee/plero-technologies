@@ -1,7 +1,5 @@
 <template>
   <section class="hero">
-    <div class="hero-bg" aria-hidden="true" />
-    <div class="hero-overlay" aria-hidden="true" />
     <div class="hero-grid" aria-hidden="true" />
     <span class="glow-orb orb-a" aria-hidden="true" />
     <span class="glow-orb orb-b" aria-hidden="true" />
@@ -44,6 +42,15 @@
 
       <div class="hero-visual fade-up" style="animation-delay: 0.2s">
         <span class="ring-orb" aria-hidden="true" />
+
+        <!-- Hero image sits behind the card -->
+        <img
+          src="/hero-image.avif"
+          alt=""
+          class="hero-img"
+          loading="eager"
+          decoding="async"
+        />
 
         <div ref="quoteRef" class="quote-card glass glass-hover neon-border">
           <span class="glow-spot" aria-hidden="true" />
@@ -104,26 +111,6 @@ onMounted(() => bind(quoteRef.value))
   position: relative;
   overflow: hidden;
   padding-block: clamp(56px, 8vw, 104px) clamp(64px, 9vw, 120px);
-}
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  background-image: url('/hero-image.avif');
-  background-size: cover;
-  background-position: center 30%;
-  opacity: 0.18;
-  z-index: 0;
-}
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    105deg,
-    var(--bg) 0%,
-    rgba(8, 8, 10, 0.82) 45%,
-    rgba(8, 8, 10, 0.55) 100%
-  );
-  z-index: 0;
 }
 .hero-grid {
   position: absolute;
@@ -205,6 +192,20 @@ onMounted(() => bind(quoteRef.value))
   flex-direction: column;
   gap: 16px;
   padding: 18px 0 0;
+}
+.hero-img {
+  position: absolute;
+  inset: -40px -60px -40px -20px;
+  width: calc(100% + 80px);
+  height: calc(100% + 80px);
+  object-fit: cover;
+  object-position: center;
+  border-radius: var(--r-xl);
+  opacity: 0.55;
+  mask-image: radial-gradient(ellipse 85% 85% at 60% 50%, #000 40%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 85% 85% at 60% 50%, #000 40%, transparent 80%);
+  z-index: 0;
+  pointer-events: none;
 }
 .quote-card {
   position: relative;
