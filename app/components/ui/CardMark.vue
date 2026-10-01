@@ -4,7 +4,7 @@
     :class="`mark--${size}`"
     :style="style"
     aria-hidden="true"
-  >{{ card.logo }}</span>
+  >{{ monogram }}</span>
 </template>
 
 <script setup lang="ts">
@@ -17,6 +17,16 @@ const props = withDefaults(
   }>(),
   { size: 'md' },
 )
+
+/**
+ * Monogram from the asset's display name rather than its `logo` glyph.
+ * The old emoji rendered differently on every OS and read as placeholder art;
+ * a letterform in the brand's own colour is consistent and licence-free.
+ */
+const monogram = computed(() => {
+  const letters = props.card.short.replace(/[^\p{L}\p{N}]/gu, '')
+  return (letters[0] ?? props.card.name[0] ?? '?').toUpperCase()
+})
 
 const style = computed(() => ({
   background: `linear-gradient(150deg, ${props.card.color}33, ${props.card.color}12)`,

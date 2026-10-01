@@ -6,14 +6,14 @@
 
     <div class="container hero-inner">
       <div class="hero-copy">
-        <p class="hero-badge fade-up">
-          <span class="live-dot" :class="{ 'live-dot--off': !connected }" />
-          {{ connected ? 'Live Deriv rates · streaming now' : 'Rates updating · reconnecting' }}
+        <p class="hero-badge fade-up chip chip--neon">
+          <span class="live-dot" :class="{ 'live-dot--off': !hasLiveRate }" />
+          {{ hasLiveRate ? 'Live Deriv rates · streaming now' : 'Rates updating · reconnecting' }}
         </p>
 
         <h1 class="hero-title fade-up" style="animation-delay: 0.06s">
           Turn unused gift cards<br class="br-wide" />
-          into <span class="grad">cash in minutes.</span>
+          into <span class="grad-text">cash in minutes.</span>
         </h1>
 
         <p class="hero-lede fade-up" style="animation-delay: 0.12s">
@@ -22,11 +22,11 @@
         </p>
 
         <div class="btn-row fade-up" style="animation-delay: 0.18s">
-          <NuxtLink to="/register" class="btn btn-primary btn-lg">
+          <NuxtLink to="/register" class="btn-grad">
             Start trading free
             <AppIcon name="arrow" :size="17" />
           </NuxtLink>
-          <NuxtLink to="/rates" class="btn btn-ghost btn-lg">
+          <NuxtLink to="/rates" class="btn-glass">
             <AppIcon name="trend" :size="17" />
             See live rates
           </NuxtLink>
@@ -41,16 +41,19 @@
       </div>
 
       <div class="hero-visual fade-up" style="animation-delay: 0.2s">
-        <div class="quote-card glass-card glass-card--float">
+        <span class="ring-orb" aria-hidden="true" />
+
+        <div ref="quoteRef" class="quote-card glass glass-hover neon-border">
+          <span class="glow-spot" aria-hidden="true" />
           <div class="quote-head">
             <p class="quote-label">USD / NGN</p>
-            <span class="tag" :class="connected ? 'tag-green' : 'tag-yellow'">
-              <span class="live-dot" :class="{ 'live-dot--off': !connected }" />
-              {{ connected ? 'Live' : 'Cached' }}
+            <span class="chip chip--neon">
+              <span class="live-dot" :class="{ 'live-dot--off': !hasLiveRate }" />
+              {{ hasLiveRate ? 'Live' : 'Cached' }}
             </span>
           </div>
-          <p class="quote-rate text-shimmer">₦{{ liveRate.toLocaleString('en-NG') }}</p>
-          <p class="quote-sub">per $1 · updates every 30 seconds</p>
+          <p class="quote-rate grad-text">₦{{ liveRate.toLocaleString('en-NG') }}</p>
+          <p class="quote-sub">per $1 · source: {{ rateSource }}</p>
 
           <ul class="quote-list">
             <li v-for="card in featured" :key="card.id" class="quote-row">
@@ -63,14 +66,16 @@
             </li>
           </ul>
 
-          <NuxtLink to="/cards" class="btn btn-soft btn-block quote-cta">
+          <NuxtLink to="/cards" class="btn-glass btn-block quote-cta">
             Browse all gift cards
             <AppIcon name="arrow" :size="16" />
           </NuxtLink>
         </div>
 
-        <div class="float-card glass-card">
-          <AppIcon name="bolt" :size="16" />
+        <div class="float-card glass glass-hover">
+          <span class="icon-tile icon-float">
+            <AppIcon name="bolt" :size="16" />
+          </span>
           <div>
             <p class="float-value">₦144,000</p>
             <p class="float-label">$100 Deriv · settled in 6 min</p>
@@ -85,8 +90,11 @@
 import { getFeaturedCards } from '~/data/cards'
 import { HERO_TRUST } from '~/data/site'
 
-const { liveRate, connected, format } = useDerivRate()
+const { liveRate, hasLiveRate, rateSource, format } = useDerivRate()
 const featured = getFeaturedCards()
+
+const { el: quoteRef, bind } = useSpotlight()
+onMounted(() => bind(quoteRef.value))
 </script>
 
 <style scoped>
@@ -110,14 +118,14 @@ const featured = getFeaturedCards()
   height: 620px;
   top: -280px;
   left: -140px;
-  background: radial-gradient(circle, rgb(var(--primary-rgb) / 0.22), transparent 70%);
+  background: radial-gradient(circle, rgb(var(--neon-2-rgb) / 0.3), transparent 70%);
 }
 .orb-b {
   width: 560px;
   height: 560px;
   top: -120px;
   right: -160px;
-  background: radial-gradient(circle, rgb(var(--primary-2-rgb) / 0.2), transparent 70%);
+  background: radial-gradient(circle, rgb(var(--neon-4-rgb) / 0.26), transparent 70%);
 }
 
 .hero-inner {
@@ -134,34 +142,14 @@ const featured = getFeaturedCards()
 }
 
 .hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  padding: 7px 15px;
-  border-radius: var(--r-full);
-  background: var(--accent-soft);
-  border: 1px solid rgb(var(--accent-rgb) / 0.22);
-  color: #2fd4c8;
-  font-size: 12.5px;
-  font-weight: 600;
   margin-bottom: 26px;
-}
-.live-dot--off {
-  background: var(--gold);
-  animation: none;
 }
 
 .hero-title {
   font-size: clamp(38px, 6vw, 68px);
   font-weight: 800;
-  letter-spacing: -0.035em;
-  line-height: 1.03;
-}
-.grad {
-  background: linear-gradient(120deg, var(--primary-light), var(--primary) 40%, var(--violet));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  letter-spacing: -0.04em;
+  line-height: 1.02;
 }
 
 .hero-lede {
@@ -197,7 +185,9 @@ const featured = getFeaturedCards()
   padding: 18px 0 0;
 }
 .quote-card {
+  position: relative;
   padding: 26px;
+  z-index: 1;
 }
 .quote-head {
   display: flex;
@@ -213,9 +203,9 @@ const featured = getFeaturedCards()
 }
 .quote-rate {
   font-family: var(--font-display);
-  font-size: 44px;
+  font-size: 46px;
   font-weight: 800;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.04em;
   line-height: 1.05;
   margin-top: 8px;
   font-variant-numeric: tabular-nums;
@@ -238,8 +228,17 @@ const featured = getFeaturedCards()
   gap: 12px;
   padding: 10px 12px;
   border-radius: var(--r-md);
-  background: rgba(255, 255, 255, 0.025);
-  border: 1px solid var(--hairline);
+  background: rgb(255 255 255 / 0.03);
+  border: 1px solid var(--glass-border);
+  transition:
+    background 0.25s var(--ease),
+    border-color 0.25s var(--ease),
+    transform 0.25s var(--ease);
+}
+.quote-row:hover {
+  background: rgb(255 255 255 / 0.06);
+  border-color: rgb(var(--neon-2-rgb) / 0.35);
+  transform: translateX(3px);
 }
 .quote-meta {
   flex: 1;
@@ -262,7 +261,7 @@ const featured = getFeaturedCards()
   white-space: nowrap;
   font-size: 14px;
   font-weight: 700;
-  color: var(--accent);
+  color: var(--neon-5);
   font-variant-numeric: tabular-nums;
 }
 .quote-cta {
@@ -270,16 +269,15 @@ const featured = getFeaturedCards()
 }
 
 .float-card {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 13px;
   align-self: flex-end;
-  padding: 14px 18px;
+  padding: 13px 17px;
   border-radius: var(--r-lg);
+  z-index: 2;
   animation: float 7s var(--ease) 0.6s infinite;
-}
-.float-card :deep(.icon) {
-  color: var(--primary);
 }
 .float-value {
   font-size: 15px;

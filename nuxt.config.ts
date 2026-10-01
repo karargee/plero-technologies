@@ -33,11 +33,20 @@ export default defineNuxtConfig({
           property: 'og:description',
           content: 'Live USD/NGN pricing, verified settlement, and payouts straight to your Nigerian bank account.',
         },
-        { property: 'og:image', content: '/plero-logo.jpg' },
+        // 1200x630 social card generated from the logo by scripts/generate-assets.cjs.
+        // The raw logo is the wrong shape and aspect for a social preview.
+        { property: 'og:image', content: '/og-image.png' },
+        { property: 'og:image:width', content: '1200' },
+        { property: 'og:image:height', content: '630' },
+        { property: 'og:image:alt', content: 'Plero — trade gift cards at live market rates' },
         { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:image', content: '/og-image.png' },
       ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        { rel: 'icon', type: 'image/svg+xml', href: '/icon.svg' },
+        { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+        { rel: 'manifest', href: '/site.webmanifest' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         {

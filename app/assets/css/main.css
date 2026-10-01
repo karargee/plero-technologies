@@ -61,7 +61,64 @@
   --shadow-lg: 0 32px 80px -28px rgba(0, 0, 0, 0.85);
   --glow: 0 20px 60px -20px var(--primary-glow);
 
+  /* ── Neon accent scale ────────────────────────────────────
+     The logo is deep indigo, so the neon layer stays in the
+     violet→fuchsia→cyan arc and gets its energy from lightness
+     and saturation rather than from a new hue family. */
+  --neon-1: #818cf8;
+  --neon-2: #a78bfa;
+  --neon-3: #d946ef;
+  --neon-4: #22d3ee;
+  --neon-5: #34d399;
+  --neon-amber: #fbbf24;
+  --neon-rose: #fb7185;
+
+  --neon-1-rgb: 129 140 248;
+  --neon-2-rgb: 167 139 250;
+  --neon-3-rgb: 217 70 239;
+  --neon-4-rgb: 34 211 238;
+  --neon-5-rgb: 52 211 153;
+
+  /* Signature gradient: used for headlines, primary actions and borders. */
+  --brand-grad: linear-gradient(
+    115deg,
+    var(--neon-1) 0%,
+    var(--neon-2) 32%,
+    var(--neon-3) 62%,
+    var(--neon-4) 100%
+  );
+  --brand-grad-soft: linear-gradient(
+    115deg,
+    rgb(var(--neon-1-rgb) / 0.16),
+    rgb(var(--neon-2-rgb) / 0.12),
+    rgb(var(--neon-3-rgb) / 0.14),
+    rgb(var(--neon-4-rgb) / 0.12)
+  );
+
+  /* Neon bloom */
+  --glow-1: 0 0 0 1px rgb(var(--neon-1-rgb) / 0.32), 0 18px 48px -18px rgb(var(--neon-1-rgb) / 0.55);
+  --glow-2: 0 0 0 1px rgb(var(--neon-2-rgb) / 0.32), 0 18px 48px -18px rgb(var(--neon-2-rgb) / 0.55);
+  --glow-4: 0 0 0 1px rgb(var(--neon-4-rgb) / 0.32), 0 18px 48px -18px rgb(var(--neon-4-rgb) / 0.5);
+
+  /* ── Glass ────────────────────────────────────────────── */
+  --glass-bg: rgb(19 19 27 / 0.58);
+  --glass-bg-strong: rgb(24 24 34 / 0.78);
+  --glass-border: rgb(255 255 255 / 0.09);
+  --glass-border-lit: rgb(255 255 255 / 0.16);
+  --glass-blur: 22px;
+  --glass-highlight: linear-gradient(
+    160deg,
+    rgb(255 255 255 / 0.11) 0%,
+    rgb(255 255 255 / 0.02) 38%,
+    transparent 60%
+  );
+
+  /* ── Layout grid backdrop ─────────────────────────────── */
+  --grid-line: rgb(255 255 255 / 0.035);
+
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --nav-h: 68px;
 }
 
@@ -89,7 +146,20 @@ html {
 }
 
 body {
-  background: var(--bg);
+  /* Layered depth: two soft neon blooms over near-black, then a faint
+     technical grid. Fixed so it does not parallax while scrolling. */
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse 70% 50% at 12% -8%, rgb(var(--neon-2-rgb) / 0.14), transparent 60%),
+    radial-gradient(ellipse 60% 45% at 88% 4%, rgb(var(--neon-4-rgb) / 0.1), transparent 62%),
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size:
+    100% 100%,
+    100% 100%,
+    56px 56px,
+    56px 56px;
+  background-attachment: fixed;
   color: var(--text);
   font-family: var(--font-sans);
   font-size: 16px;
@@ -482,6 +552,11 @@ svg {
   padding: 15px 32px;
   font-size: 15px;
 }
+.btn-sm {
+  padding: 9px 18px;
+  font-size: 13px;
+  gap: 6px;
+}
 .btn-block {
   width: 100%;
 }
@@ -590,6 +665,17 @@ svg {
   background: var(--accent);
   box-shadow: 0 0 0 0 var(--accent-soft);
   animation: pulse 2s infinite;
+}
+
+/* Fallback state while the rate socket is reconnecting: amber, not pulsing. */
+.live-dot--off {
+  background: var(--gold);
+  animation: none;
+}
+
+/* Opt-in drift for glass cards. The keyframes live with the other motion. */
+.float-subtle {
+  animation: float-subtle 9s var(--ease) infinite;
 }
 
 /* ── Mobile app shell (used by app-style pages) ─────────── */
@@ -733,5 +819,417 @@ svg {
   .reveal {
     opacity: 1;
     transform: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Neon / glass / bento primitives
+   Additive layer: everything above keeps working unchanged.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Glass surfaces ──────────────────────────────────────── */
+
+.glass,
+.glass-soft {
+  position: relative;
+  isolation: isolate;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+/* The lit top edge is what sells the material as glass. */
+.glass::before,
+.glass-soft::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--glass-highlight);
+  pointer-events: none;
+}
+
+.glass-soft {
+  --glass-bg: rgb(255 255 255 / 0.028);
+  --glass-blur: 14px;
+}
+
+/* Interactive glass: lifts, blooms, and catches the pointer. */
+.glass-hover {
+  transition:
+    transform 0.42s var(--ease-out-expo),
+    border-color 0.3s var(--ease),
+    box-shadow 0.42s var(--ease-out-expo);
+  will-change: transform;
+}
+.glass-hover:hover {
+  transform: translateY(-5px);
+  border-color: var(--glass-border-lit);
+  box-shadow:
+    var(--shadow-lg),
+    0 0 40px -12px rgb(var(--neon-2-rgb) / 0.4);
+}
+
+/* A cursor-tracked bloom, driven by --mx/--my from a pointer handler. */
+.glow-spot {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    240px circle at var(--mx, 50%) var(--my, 50%),
+    rgb(var(--neon-2-rgb) / 0.16),
+    transparent 68%
+  );
+  transition: opacity 0.4s var(--ease);
+}
+.glass-hover:hover .glow-spot {
+  opacity: 1;
+}
+.glass-hover > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Gradient text ───────────────────────────────────────── */
+
+.grad-text,
+.neon-text {
+  background: var(--brand-grad);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: grad-slide 9s ease-in-out infinite;
+}
+
+.grad-text--warm {
+  background-image: linear-gradient(115deg, var(--neon-amber), var(--neon-3), var(--neon-4));
+  background-size: 220% 100%;
+}
+
+/* ── Bento grid ──────────────────────────────────────────── */
+
+.bento {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(12px, 1.4vw, 18px);
+}
+
+.bento > * {
+  grid-column: span 4;
+}
+
+.bento__wide {
+  grid-column: span 6;
+}
+.bento__half {
+  grid-column: span 6;
+}
+.bento__third {
+  grid-column: span 4;
+}
+.bento__tall {
+  grid-row: span 2;
+}
+.bento__full {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 900px) {
+  .bento > *,
+  .bento__wide,
+  .bento__half,
+  .bento__third {
+    grid-column: span 6;
+  }
+}
+@media (max-width: 620px) {
+  .bento > *,
+  .bento__wide,
+  .bento__half,
+  .bento__third,
+  .bento__full {
+    grid-column: 1 / -1;
+  }
+  .bento__tall {
+    grid-row: auto;
+  }
+}
+
+/* ── Neon borders and chips ──────────────────────────────── */
+
+.neon-border {
+  position: relative;
+}
+.neon-border::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--brand-grad);
+  /* Mask keeps only the gradient border, not a filled panel. */
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0.55;
+  transition: opacity 0.35s var(--ease);
+  pointer-events: none;
+}
+.neon-border:hover::after {
+  opacity: 1;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 13px;
+  border-radius: var(--r-full);
+  border: 1px solid var(--glass-border);
+  background: rgb(255 255 255 / 0.04);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  backdrop-filter: blur(10px);
+}
+
+.chip--neon {
+  border-color: rgb(var(--neon-4-rgb) / 0.35);
+  background: rgb(var(--neon-4-rgb) / 0.1);
+  color: var(--neon-4);
+  box-shadow: 0 0 22px -8px rgb(var(--neon-4-rgb) / 0.7);
+}
+
+/* ── Buttons ─────────────────────────────────────────────── */
+
+.btn-grad {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 26px;
+  border-radius: var(--r-full);
+  background: var(--brand-grad);
+  background-size: 200% 100%;
+  color: #0a0a12;
+  font-weight: 700;
+  font-size: 14.5px;
+  letter-spacing: -0.01em;
+  box-shadow:
+    0 10px 30px -10px rgb(var(--neon-2-rgb) / 0.75),
+    inset 0 1px 0 rgb(255 255 255 / 0.4);
+  overflow: hidden;
+  transition:
+    transform 0.3s var(--spring),
+    box-shadow 0.35s var(--ease),
+    background-position 0.6s var(--ease);
+}
+.btn-grad:hover {
+  transform: translateY(-2px);
+  background-position: 100% 0;
+  box-shadow:
+    0 18px 44px -12px rgb(var(--neon-3-rgb) / 0.8),
+    inset 0 1px 0 rgb(255 255 255 / 0.5);
+}
+.btn-grad:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Light sweep that crosses the button on hover. */
+.btn-grad::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -60%;
+  width: 45%;
+  background: linear-gradient(100deg, transparent, rgb(255 255 255 / 0.55), transparent);
+  transform: skewX(-18deg);
+  transition: left 0.7s var(--ease-out-expo);
+}
+.btn-grad:hover::after {
+  left: 120%;
+}
+
+.btn-glass {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 26px;
+  border-radius: var(--r-full);
+  border: 1px solid var(--glass-border-lit);
+  background: rgb(255 255 255 / 0.05);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  color: var(--text);
+  font-weight: 600;
+  font-size: 14.5px;
+  transition:
+    transform 0.3s var(--ease-out-expo),
+    background 0.3s var(--ease),
+    border-color 0.3s var(--ease),
+    box-shadow 0.3s var(--ease);
+}
+.btn-glass:hover {
+  transform: translateY(-2px);
+  background: rgb(255 255 255 / 0.09);
+  border-color: rgb(var(--neon-1-rgb) / 0.5);
+  box-shadow: 0 14px 36px -16px rgb(var(--neon-1-rgb) / 0.7);
+}
+.btn-glass:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* ── Icon micro-interactions ─────────────────────────────── */
+
+.icon-float {
+  transition: transform 0.45s var(--spring);
+}
+.glass-hover:hover .icon-float {
+  transform: translateY(-3px) scale(1.06);
+}
+
+.icon-tile {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: var(--brand-grad-soft);
+  border: 1px solid var(--glass-border);
+  color: var(--neon-1);
+  transition:
+    transform 0.45s var(--spring),
+    box-shadow 0.4s var(--ease);
+}
+.glass-hover:hover .icon-tile {
+  transform: translateY(-3px) rotate(-4deg);
+  box-shadow: 0 12px 30px -12px rgb(var(--neon-2-rgb) / 0.85);
+}
+
+/* ── Marquee ─────────────────────────────────────────────── */
+
+.marquee {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.marquee__track {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-right: 14px;
+  white-space: nowrap;
+  animation: marquee 42s linear infinite;
+  will-change: transform;
+}
+.marquee:hover .marquee__track {
+  animation-play-state: paused;
+}
+.marquee__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 15px;
+  border-radius: var(--r-full);
+  border: 1px solid var(--glass-border);
+  background: rgb(255 255 255 / 0.035);
+  font-size: 13px;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.marquee__item b {
+  color: var(--text);
+  font-weight: 600;
+}
+.marquee__item span {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--neon-5);
+  font-weight: 600;
+}
+
+/* ── Decorative orbs ─────────────────────────────────────── */
+
+.neon-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.55;
+}
+.neon-orb--1 {
+  background: radial-gradient(circle, rgb(var(--neon-2-rgb) / 0.5), transparent 70%);
+}
+.neon-orb--2 {
+  background: radial-gradient(circle, rgb(var(--neon-4-rgb) / 0.4), transparent 70%);
+}
+.neon-orb--3 {
+  background: radial-gradient(circle, rgb(var(--neon-3-rgb) / 0.35), transparent 70%);
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes grad-slide {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Conic ring used behind hero and CTA panels. */
+.ring-orb {
+  position: absolute;
+  inset: -30%;
+  z-index: 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    from var(--glass-angle, 0deg),
+    transparent 0%,
+    rgb(var(--neon-1-rgb) / 0.5) 18%,
+    rgb(var(--neon-3-rgb) / 0.45) 32%,
+    transparent 52%,
+    rgb(var(--neon-4-rgb) / 0.4) 76%,
+    transparent 100%
+  );
+  filter: blur(70px);
+  opacity: 0.5;
+  pointer-events: none;
+  animation: ring-spin 18s linear infinite;
+}
+
+@keyframes ring-spin {
+  to {
+    transform: rotate(1turn);
   }
 }
