@@ -1,5 +1,7 @@
 <template>
   <section class="hero">
+    <div class="hero-bg" aria-hidden="true" />
+    <div class="hero-overlay" aria-hidden="true" />
     <div class="hero-grid" aria-hidden="true" />
     <span class="glow-orb orb-a" aria-hidden="true" />
     <span class="glow-orb orb-b" aria-hidden="true" />
@@ -102,6 +104,26 @@ onMounted(() => bind(quoteRef.value))
   position: relative;
   overflow: hidden;
   padding-block: clamp(56px, 8vw, 104px) clamp(64px, 9vw, 120px);
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('/hero-image.avif');
+  background-size: cover;
+  background-position: center 30%;
+  opacity: 0.18;
+  z-index: 0;
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    var(--bg) 0%,
+    rgba(8, 8, 10, 0.82) 45%,
+    rgba(8, 8, 10, 0.55) 100%
+  );
+  z-index: 0;
 }
 .hero-grid {
   position: absolute;
