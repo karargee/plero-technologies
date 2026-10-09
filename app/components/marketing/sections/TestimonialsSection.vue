@@ -1,5 +1,5 @@
 <template>
-  <section class="section testimonials section--alt" ref="sectionRef">
+  <section v-if="TESTIMONIALS.length" class="section testimonials section--alt" ref="sectionRef">
     <div class="container">
       <div class="section-head section-head--center reveal">
         <p class="eyebrow">TRADER STORIES</p>

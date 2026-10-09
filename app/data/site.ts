@@ -88,12 +88,7 @@ export const HERO_TRUST: string[] = [
   'Regulated escrow handling',
 ]
 
-export const HOME_STATS: StatItem[] = [
-  { value: '54,000+', label: 'Traders onboard' },
-  { value: '₦3.4B', label: 'Card value settled' },
-  { value: '8', label: 'Card brands live' },
-  { value: '11 min', label: 'Median payout' },
-]
+export const HOME_STATS: StatItem[] = []
 
 export const STEPS: Step[] = [
   {
@@ -125,11 +120,7 @@ export const FEATURES: Feature[] = [
   { icon: 'headset', title: 'Support that answers', desc: 'Real people on live chat and WhatsApp, around the clock, with order context already loaded when you reach out.' },
 ]
 
-export const TESTIMONIALS: Testimonial[] = [
-  { quote: 'I stopped queueing at agents. Submitted a $200 Deriv card at 11pm and the money was in my account before midnight.', name: 'Amaka O.', role: 'Lagos · sells weekly', initials: 'AO' },
-  { quote: 'The rate on screen is the rate I get paid. That is the whole reason I moved here and stayed.', name: 'Tunde B.', role: 'Abuja · first traded 2025', initials: 'TB' },
-  { quote: 'Support actually pulled my order up mid-dispute and fixed it. That is rarer than it should be.', name: 'Zainab K.', role: 'Kano · power seller', initials: 'ZK' },
-]
+export const TESTIMONIALS: Testimonial[] = []
 
 export const HOME_FAQS: FaqItem[] = [
   { q: 'How is the rate decided?', a: 'We anchor every card to the live USD/NGN exchange rate streamed from our pricing feed, then apply a card-specific multiplier that reflects demand, brand and denomination. The multiplier is shown next to every rate, so you can see exactly how the number was built.' },
@@ -184,9 +175,6 @@ export const FLOW_FAQS: FaqItem[] = [
 
 export const ABOUT_STATS: StatItem[] = [
   { value: '2024', label: 'Founded' },
-  { value: '54,000+', label: 'Registered traders' },
-  { value: '₦3.4B', label: 'Settled to date' },
-  { value: '8', label: 'Brands supported' },
 ]
 
 export const PRINCIPLES: Principle[] = [

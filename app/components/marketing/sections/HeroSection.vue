@@ -40,10 +40,6 @@
             <AppIcon name="check" :size="15" />
             <span>{{ item }}</span>
           </li>
-          <li>
-            <AppIcon name="shield" :size="15" />
-            <span>50,000+ active traders</span>
-          </li>
         </ul>
       </div>
 
@@ -74,7 +70,6 @@
           <div class="terminal-quote">
             <div class="terminal-pair">
               <span class="terminal-symbol">{{ activeAsset.name }}</span>
-              <span class="terminal-badge">+2.45% ▲</span>
             </div>
             <div class="terminal-rate-row">
               <p class="terminal-rate">₦{{ Math.round(unitPrice).toLocaleString('en-NG') }}</p>
@@ -146,17 +141,7 @@
             </NuxtLink>
           </div>
 
-          <!-- Recent Verified Settlements Strip -->
-          <div class="terminal-recent">
-            <div class="recent-title">
-              <span class="live-dot" />
-              <span>Recent Settlements</span>
-            </div>
-            <div class="recent-item">
-              <span class="recent-text">{{ currentFeedItem }}</span>
-              <span class="recent-tag">Verified</span>
-            </div>
-          </div>
+
         </div>
       </div>
     </div>
@@ -197,23 +182,7 @@ const estimatedPayout = computed(() => {
   return Math.round(amt * unitPrice.value)
 })
 
-const recentTrades = [
-  '$150 Deriv USD settled to GTBank (2m ago)',
-  '$200 Steam Card settled to OPay (4m ago)',
-  '$500 USDT settled to Access Bank (6m ago)',
-  '$100 Apple Card settled to Kuda (8m ago)',
-  '$300 Deriv USD settled to Zenith Bank (11m ago)',
-]
 
-const feedIndex = ref(0)
-const currentFeedItem = computed(() => recentTrades[feedIndex.value % recentTrades.length]!)
-
-onMounted(() => {
-  const timer = setInterval(() => {
-    feedIndex.value = (feedIndex.value + 1) % recentTrades.length
-  }, 4000)
-  onBeforeUnmount(() => clearInterval(timer))
-})
 </script>
 
 <style scoped>
@@ -583,45 +552,6 @@ onMounted(() => {
   margin-top: 18px;
   padding: 13px 20px;
   font-size: 15px;
-}
-
-/* Recent Settlements Strip */
-.terminal-recent {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 24px;
-  background: #0f1014;
-  border-top: 1px solid var(--hairline);
-  font-size: 12px;
-}
-
-.recent-title {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--muted-2);
-  font-weight: 600;
-}
-
-.recent-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.recent-text {
-  color: var(--text);
-  font-weight: 500;
-}
-
-.recent-tag {
-  background: rgba(0, 167, 103, 0.12);
-  color: var(--accent);
-  font-weight: 700;
-  padding: 2px 6px;
-  border-radius: var(--r-xs);
-  font-size: 10.5px;
 }
 
 /* Reveal transition */

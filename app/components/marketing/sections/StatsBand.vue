@@ -1,5 +1,5 @@
 <template>
-  <section class="stats stats-band" ref="sectionRef">
+  <section v-if="HOME_STATS.length" class="stats stats-band" ref="sectionRef">
     <div class="container">
       <div class="stats-head reveal">
         <p class="eyebrow">PROVEN LIQUIDITY</p>
