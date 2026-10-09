@@ -1,5 +1,12 @@
 <template>
   <section class="hero" ref="heroRef">
+    <!-- Full-bleed background image -->
+    <div class="hero-bg" aria-hidden="true">
+      <img src="/hero-image.avif" alt="" class="hero-bg-img" loading="eager" decoding="async" />
+      <div class="hero-bg-overlay" />
+    </div>
+    <span class="hero-orb hero-orb--a" aria-hidden="true" />
+    <span class="hero-orb hero-orb--b" aria-hidden="true" />
     <div class="container hero-inner">
       <div class="hero-copy">
         <div class="hero-badge reveal chip chip--neon">
@@ -218,10 +225,52 @@ onMounted(() => {
   justify-content: center;
   overflow: hidden;
   padding-block: clamp(48px, 6vw, 84px) clamp(64px, 8vw, 100px);
-  background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(255, 68, 79, 0.05), transparent 70%);
+}
+
+/* ── Background image ──────────────────────────────── */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.hero-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  mix-blend-mode: luminosity;
+  opacity: 0.22;
+}
+.hero-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 70% 40%, rgb(var(--neon-2-rgb) / 0.1), transparent 65%),
+    radial-gradient(ellipse 60% 80% at 20% 60%, rgb(var(--neon-4-rgb) / 0.07), transparent 65%),
+    linear-gradient(to bottom, rgb(8 8 10 / 0.2) 0%, rgb(8 8 10 / 0.55) 60%, rgb(8 8 10 / 1) 100%);
+}
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  z-index: 1;
+}
+.hero-orb--a {
+  width: 600px; height: 600px;
+  top: -280px; left: -160px;
+  background: radial-gradient(circle, rgb(var(--neon-2-rgb) / 0.22), transparent 70%);
+}
+.hero-orb--b {
+  width: 500px; height: 500px;
+  top: -100px; right: -180px;
+  background: radial-gradient(circle, rgb(var(--neon-4-rgb) / 0.18), transparent 70%);
 }
 
 .hero-inner {
+  position: relative;
+  z-index: 2;
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
   gap: clamp(36px, 5vw, 64px);
