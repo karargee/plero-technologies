@@ -74,8 +74,8 @@ useSeoMeta({
   font-size: 13px;
   font-weight: 600;
 }
-.is-live { color: #14b892; }
-.is-connecting { color: #f0a92b; }
+.is-live { color: var(--accent); }
+.is-connecting { color: var(--gold); }
 
 .mkt-disclaimer {
   color: var(--muted-3);

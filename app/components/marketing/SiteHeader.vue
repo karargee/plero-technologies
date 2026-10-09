@@ -37,7 +37,7 @@
         <button
           type="button"
           class="burger"
-          :aria-expanded="menuOpen"
+          :aria-expanded="String(menuOpen)"
           aria-label="Toggle menu"
           @click="menuOpen = !menuOpen"
         >
@@ -146,11 +146,11 @@ onBeforeUnmount(() => {
   inset: 0 0 auto;
   z-index: 200;
   height: var(--nav-h);
-  background: rgba(8, 8, 10, 0.95);
-  backdrop-filter: blur(22px) saturate(160%);
-  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  background: rgba(14, 14, 14, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--hairline);
-  transition: border-color 0.35s;
+  transition: border-color 0.25s;
 }
 
 .nav-progress {
@@ -161,7 +161,7 @@ onBeforeUnmount(() => {
   width: 100%;
   transform-origin: 0 50%;
   transform: scaleX(0);
-  background: linear-gradient(90deg, var(--primary), var(--primary-light));
+  background: var(--primary);
   opacity: 0.9;
 }
 
@@ -169,7 +169,7 @@ onBeforeUnmount(() => {
   height: var(--nav-h);
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
 }
 
 .brand {
@@ -177,13 +177,13 @@ onBeforeUnmount(() => {
   align-items: center;
   gap: 10px;
   flex-shrink: 0;
-  margin-right: auto;
+  margin-right: 28px;
 }
 .brand-img {
   height: 36px;
   width: 36px;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: var(--r-md);
   border: 1px solid var(--hairline);
 }
 .brand-text {
@@ -200,7 +200,7 @@ onBeforeUnmount(() => {
 .brand-sub {
   font-size: 9.5px;
   font-weight: 600;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--muted-2);
 }
@@ -208,20 +208,20 @@ onBeforeUnmount(() => {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 4px;
   margin-right: auto;
 }
 .nav-link {
   padding: 8px 14px;
-  border-radius: var(--r-full);
-  font-size: 14.5px;
+  border-radius: var(--r-md);
+  font-size: 14px;
   font-weight: 500;
   color: var(--muted);
-  transition: color 0.2s, background 0.2s;
+  transition: color 0.15s, background 0.15s;
   white-space: nowrap;
 }
-.nav-link:hover { color: var(--text); background: rgba(255,255,255,0.05); }
-.nav-link--active { color: var(--text); background: rgba(255,255,255,0.07); }
+.nav-link:hover { color: #fff; background: rgba(255,255,255,0.05); }
+.nav-link--active { color: #fff; background: rgba(255,255,255,0.07); font-weight: 600; }
 
 .nav-actions {
   display: flex;
@@ -234,19 +234,19 @@ onBeforeUnmount(() => {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  padding: 6px 13px;
+  padding: 5px 12px;
   border-radius: var(--r-full);
-  background: var(--accent-soft);
-  border: 1px solid rgb(var(--accent-rgb) / 0.22);
-  color: #2fd4c8;
+  background: rgba(0, 167, 103, 0.08);
+  border: 1px solid rgba(0, 167, 103, 0.25);
+  color: var(--accent);
   font-size: 12.5px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
 
-.nav-auth { padding: 9px 18px; font-size: 13.5px; }
-.nav-cta  { padding: 9px 20px; font-size: 13.5px; }
+.nav-auth { padding: 8px 16px; font-size: 13.5px; border-radius: var(--r-md); }
+.nav-cta  { padding: 8px 18px; font-size: 13.5px; border-radius: var(--r-md); }
 
 /* ── Hamburger ─────────────────────────────────────── */
 .burger {
@@ -296,7 +296,7 @@ onBeforeUnmount(() => {
 .backdrop {
   position: fixed;
   inset: 0;
-  z-index: 197;
+  z-index: 201;
   background: rgba(0, 0, 0, 0.6);
 }
 
@@ -306,7 +306,7 @@ onBeforeUnmount(() => {
   left: 0;
   right: 0;
   height: calc(100dvh - var(--nav-h));
-  z-index: 198;
+  z-index: 202;
   background: #08080a;
   border-top: 1px solid rgba(255,255,255,0.07);
   display: flex;

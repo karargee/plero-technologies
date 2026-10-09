@@ -1,25 +1,20 @@
 <template>
-  <section class="stats" ref="sectionRef">
-    <div class="container stats__inner">
-      <div class="stats__text reveal">
-        <h2 class="stats__title">Trade with confidence</h2>
-        <p class="stats__sub">Plero is built on live market data and verified settlement — no guesswork, no agents.</p>
+  <section class="stats stats-band" ref="sectionRef">
+    <div class="container">
+      <div class="stats-head reveal">
+        <p class="eyebrow">PROVEN LIQUIDITY</p>
+        <h2 class="stats-title">Numbers backed by verified execution</h2>
+        <p class="stats-sub">Over 50,000 Nigerian traders trust Plero for instant settlement and live pricing.</p>
       </div>
 
-      <div class="stats__card reveal" style="transition-delay:0.15s">
-        <div class="stats__track">
-          <div class="stats__fade stats__fade--top" aria-hidden="true" />
-          <div class="stats__fade stats__fade--bottom" aria-hidden="true" />
-          <div
-            v-for="(stat, i) in HOME_STATS"
-            :key="stat.label"
-            class="stats__stat"
-            :class="{ 'stats__stat--active': activeIndex === i }"
-            :aria-hidden="activeIndex !== i"
-          >
-            <span class="stats__val">{{ stat.value }}</span>
-            <span class="stats__label">{{ stat.label }}</span>
-          </div>
+      <div class="stats-grid reveal" style="transition-delay:0.15s">
+        <div
+          v-for="stat in HOME_STATS"
+          :key="stat.label"
+          class="stat-box panel"
+        >
+          <p class="stat-val">{{ stat.value }}</p>
+          <p class="stat-label">{{ stat.label }}</p>
         </div>
       </div>
     </div>
@@ -31,109 +26,81 @@ import { HOME_STATS } from '~/data/site'
 
 const sectionRef = ref<HTMLElement | null>(null)
 useReveal(sectionRef)
-
-const activeIndex = ref(0)
-
-onMounted(() => {
-  const timer = setInterval(() => {
-    activeIndex.value = (activeIndex.value + 1) % HOME_STATS.length
-  }, 2800)
-  onBeforeUnmount(() => clearInterval(timer))
-})
 </script>
 
 <style scoped>
 .stats {
-  padding-block: clamp(64px, 9vw, 116px);
+  padding-block: clamp(64px, 8vw, 100px);
   border-block: 1px solid var(--hairline);
+  background: var(--bg-alt);
 }
-.stats__inner {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 64px;
-  align-items: center;
+
+.stats-head {
+  text-align: center;
+  max-width: 640px;
+  margin-inline: auto;
+  margin-bottom: 48px;
 }
-.stats__title {
-  font-size: clamp(26px, 3.5vw, 40px);
+
+.stats-title {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3.5vw, 38px);
   font-weight: 800;
   letter-spacing: -0.03em;
-  margin-bottom: 14px;
-}
-.stats__sub {
-  font-size: 16px;
-  color: var(--muted);
-  max-width: 44ch;
-  line-height: 1.7;
+  color: #fff;
+  margin-bottom: 12px;
 }
 
-/* Slot machine card */
-.stats__card {
-  width: 220px;
-  height: 120px;
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--r-lg);
+.stats-sub {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.stat-box {
+  padding: 28px 24px;
   background: var(--surface);
   border: 1px solid var(--hairline);
-  flex-shrink: 0;
-}
-.stats__track {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-.stats__fade {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 36px;
-  z-index: 2;
-  pointer-events: none;
-}
-.stats__fade--top {
-  top: 0;
-  background: linear-gradient(to bottom, var(--surface), transparent);
-}
-.stats__fade--bottom {
-  bottom: 0;
-  background: linear-gradient(to top, var(--surface), transparent);
-}
-.stats__stat {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  transform: translateY(110%);
-  opacity: 0;
-  transition: transform 0.7s cubic-bezier(0.33, 1, 0.68, 1), opacity 0.7s cubic-bezier(0.33, 1, 0.68, 1);
-}
-.stats__stat--active {
-  transform: translateY(0);
-  opacity: 1;
-}
-.stats__val {
-  font-family: var(--font-display);
-  font-size: 36px;
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 1;
-}
-.stats__label {
-  font-size: 13px;
-  color: var(--muted-2);
+  border-radius: var(--r-lg);
   text-align: center;
+  transition: border-color 0.2s var(--ease), transform 0.2s var(--ease);
+}
+.stat-box:hover {
+  border-color: #3b4354;
+  transform: translateY(-2px);
 }
 
-@media (max-width: 720px) {
-  .stats__inner {
-    grid-template-columns: 1fr;
-    gap: 40px;
+.stat-val {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 3.6vw, 44px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+  margin-bottom: 6px;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-label {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--muted-2);
+}
+
+@media (max-width: 900px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
-  .stats__card {
-    width: 100%;
+}
+@media (max-width: 500px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
   }
 }
 </style>
+

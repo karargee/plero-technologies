@@ -1,39 +1,34 @@
 <template>
-  <section class="tp section--alt" ref="sectionRef">
+  <section class="section testimonials section--alt" ref="sectionRef">
     <div class="container">
-      <div class="tp__head reveal">
-        <h2 class="tp__title">What our traders say</h2>
+      <div class="section-head section-head--center reveal">
+        <p class="eyebrow">TRADER STORIES</p>
+        <h2 class="section-title">What our traders say</h2>
+        <p class="section-lede">Rated 4.8/5 by over 50,000 active traders across Lagos, Abuja, Port Harcourt and beyond.</p>
       </div>
 
-      <div class="tp__bleed reveal" style="transition-delay:0.12s">
-        <div class="tp__carousel" ref="trackRef">
-          <a
-            v-for="item in TESTIMONIALS"
-            :key="item.name"
-            class="tp__card"
-            href="#"
-            @click.prevent
-          >
-            <div class="tp__stars" aria-label="5 stars">
-              <svg v-for="n in 5" :key="n" viewBox="0 0 20 20" width="18" height="18" fill="#00b67a">
-                <path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.32L10 13.27l-4.77 2.44.91-5.32L2.27 6.62l5.34-.78z"/>
-              </svg>
+      <div class="quote-grid reveal" style="transition-delay:0.15s">
+        <div
+          v-for="item in TESTIMONIALS"
+          :key="item.name"
+          class="review-card panel"
+        >
+          <div class="review-stars" aria-label="5 stars">
+            <svg v-for="n in 5" :key="n" viewBox="0 0 20 20" width="16" height="16" fill="#00a767">
+              <path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.32L10 13.27l-4.77 2.44.91-5.32L2.27 6.62l5.34-.78z"/>
+            </svg>
+            <span class="verified-tag">✓ Verified Trade</span>
+          </div>
+
+          <p class="review-quote">"{{ item.quote }}"</p>
+
+          <div class="review-footer">
+            <div class="review-avatar">{{ item.initials }}</div>
+            <div>
+              <p class="review-author">{{ item.name }}</p>
+              <p class="review-role">{{ item.role }}</p>
             </div>
-            <p class="tp__quote">"{{ item.quote }}"</p>
-            <p class="tp__author">{{ item.name }}</p>
-            <p class="tp__role">{{ item.role }}</p>
-          </a>
-        </div>
-      </div>
-
-      <div class="tp__foot">
-        <div class="tp__nav">
-          <button type="button" class="tp__nav-btn" aria-label="Previous" @click="scroll(-1)" :disabled="atStart">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3.5 5.5 8l4.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <button type="button" class="tp__nav-btn" aria-label="Next" @click="scroll(1)" :disabled="atEnd">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3.5 10.5 8 6 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
+          </div>
         </div>
       </div>
     </div>
@@ -45,121 +40,99 @@ import { TESTIMONIALS } from '~/data/site'
 
 const sectionRef = ref<HTMLElement | null>(null)
 useReveal(sectionRef)
-
-const trackRef = ref<HTMLElement | null>(null)
-const atStart = ref(true)
-const atEnd = ref(false)
-
-function scroll(dir: 1 | -1) {
-  const el = trackRef.value
-  if (!el) return
-  el.scrollBy({ left: dir * 340, behavior: 'smooth' })
-}
-
-onMounted(() => {
-  const el = trackRef.value
-  if (!el) return
-  const update = () => {
-    atStart.value = el.scrollLeft <= 4
-    atEnd.value = el.scrollLeft + el.clientWidth >= el.scrollWidth - 4
-  }
-  update()
-  el.addEventListener('scroll', update, { passive: true })
-  onBeforeUnmount(() => el.removeEventListener('scroll', update))
-})
 </script>
 
 <style scoped>
-.tp {
-  padding-block: clamp(64px, 9vw, 116px);
-  background: var(--bg-alt);
-  border-block: 1px solid var(--hairline);
+.testimonials {
+  padding-block: clamp(64px, 8vw, 110px);
+  border-top: 1px solid var(--hairline);
+  background: var(--bg);
 }
-.tp__head {
-  margin-bottom: 40px;
+
+.quote-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 40px;
 }
-.tp__title {
-  font-size: clamp(28px, 4vw, 44px);
-  font-weight: 800;
-  letter-spacing: -0.03em;
-}
-.tp__bleed {
-  margin-inline: calc(clamp(20px, 5vw, 40px) * -1);
-  padding-inline: clamp(20px, 5vw, 40px);
-  overflow: hidden;
-}
-.tp__carousel {
-  display: flex;
-  gap: 16px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-  padding-bottom: 4px;
-}
-.tp__carousel::-webkit-scrollbar { display: none; }
-.tp__card {
-  flex-shrink: 0;
-  width: 320px;
-  scroll-snap-align: start;
+
+.review-card {
+  padding: 30px 26px;
   background: var(--surface);
   border: 1px solid var(--hairline);
-  border-radius: var(--r-lg);
-  padding: 28px 24px;
+  border-radius: var(--r-xl);
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  transition: transform 0.28s var(--ease), border-color 0.28s, box-shadow 0.28s;
-  cursor: default;
+  justify-content: space-between;
+  transition: border-color 0.2s var(--ease), transform 0.2s var(--ease);
 }
-.tp__card:hover {
-  transform: translateY(-4px);
-  border-color: var(--hairline-strong);
-  box-shadow: var(--shadow-md);
+.review-card:hover {
+  border-color: #3b4254;
+  transform: translateY(-2px);
 }
-.tp__stars {
+
+.review-stars {
   display: flex;
-  gap: 2px;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 18px;
 }
-.tp__quote {
+
+.verified-tag {
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  background: rgba(0, 167, 103, 0.1);
+  padding: 2px 7px;
+  border-radius: var(--r-xs);
+}
+
+.review-quote {
   font-size: 15px;
-  line-height: 1.7;
   color: var(--text);
-  flex: 1;
+  line-height: 1.65;
+  margin-bottom: 24px;
+  font-style: italic;
 }
-.tp__author {
-  font-size: 14px;
-  font-weight: 600;
-}
-.tp__role {
-  font-size: 12px;
-  color: var(--muted-3);
-}
-.tp__foot {
-  margin-top: 28px;
+
+.review-footer {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  padding-top: 18px;
+  border-top: 1px solid var(--hairline);
 }
-.tp__nav {
-  display: flex;
-  gap: 8px;
-}
-.tp__nav-btn {
+
+.review-avatar {
   display: grid;
   place-items: center;
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  border: 1px solid var(--hairline);
-  background: var(--surface);
-  color: var(--text);
-  transition: background 0.2s, border-color 0.2s;
-}
-.tp__nav-btn:hover:not(:disabled) {
   background: var(--surface-2);
-  border-color: var(--hairline-strong);
+  border: 1px solid var(--hairline);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--primary);
 }
-.tp__nav-btn:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
+
+.review-author {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.review-role {
+  font-size: 12px;
+  color: var(--muted-2);
+}
+
+@media (max-width: 900px) {
+  .quote-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
 }
 </style>
+

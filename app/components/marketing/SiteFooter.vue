@@ -45,12 +45,19 @@
         </div>
       </div>
 
+      <!-- Institutional Disclosure (Deriv Style) -->
+      <div class="footer-disclosure">
+        <p>
+          <strong>Regulatory &amp; Market Disclosure:</strong> Plero Technologies operates an automated OTC settlement infrastructure for digital assets and verified gift card instruments. All conversion rates are referenced from live public exchange feeds and locked upon order generation. Fiat disbursements are processed via licensed Nigerian banking partners.
+        </p>
+      </div>
+
       <div class="footer-bottom">
         <p>© {{ year }} {{ BRAND.legalName }} All rights reserved.</p>
         <div class="bottom-links">
-          <a href="#">Privacy</a>
-          <a href="#">Terms</a>
-          <a href="#">AML Policy</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">AML / KYC Policy</a>
           <span class="status"><span class="live-dot" /> All systems operational</span>
         </div>
       </div>
@@ -187,13 +194,24 @@ const subscribed = ref(false)
   color: var(--accent);
 }
 
+.footer-disclosure {
+  padding: 20px 0;
+  border-top: 1px solid var(--hairline);
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--muted-3);
+}
+.footer-disclosure strong {
+  color: var(--muted-2);
+}
+
 .footer-bottom {
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 14px;
-  padding: 24px 0 32px;
+  padding: 20px 0 32px;
   border-top: 1px solid var(--hairline);
   font-size: 13px;
   color: var(--muted-3);

@@ -1,6 +1,5 @@
 <template>
   <section class="cta" ref="sectionRef">
-    <span class="glow-orb orb" aria-hidden="true" />
     <div class="container cta-inner">
       <h2 class="cta-title reveal">{{ title }}</h2>
       <p class="cta-lede reveal" style="transition-delay:0.1s">{{ lede }}</p>
@@ -40,18 +39,11 @@ withDefaults(
   position: relative;
   overflow: hidden;
   border-top: 1px solid var(--hairline);
-  padding-block: clamp(72px, 10vw, 128px);
+  padding-block: clamp(72px, 9vw, 120px);
   text-align: center;
-  background: radial-gradient(ellipse 60% 100% at 50% 0%, rgb(var(--primary-rgb) / 0.09), transparent 65%);
+  background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(255, 68, 79, 0.05), transparent 70%), var(--bg);
 }
-.orb {
-  width: 640px;
-  height: 400px;
-  bottom: -220px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: radial-gradient(circle, rgb(var(--primary-2-rgb) / 0.16), transparent 70%);
-}
+
 .cta-inner {
   position: relative;
   z-index: 1;
@@ -59,20 +51,27 @@ withDefaults(
   flex-direction: column;
   align-items: center;
 }
+
 .cta-title {
-  font-size: clamp(30px, 5.4vw, 58px);
+  font-family: var(--font-display);
+  font-size: clamp(32px, 5vw, 54px);
   font-weight: 800;
   letter-spacing: -0.035em;
-  max-width: 18ch;
+  max-width: 20ch;
+  color: #fff;
 }
+
 .cta-lede {
-  margin-top: 20px;
-  font-size: clamp(15px, 1.5vw, 18px);
+  margin-top: 18px;
+  font-size: clamp(15px, 1.4vw, 18px);
   color: var(--muted);
-  max-width: 50ch;
+  max-width: 52ch;
+  line-height: 1.65;
 }
+
 .cta-actions {
   justify-content: center;
-  margin-top: 36px;
+  margin-top: 32px;
 }
 </style>
+

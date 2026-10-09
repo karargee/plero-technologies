@@ -1,7 +1,6 @@
 <template>
   <div>
     <section class="head">
-      <span class="glow-orb orb" aria-hidden="true" />
       <div class="container head-inner">
         <p class="eyebrow">About</p>
         <h1 class="head-title">We build the plumbing, not the queues.</h1>

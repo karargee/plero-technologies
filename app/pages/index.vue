@@ -1,10 +1,29 @@
 <template>
-  <div>
+  <div class="home-page">
     <HeroSection />
 
     <RateTicker />
 
     <BentoShowcase />
+
+    <!-- Live Trading Terminal Section (Deriv Signature Feature) -->
+    <section class="section terminal-section">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">DERIV REAL-TIME STREAMING</p>
+          <h2 class="section-title">
+            World-class charts, <span class="title-accent">24/7 trading.</span>
+          </h2>
+          <p class="section-lede">
+            Stream continuous ticks and candlestick feeds directly from Deriv's public WebSocket exchange. Technical precision with zero desk latency.
+          </p>
+        </div>
+
+        <div class="terminal-container reveal" style="transition-delay:0.1s">
+          <TradeView />
+        </div>
+      </div>
+    </section>
 
     <StepsSection />
     <FeaturesSection />
@@ -13,9 +32,9 @@
     <FaqSection :items="HOME_FAQS" />
 
     <CtaSection
-      title="Ready to turn your cards into cash?"
-      lede="Create a free account, send your gift card or Deriv balance, and get naira in your bank while you watch. No agents, no queues."
-      primary-label="Create free account"
+      title="Ready to trade without limits?"
+      lede="Open a free account in 2 minutes. Send your Deriv balance, gift cards or crypto, and get paid straight to your bank account."
+      primary-label="Open free account"
       secondary-label="Sign in instead"
       secondary-to="/login"
     />
@@ -26,14 +45,14 @@
 import { HOME_FAQS } from '~/data/site'
 
 useHead({
-  title: 'Plero — Sell gift cards, crypto & Deriv USD for naira',
+  title: 'Plero Technologies — Trade gift cards, crypto & Deriv USD',
   meta: [
     {
       name: 'description',
       content:
         'Live market pricing on Deriv USD, crypto, vouchers and gift cards in Nigeria. Verified settlement and payouts straight to your bank in minutes.',
     },
-    { property: 'og:title', content: 'Plero — live rates for gift cards, crypto & Deriv USD' },
+    { property: 'og:title', content: 'Plero Technologies — Trade with confidence' },
     {
       property: 'og:description',
       content:
@@ -45,3 +64,20 @@ useHead({
   ],
 })
 </script>
+
+<style scoped>
+.terminal-section {
+  padding-block: clamp(56px, 7vw, 96px);
+  border-top: 1px solid var(--hairline);
+  background: var(--bg-alt);
+}
+
+.title-accent {
+  color: var(--primary);
+}
+
+.terminal-container {
+  margin-top: 28px;
+}
+</style>
+

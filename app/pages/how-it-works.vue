@@ -1,7 +1,6 @@
 <template>
   <div>
     <section class="head">
-      <span class="glow-orb orb" aria-hidden="true" />
       <div class="container head-inner">
         <p class="eyebrow">How it works</p>
         <h1 class="head-title">From card to cash,<br />without the queue.</h1>

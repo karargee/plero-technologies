@@ -1,4 +1,4 @@
-/* Plero Technologies — global design system */
+/* Plero Technologies — Deriv Institutional Fintech Design System */
 
 :root {
   /* Type */
@@ -6,119 +6,110 @@
   --font-display: "Inter Tight", "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
 
-  /* Brand
-     Derived from the Plero logo: deep indigo ink #26256a (hsl 244 65% 28%)
-     on a white plate. Everything below stays in that 240-275deg family so the
-     white logo tile reads as part of the page rather than pasted onto it. */
-  --brand-deep: #26256a;
+  /* Deriv Brand Identity
+     Primary signature Deriv Coral Red (#ff444f) with high-contrast monochrome
+     and clean fintech emerald (#00a767). */
+  --brand-deep: #0e0e0e;
   --brand-plate: #ffffff;
 
-  --primary: #6f6bf2;
-  --primary-dark: #4b46d6;
-  --primary-deep: #3b2fb8;
-  --primary-light: #a5a2fb;
-  --primary-2: #b45cf0;
-  --primary-soft: rgba(111, 107, 242, 0.14);
-  --primary-glow: rgba(111, 107, 242, 0.34);
+  --primary: #ff444f;
+  --primary-hover: #eb3e48;
+  --primary-active: #d4353f;
+  --primary-dark: #cc2933;
+  --primary-deep: #b31d26;
+  --primary-light: #ff6b74;
+  --primary-2: #ff444f;
+  --primary-soft: rgba(255, 68, 79, 0.12);
+  --primary-glow: rgba(255, 68, 79, 0.22);
+  --primary-border: rgba(255, 68, 79, 0.28);
 
-  --accent: #14b892;
-  --accent-soft: rgba(20, 184, 146, 0.13);
-  --gold: #f0a92b;
-  --violet: #9d6bf5;
-  --danger: #ef4444;
+  --accent: #00a767;
+  --accent-hover: #00935a;
+  --accent-soft: rgba(0, 167, 103, 0.12);
+  --gold: #f59e0b;
+  --gold-soft: rgba(245, 158, 11, 0.12);
+  --violet: #818cf8;
+  --danger: #ff444f;
 
-  /* Channel triplets, for tints that need a custom alpha. */
-  --primary-rgb: 111 107 242;
-  --primary-light-rgb: 165 162 251;
-  --primary-2-rgb: 180 92 240;
-  --accent-rgb: 20 184 146;
-  --violet-rgb: 157 107 245;
+  /* Channel triplets */
+  --primary-rgb: 255 68 79;
+  --primary-light-rgb: 255 107 116;
+  --primary-2-rgb: 255 68 79;
+  --accent-rgb: 0 167 103;
+  --violet-rgb: 129 140 248;
 
-  /* Surfaces */
-  --bg: #08080a;
-  --bg-alt: #0b0b0f;
-  --surface: #101014;
-  --surface-2: #14141a;
-  --surface-3: #1a1a22;
-  --hairline: rgba(255, 255, 255, 0.07);
-  --hairline-strong: rgba(255, 255, 255, 0.13);
+  /* Fintech Dark Surfaces (Deriv Charcoal/Obsidian) */
+  --bg: #0e0e0e;
+  --bg-alt: #121418;
+  --surface: #15171c;
+  --surface-2: #1a1d24;
+  --surface-3: #222631;
+  --surface-hover: #20242e;
+  --hairline: #242832;
+  --hairline-strong: #363c4a;
+  --hairline-light: rgba(255, 255, 255, 0.08);
 
-  /* Text */
-  --text: #f7f7f8;
-  --muted: #9a9aa6;
-  --muted-2: #6c6c78;
-  --muted-3: #4a4a55;
+  /* High-contrast Typography */
+  --text: #ffffff;
+  --muted: #999ea8;
+  --muted-2: #6e737e;
+  --muted-3: #4a4f5c;
 
-  /* Shape */
-  --r-sm: 8px;
-  --r-md: 12px;
-  --r-lg: 18px;
-  --r-xl: 26px;
+  /* Precise Fintech Geometry */
+  --r-xs: 4px;
+  --r-sm: 6px;
+  --r-md: 8px;
+  --r-lg: 12px;
+  --r-xl: 16px;
+  --r-2xl: 20px;
   --r-full: 999px;
 
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 12px 32px -12px rgba(0, 0, 0, 0.7);
-  --shadow-lg: 0 32px 80px -28px rgba(0, 0, 0, 0.85);
-  --glow: 0 20px 60px -20px var(--primary-glow);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 8px 24px -6px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 24px 48px -12px rgba(0, 0, 0, 0.75);
+  --glow: 0 12px 32px -8px var(--primary-glow);
 
-  /* ── Neon accent scale ────────────────────────────────────
-     The logo is deep indigo, so the neon layer stays in the
-     violet→fuchsia→cyan arc and gets its energy from lightness
-     and saturation rather than from a new hue family. */
-  --neon-1: #818cf8;
-  --neon-2: #a78bfa;
-  --neon-3: #d946ef;
-  --neon-4: #22d3ee;
-  --neon-5: #34d399;
-  --neon-amber: #fbbf24;
-  --neon-rose: #fb7185;
+  /* Deriv Accent Tokens (Aliased cleanly to remove generic AI purple neon) */
+  --neon-1: #ff444f;
+  --neon-2: #ff6b74;
+  --neon-3: #ff444f;
+  --neon-4: #00a767;
+  --neon-5: #00a767;
+  --neon-amber: #f59e0b;
+  --neon-rose: #ff444f;
 
-  --neon-1-rgb: 129 140 248;
-  --neon-2-rgb: 167 139 250;
-  --neon-3-rgb: 217 70 239;
-  --neon-4-rgb: 34 211 238;
-  --neon-5-rgb: 52 211 153;
+  --neon-1-rgb: 255 68 79;
+  --neon-2-rgb: 255 107 116;
+  --neon-3-rgb: 255 68 79;
+  --neon-4-rgb: 0 167 103;
+  --neon-5-rgb: 0 167 103;
 
-  /* Signature gradient: used for headlines, primary actions and borders. */
-  --brand-grad: linear-gradient(
-    115deg,
-    var(--neon-1) 0%,
-    var(--neon-2) 32%,
-    var(--neon-3) 62%,
-    var(--neon-4) 100%
-  );
-  --brand-grad-soft: linear-gradient(
-    115deg,
-    rgb(var(--neon-1-rgb) / 0.16),
-    rgb(var(--neon-2-rgb) / 0.12),
-    rgb(var(--neon-3-rgb) / 0.14),
-    rgb(var(--neon-4-rgb) / 0.12)
-  );
+  /* Professional Action Gradient */
+  --brand-grad: linear-gradient(135deg, #ff444f 0%, #eb3e48 100%);
+  --brand-grad-soft: rgba(255, 68, 79, 0.08);
 
-  /* Neon bloom */
-  --glow-1: 0 0 0 1px rgb(var(--neon-1-rgb) / 0.32), 0 18px 48px -18px rgb(var(--neon-1-rgb) / 0.55);
-  --glow-2: 0 0 0 1px rgb(var(--neon-2-rgb) / 0.32), 0 18px 48px -18px rgb(var(--neon-2-rgb) / 0.55);
-  --glow-4: 0 0 0 1px rgb(var(--neon-4-rgb) / 0.32), 0 18px 48px -18px rgb(var(--neon-4-rgb) / 0.5);
+  /* Precise Focus and Hairlines */
+  --glow-1: 0 0 0 1px rgba(255, 68, 79, 0.35), 0 8px 24px -8px rgba(255, 68, 79, 0.3);
+  --glow-2: 0 0 0 1px rgba(255, 255, 255, 0.12), 0 8px 24px -8px rgba(0, 0, 0, 0.5);
+  --glow-4: 0 0 0 1px rgba(0, 167, 103, 0.35), 0 8px 24px -8px rgba(0, 167, 103, 0.3);
 
-  /* ── Glass ────────────────────────────────────────────── */
-  --glass-bg: rgb(19 19 27 / 0.58);
-  --glass-bg-strong: rgb(24 24 34 / 0.78);
-  --glass-border: rgb(255 255 255 / 0.09);
-  --glass-border-lit: rgb(255 255 255 / 0.16);
-  --glass-blur: 22px;
+  /* Clean Fintech Surfaces */
+  --glass-bg: rgba(21, 23, 28, 0.85);
+  --glass-bg-strong: rgba(26, 29, 36, 0.95);
+  --glass-border: #242832;
+  --glass-border-lit: #363c4a;
+  --glass-blur: 16px;
   --glass-highlight: linear-gradient(
-    160deg,
-    rgb(255 255 255 / 0.11) 0%,
-    rgb(255 255 255 / 0.02) 38%,
-    transparent 60%
+    180deg,
+    rgba(255, 255, 255, 0.04) 0%,
+    transparent 100%
   );
 
-  /* ── Layout grid backdrop ─────────────────────────────── */
-  --grid-line: rgb(255 255 255 / 0.035);
+  --grid-line: rgba(255, 255, 255, 0.02);
 
-  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease: cubic-bezier(0.2, 0, 0, 1);
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --spring: cubic-bezier(0.25, 1, 0.5, 1);
   --nav-h: 68px;
 }
 
@@ -144,23 +135,15 @@ html {
 }
 
 body {
-  /* Layered depth: two soft neon blooms over near-black, then a faint
-     technical grid. Fixed so it does not parallax while scrolling. */
+  /* Crisp Deriv dark theme: clean dark canvas with subtle vignette */
   background-color: var(--bg);
   background-image:
-    radial-gradient(ellipse 70% 50% at 12% -8%, rgb(var(--neon-2-rgb) / 0.14), transparent 60%),
-    radial-gradient(ellipse 60% 45% at 88% 4%, rgb(var(--neon-4-rgb) / 0.1), transparent 62%),
-    linear-gradient(var(--grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-  background-size:
-    100% 100%,
-    100% 100%,
-    56px 56px,
-    56px 56px;
+    radial-gradient(ellipse 90% 60% at 50% -10%, rgba(255, 68, 79, 0.04), transparent 60%),
+    radial-gradient(ellipse 80% 50% at 50% 100%, rgba(20, 24, 32, 0.8), transparent 70%);
   background-attachment: fixed;
   color: var(--text);
   font-family: var(--font-sans);
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.6;
   min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
@@ -327,213 +310,108 @@ svg {
 }
 
 .glass {
-  background: rgba(16, 16, 20, 0.72);
-  backdrop-filter: blur(20px) saturate(140%);
-  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  background: var(--surface);
   border: 1px solid var(--hairline);
-}
-
-/* Animated glass panel: rotating gradient border + travelling shine. */
-@property --glass-angle {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
+  box-shadow: var(--shadow-sm);
 }
 
 .glass-card {
   position: relative;
-  isolation: isolate;
   border-radius: var(--r-xl);
-  background: rgba(14, 14, 18, 0.62);
-  backdrop-filter: blur(26px) saturate(170%);
-  -webkit-backdrop-filter: blur(26px) saturate(170%);
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  box-shadow: var(--shadow-lg);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  box-shadow: var(--shadow-md);
   overflow: hidden;
 }
 
-.glass-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  padding: 1px;
-  border-radius: inherit;
-  background: conic-gradient(
-    from var(--glass-angle),
-    transparent 0%,
-    var(--primary) 16%,
-    var(--primary-2) 30%,
-    transparent 48%,
-    var(--accent) 74%,
-    transparent 100%
-  );
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  animation: glass-spin 7s linear infinite;
-  pointer-events: none;
-}
-
-.glass-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  border-radius: inherit;
-  background: linear-gradient(
-    105deg,
-    transparent 32%,
-    rgba(255, 255, 255, 0.11) 46%,
-    transparent 62%
-  );
-  background-size: 250% 100%;
-  animation: glass-shine 7s var(--ease) infinite;
-  pointer-events: none;
-}
-
-.glass-card > * {
-  position: relative;
-  z-index: 3;
-}
-
-/* Slow vertical drift for a "floating panel" feel. */
 .glass-card--float {
-  animation: float 7s var(--ease) infinite;
+  /* No float jitter */
 }
 
-@keyframes glass-spin {
-  to {
-    --glass-angle: 360deg;
-  }
-}
-
-@keyframes glass-shine {
-  0%,
-  55%,
-  100% {
-    background-position: 220% 0;
-  }
-  80% {
-    background-position: -60% 0;
-  }
-}
-
-/* Gradient text with a moving highlight. */
+/* Gradient text with high-contrast finish */
 .text-shimmer {
-  background: linear-gradient(
-    100deg,
-    var(--primary-light) 0%,
-    #fff 22%,
-    var(--primary-light) 42%,
-    var(--violet) 62%,
-    var(--primary-light) 100%
-  );
-  background-size: 250% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: glass-shine 7s linear infinite;
+  color: var(--text);
+  font-weight: 700;
 }
 
-/* Same drift at a fraction of the amplitude, for small screens where the full
-   10px travel reads as jitter rather than motion. */
 @keyframes float-subtle {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-4px);
-  }
+  0%, 100% { transform: translateY(0); }
 }
 
 @keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
+  0%, 100% { transform: translateY(0); }
 }
 
 .glow-orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(90px);
-  pointer-events: none;
-  z-index: 0;
+  display: none;
 }
 
-/* The logo artwork is deep indigo on an opaque white plate. On a near-black
-   page that plate needs a rim and a tinted shadow, otherwise the mark reads as
-   a hole punched in the surface rather than part of the brand. */
+/* The logo artwork */
 .logo-plate {
   object-fit: cover;
   background: var(--brand-plate);
-  border-radius: 10px;
+  border-radius: var(--r-md);
   box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.14),
-    0 6px 18px -8px rgb(var(--primary-rgb) / 0.55);
+    0 0 0 1px rgba(255, 255, 255, 0.12),
+    0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
-/* ── Buttons ────────────────────────────────────────────── */
+/* ── Buttons (Deriv Clean Fintech Style) ────────────────── */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 12px 24px;
-  border-radius: var(--r-full);
+  padding: 10px 22px;
+  border-radius: var(--r-md);
   font-size: 14px;
   font-weight: 600;
   letter-spacing: -0.01em;
   white-space: nowrap;
-  transition: transform 0.18s var(--ease), background 0.18s, border-color 0.18s,
-    box-shadow 0.18s, color 0.18s;
+  transition: transform 0.15s var(--ease), background 0.15s, border-color 0.15s, box-shadow 0.15s, color 0.15s;
 }
 
 .btn:active {
   transform: scale(0.98);
 }
 
-/* The primary CTA. `.btn-primary` is a legacy alias kept so older markup still
-   resolves, but the brand is indigo now, not red. */
+/* The signature Deriv Red CTA */
 .btn-primary,
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary-light), var(--primary) 45%, var(--primary-dark));
+  background: var(--primary);
   color: #fff;
-  box-shadow: 0 8px 24px -8px var(--primary-glow);
+  border: 1px solid transparent;
+  box-shadow: 0 4px 14px rgba(255, 68, 79, 0.28);
 }
 .btn-primary:hover,
 .btn-primary:hover {
-  box-shadow: 0 14px 34px -10px var(--primary-glow);
-  filter: brightness(1.06);
+  background: var(--primary-hover);
+  box-shadow: 0 6px 20px rgba(255, 68, 79, 0.4);
+  transform: translateY(-1px);
+}
+.btn-primary:active {
+  background: var(--primary-active);
+  transform: scale(0.98);
 }
 
 .btn-ghost {
-  background: rgba(255, 255, 255, 0.02);
+  background: transparent;
   color: var(--text);
-  border: 1px solid var(--hairline-strong);
+  border: 1px solid var(--hairline);
 }
 .btn-ghost:hover {
-  background: rgba(255, 255, 255, 0.07);
-  border-color: rgba(255, 255, 255, 0.28);
+  background: var(--surface-2);
+  border-color: var(--hairline-strong);
+  color: #fff;
 }
 
 .btn-white {
   background: #fff;
-  color: #0b0b0f;
+  color: #0e0e0e;
   font-weight: 600;
 }
 .btn-white:hover {
-  background: #ececf0;
+  background: #f0f0f2;
 }
 
 .btn-soft {
@@ -544,15 +422,18 @@ svg {
 .btn-soft:hover {
   background: var(--surface-3);
   border-color: var(--hairline-strong);
+  color: #fff;
 }
 
 .btn-lg {
-  padding: 15px 32px;
+  padding: 13px 28px;
   font-size: 15px;
+  border-radius: var(--r-lg);
 }
 .btn-sm {
-  padding: 9px 18px;
+  padding: 7px 15px;
   font-size: 13px;
+  border-radius: var(--r-sm);
   gap: 6px;
 }
 .btn-block {
@@ -821,103 +702,61 @@ svg {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   Neon / glass / bento primitives
-   Additive layer: everything above keeps working unchanged.
+   Deriv Institutional Fintech Primitives
    ═══════════════════════════════════════════════════════════ */
 
-/* ── Glass surfaces ──────────────────────────────────────── */
+/* ── Fintech Surfaces ────────────────────────────────────── */
 
 .glass,
 .glass-soft {
   position: relative;
-  isolation: isolate;
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur)) saturate(180%);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
-  border: 1px solid var(--glass-border);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
   border-radius: var(--r-lg);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-sm);
   overflow: hidden;
 }
 
-/* The lit top edge is what sells the material as glass. */
-.glass::before,
-.glass-soft::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: var(--glass-highlight);
-  pointer-events: none;
-}
-
 .glass-soft {
-  --glass-bg: rgb(255 255 255 / 0.028);
-  --glass-blur: 14px;
+  background: var(--surface-2);
 }
 
-/* Interactive glass: lifts, blooms, and catches the pointer. */
+/* Interactive hover */
 .glass-hover {
-  transition:
-    transform 0.42s var(--ease-out-expo),
-    border-color 0.3s var(--ease),
-    box-shadow 0.42s var(--ease-out-expo);
-  will-change: transform;
+  transition: transform 0.2s var(--ease), border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
 }
 .glass-hover:hover {
-  transform: translateY(-5px);
-  border-color: var(--glass-border-lit);
-  box-shadow:
-    var(--shadow-lg),
-    0 0 40px -12px rgb(var(--neon-2-rgb) / 0.4);
+  transform: translateY(-2px);
+  border-color: #383e4d;
+  box-shadow: var(--shadow-md);
 }
 
-/* A cursor-tracked bloom, driven by --mx/--my from a pointer handler. */
 .glow-spot {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  opacity: 0;
-  background: radial-gradient(
-    240px circle at var(--mx, 50%) var(--my, 50%),
-    rgb(var(--neon-2-rgb) / 0.16),
-    transparent 68%
-  );
-  transition: opacity 0.4s var(--ease);
-}
-.glass-hover:hover .glow-spot {
-  opacity: 1;
+  display: none;
 }
 .glass-hover > * {
   position: relative;
   z-index: 1;
 }
 
-/* ── Gradient text ───────────────────────────────────────── */
+/* ── Typography High-Contrast ────────────────────────────── */
 
 .grad-text,
 .neon-text {
-  background: var(--brand-grad);
-  background-size: 220% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: grad-slide 9s ease-in-out infinite;
+  color: var(--text);
+  font-weight: 800;
 }
 
 .grad-text--warm {
-  background-image: linear-gradient(115deg, var(--neon-amber), var(--neon-3), var(--neon-4));
-  background-size: 220% 100%;
+  color: #f59e0b;
 }
 
-/* ── Bento grid ──────────────────────────────────────────── */
+/* ── Bento & Markets Grid ────────────────────────────────── */
 
 .bento {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: clamp(12px, 1.4vw, 18px);
+  gap: clamp(14px, 1.6vw, 20px);
 }
 
 .bento > * {
@@ -961,108 +800,63 @@ svg {
   }
 }
 
-/* ── Neon borders and chips ──────────────────────────────── */
+/* ── Deriv Borders and Status Chips ──────────────────────── */
 
 .neon-border {
-  position: relative;
+  border-color: var(--hairline);
+  transition: border-color 0.2s var(--ease);
 }
-.neon-border::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: var(--brand-grad);
-  /* Mask keeps only the gradient border, not a filled panel. */
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  mask-composite: exclude;
-  opacity: 0.55;
-  transition: opacity 0.35s var(--ease);
-  pointer-events: none;
-}
-.neon-border:hover::after {
-  opacity: 1;
+.neon-border:hover {
+  border-color: rgba(255, 68, 79, 0.35);
 }
 
 .chip {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  padding: 6px 13px;
+  padding: 5px 12px;
   border-radius: var(--r-full);
-  border: 1px solid var(--glass-border);
-  background: rgb(255 255 255 / 0.04);
+  border: 1px solid var(--hairline);
+  background: var(--surface-2);
   font-size: 11.5px;
   font-weight: 600;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
   color: var(--muted);
-  backdrop-filter: blur(10px);
 }
 
 .chip--neon {
-  border-color: rgb(var(--neon-4-rgb) / 0.35);
-  background: rgb(var(--neon-4-rgb) / 0.1);
-  color: var(--neon-4);
-  box-shadow: 0 0 22px -8px rgb(var(--neon-4-rgb) / 0.7);
+  border-color: rgba(0, 167, 103, 0.25);
+  background: rgba(0, 167, 103, 0.08);
+  color: var(--accent);
+  box-shadow: none;
 }
 
-/* ── Buttons ─────────────────────────────────────────────── */
+/* ── Primary Deriv Buttons ───────────────────────────────── */
 
 .btn-grad {
-  position: relative;
-  isolation: isolate;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 13px 26px;
-  border-radius: var(--r-full);
-  background: var(--brand-grad);
-  background-size: 200% 100%;
-  color: #0a0a12;
-  font-weight: 700;
+  padding: 12px 24px;
+  border-radius: var(--r-md);
+  background: var(--primary);
+  color: #fff;
+  font-weight: 600;
   font-size: 14.5px;
   letter-spacing: -0.01em;
-  box-shadow:
-    0 10px 30px -10px rgb(var(--neon-2-rgb) / 0.75),
-    inset 0 1px 0 rgb(255 255 255 / 0.4);
-  overflow: hidden;
-  transition:
-    transform 0.3s var(--spring),
-    box-shadow 0.35s var(--ease),
-    background-position 0.6s var(--ease);
+  border: 1px solid transparent;
+  box-shadow: 0 4px 14px rgba(255, 68, 79, 0.28);
+  transition: transform 0.15s var(--ease), background 0.15s var(--ease), box-shadow 0.15s var(--ease);
 }
 .btn-grad:hover {
-  transform: translateY(-2px);
-  background-position: 100% 0;
-  box-shadow:
-    0 18px 44px -12px rgb(var(--neon-3-rgb) / 0.8),
-    inset 0 1px 0 rgb(255 255 255 / 0.5);
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(255, 68, 79, 0.4);
 }
 .btn-grad:active {
-  transform: translateY(0) scale(0.98);
-}
-
-/* Light sweep that crosses the button on hover. */
-.btn-grad::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: -60%;
-  width: 45%;
-  background: linear-gradient(100deg, transparent, rgb(255 255 255 / 0.55), transparent);
-  transform: skewX(-18deg);
-  transition: left 0.7s var(--ease-out-expo);
-}
-.btn-grad:hover::after {
-  left: 120%;
+  background: var(--primary-active);
+  transform: scale(0.98);
 }
 
 .btn-glass {
@@ -1070,74 +864,63 @@ svg {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 13px 26px;
-  border-radius: var(--r-full);
-  border: 1px solid var(--glass-border-lit);
-  background: rgb(255 255 255 / 0.05);
-  backdrop-filter: blur(16px) saturate(160%);
-  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  padding: 12px 24px;
+  border-radius: var(--r-md);
+  border: 1px solid #2e3442;
+  background: var(--surface-2);
   color: var(--text);
   font-weight: 600;
   font-size: 14.5px;
-  transition:
-    transform 0.3s var(--ease-out-expo),
-    background 0.3s var(--ease),
-    border-color 0.3s var(--ease),
-    box-shadow 0.3s var(--ease);
+  transition: transform 0.15s var(--ease), background 0.15s var(--ease), border-color 0.15s var(--ease);
 }
 .btn-glass:hover {
-  transform: translateY(-2px);
-  background: rgb(255 255 255 / 0.09);
-  border-color: rgb(var(--neon-1-rgb) / 0.5);
-  box-shadow: 0 14px 36px -16px rgb(var(--neon-1-rgb) / 0.7);
+  background: var(--surface-3);
+  border-color: #40485c;
+  color: #fff;
+  transform: translateY(-1px);
 }
 .btn-glass:active {
-  transform: translateY(0) scale(0.98);
+  transform: scale(0.98);
 }
 
-/* ── Icon micro-interactions ─────────────────────────────── */
+/* ── Icon tiles ─────────────────────────────────────────── */
 
 .icon-float {
-  transition: transform 0.45s var(--spring);
-}
-.glass-hover:hover .icon-float {
-  transform: translateY(-3px) scale(1.06);
+  /* Clean icon stability */
 }
 
 .icon-tile {
   display: grid;
   place-items: center;
-  width: 46px;
-  height: 46px;
-  border-radius: 14px;
-  background: var(--brand-grad-soft);
-  border: 1px solid var(--glass-border);
-  color: var(--neon-1);
-  transition:
-    transform 0.45s var(--spring),
-    box-shadow 0.4s var(--ease);
+  width: 42px;
+  height: 42px;
+  border-radius: var(--r-md);
+  background: rgba(255, 68, 79, 0.08);
+  border: 1px solid rgba(255, 68, 79, 0.2);
+  color: var(--primary);
+  transition: transform 0.2s var(--ease), background 0.2s var(--ease);
 }
 .glass-hover:hover .icon-tile {
-  transform: translateY(-3px) rotate(-4deg);
-  box-shadow: 0 12px 30px -12px rgb(var(--neon-2-rgb) / 0.85);
+  background: rgba(255, 68, 79, 0.14);
+  transform: translateY(-1px);
 }
 
-/* ── Marquee ─────────────────────────────────────────────── */
+/* ── Financial Ticker Marquee ────────────────────────────── */
 
 .marquee {
   position: relative;
   overflow: hidden;
   display: flex;
-  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
 }
 .marquee__track {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding-right: 14px;
+  gap: 12px;
+  padding-right: 12px;
   white-space: nowrap;
-  animation: marquee 42s linear infinite;
+  animation: marquee 45s linear infinite;
   will-change: transform;
 }
 .marquee:hover .marquee__track {
@@ -1146,14 +929,18 @@ svg {
 .marquee__item {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
-  padding: 8px 15px;
-  border-radius: var(--r-full);
-  border: 1px solid var(--glass-border);
-  background: rgb(255 255 255 / 0.035);
-  font-size: 13px;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--hairline);
+  background: var(--surface);
+  font-size: 12.5px;
   color: var(--muted);
   flex-shrink: 0;
+  transition: border-color 0.2s var(--ease);
+}
+.marquee__item:hover {
+  border-color: #383e4d;
 }
 .marquee__item b {
   color: var(--text);
@@ -1162,28 +949,18 @@ svg {
 .marquee__item span {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
-  color: var(--neon-5);
+  color: var(--accent);
   font-weight: 600;
 }
 
-/* ── Decorative orbs ─────────────────────────────────────── */
+/* ── Decorative blobs purged ────────────────────────────── */
 
-.neon-orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(90px);
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.55;
-}
-.neon-orb--1 {
-  background: radial-gradient(circle, rgb(var(--neon-2-rgb) / 0.5), transparent 70%);
-}
-.neon-orb--2 {
-  background: radial-gradient(circle, rgb(var(--neon-4-rgb) / 0.4), transparent 70%);
-}
-.neon-orb--3 {
-  background: radial-gradient(circle, rgb(var(--neon-3-rgb) / 0.35), transparent 70%);
+.neon-orb,
+.neon-orb--1,
+.neon-orb--2,
+.neon-orb--3,
+.ring-orb {
+  display: none !important;
 }
 
 @keyframes marquee {
@@ -1192,42 +969,5 @@ svg {
   }
   to {
     transform: translateX(-50%);
-  }
-}
-
-@keyframes grad-slide {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-/* Conic ring used behind hero and CTA panels. */
-.ring-orb {
-  position: absolute;
-  inset: -30%;
-  z-index: 0;
-  border-radius: 50%;
-  background: conic-gradient(
-    from var(--glass-angle, 0deg),
-    transparent 0%,
-    rgb(var(--neon-1-rgb) / 0.5) 18%,
-    rgb(var(--neon-3-rgb) / 0.45) 32%,
-    transparent 52%,
-    rgb(var(--neon-4-rgb) / 0.4) 76%,
-    transparent 100%
-  );
-  filter: blur(70px);
-  opacity: 0.5;
-  pointer-events: none;
-  animation: ring-spin 18s linear infinite;
-}
-
-@keyframes ring-spin {
-  to {
-    transform: rotate(1turn);
   }
 }

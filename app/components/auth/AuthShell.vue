@@ -119,10 +119,7 @@ const { rate, connected } = useDerivRate()
   line-height: 1.1;
 }
 .grad {
-  background: linear-gradient(120deg, var(--primary-light), var(--primary) 45%, var(--violet));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--primary);
 }
 .perks {
   list-style: none;
@@ -146,11 +143,11 @@ const { rate, connected } = useDerivRate()
   align-items: center;
   gap: 9px;
   margin-top: 32px;
-  padding: 9px 16px;
+  padding: 8px 16px;
   border-radius: var(--r-full);
-  background: var(--accent-soft);
-  border: 1px solid rgb(var(--accent-rgb) / 0.22);
-  color: #2fd4c8;
+  background: rgba(0, 167, 103, 0.08);
+  border: 1px solid rgba(0, 167, 103, 0.25);
+  color: var(--accent);
   font-size: 13.5px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;

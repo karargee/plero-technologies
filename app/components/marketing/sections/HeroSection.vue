@@ -1,345 +1,605 @@
 <template>
   <section class="hero" ref="heroRef">
-    <!-- Full-bleed background image -->
-    <div class="hero-bg" aria-hidden="true">
-      <img src="/hero-image.avif" alt="" class="hero-bg-img" loading="eager" decoding="async" />
-      <div class="hero-bg-overlay" />
-    </div>
-
-    <!-- Ambient orbs -->
-    <span class="orb orb-a" aria-hidden="true" />
-    <span class="orb orb-b" aria-hidden="true" />
-
     <div class="container hero-inner">
       <div class="hero-copy">
-        <p class="hero-badge reveal chip chip--neon">
+        <div class="hero-badge reveal chip chip--neon">
           <span class="live-dot" :class="{ 'live-dot--off': !hasLiveRate }" />
-          {{ hasLiveRate ? 'Live Deriv rates · streaming now' : 'Rates updating · reconnecting' }}
-        </p>
+          <span>{{ hasLiveRate ? 'Live Deriv WebSocket · 24/7 Liquidity' : 'Connecting to Deriv WebSocket…' }}</span>
+        </div>
 
         <h1 class="hero-title reveal" style="transition-delay:0.08s">
-          Trade your<br />
-          <span class="grad-text">digital assets.</span>
+          Trade with<br />
+          <span class="hero-accent">confidence.</span>
         </h1>
 
         <p class="hero-lede reveal" style="transition-delay:0.16s">
-          Plero is the fastest way to convert gift cards, Deriv USD and crypto into naira.
-          Live market rates, verified settlement, and payouts straight to your bank in minutes.
+          Nigeria's institutional exchange for Deriv USD, crypto, vouchers, and gift cards.
+          Pegged to live market feeds with verified settlement straight to your bank in 5–15 minutes.
         </p>
 
-        <div class="btn-row reveal" style="transition-delay:0.24s">
-          <NuxtLink to="/register" class="btn-grad btn-lg">
+        <div class="btn-row hero-actions reveal" style="transition-delay:0.24s">
+          <NuxtLink to="/register" class="btn btn-primary btn-lg">
             Start trading free
             <AppIcon name="arrow" :size="18" />
           </NuxtLink>
-          <NuxtLink to="/rates" class="btn-glass btn-lg">
+          <NuxtLink to="/rates" class="btn btn-ghost btn-lg">
             <AppIcon name="trend" :size="18" />
-            See live rates
+            Explore live rates
           </NuxtLink>
         </div>
 
         <ul class="hero-trust reveal" style="transition-delay:0.32s">
           <li v-for="item in HERO_TRUST" :key="item">
             <AppIcon name="check" :size="15" />
-            {{ item }}
+            <span>{{ item }}</span>
+          </li>
+          <li>
+            <AppIcon name="shield" :size="15" />
+            <span>50,000+ active traders</span>
           </li>
         </ul>
       </div>
 
+      <!-- Right Column: Institutional Deriv Exchange Terminal -->
       <div class="hero-visual reveal" style="transition-delay:0.2s">
-        <span class="ring-orb" aria-hidden="true" />
-
-        <div ref="quoteRef" class="quote-card glass glass-hover neon-border">
-          <span class="glow-spot" aria-hidden="true" />
-          <div class="quote-head">
-            <p class="quote-label">USD / NGN</p>
-            <span class="chip chip--neon">
+        <div class="terminal-card">
+          <!-- Terminal Tab Bar -->
+          <div class="terminal-nav">
+            <div class="terminal-tabs">
+              <button
+                v-for="tab in marketTabs"
+                :key="tab.id"
+                type="button"
+                class="terminal-tab"
+                :class="{ 'terminal-tab--active': activeTab === tab.id }"
+                @click="activeTab = tab.id"
+              >
+                {{ tab.label }}
+              </button>
+            </div>
+            <div class="terminal-status" :title="`Feed source: ${rateSource}`">
               <span class="live-dot" :class="{ 'live-dot--off': !hasLiveRate }" />
-              {{ hasLiveRate ? 'Live' : 'Cached' }}
-            </span>
+              <span>{{ hasLiveRate ? 'Live Feed' : 'Connecting' }}</span>
+            </div>
           </div>
-          <p class="quote-rate grad-text">₦{{ liveRate.toLocaleString('en-NG') }}</p>
-          <p class="quote-sub">per $1 · source: {{ rateSource }}</p>
 
-          <ul class="quote-list">
-            <li v-for="card in featured" :key="card.id" class="quote-row">
-              <CardMark :card="card" size="sm" />
-              <div class="quote-meta">
-                <p class="quote-name">{{ card.name }}</p>
-                <p class="quote-cat">{{ card.eta }} payout</p>
+          <!-- Market Price Header -->
+          <div class="terminal-quote">
+            <div class="terminal-pair">
+              <span class="terminal-symbol">{{ activeAsset.name }}</span>
+              <span class="terminal-badge">+2.45% ▲</span>
+            </div>
+            <div class="terminal-rate-row">
+              <p class="terminal-rate">₦{{ Math.round(unitPrice).toLocaleString('en-NG') }}</p>
+              <span class="terminal-unit">/ $1.00 USD</span>
+            </div>
+            <p class="terminal-source">Pegged to Deriv WebSocket · Zero hidden markup</p>
+          </div>
+
+          <!-- Quick Converter Terminal -->
+          <div class="terminal-calc">
+            <div class="calc-type-bar">
+              <button
+                type="button"
+                class="calc-type-btn"
+                :class="{ 'calc-type-btn--active': tradeType === 'sell' }"
+                @click="tradeType = 'sell'"
+              >
+                I want to Sell
+              </button>
+              <button
+                type="button"
+                class="calc-type-btn"
+                :class="{ 'calc-type-btn--active': tradeType === 'buy' }"
+                @click="tradeType = 'buy'"
+              >
+                I want to Buy
+              </button>
+            </div>
+
+            <div class="terminal-inputs">
+              <div class="calc-field">
+                <label class="calc-label">You {{ tradeType === 'sell' ? 'send' : 'receive' }}</label>
+                <div class="calc-input-wrap">
+                  <span class="calc-currency">$</span>
+                  <input
+                    v-model.number="amount"
+                    type="number"
+                    min="10"
+                    step="10"
+                    placeholder="100"
+                    class="calc-input"
+                  />
+                  <span class="calc-asset-tag">USD</span>
+                </div>
               </div>
-              <p class="quote-val">{{ format(card.sellRate) }}</p>
-            </li>
-          </ul>
 
-          <NuxtLink to="/cards" class="btn-glass btn-block quote-cta">
-            Browse all gift cards
-            <AppIcon name="arrow" :size="16" />
-          </NuxtLink>
-        </div>
+              <div class="calc-arrow">
+                <AppIcon name="trend" :size="16" />
+              </div>
 
-        <div class="float-card glass glass-hover">
-          <span class="icon-tile icon-float">
-            <AppIcon name="bolt" :size="16" />
-          </span>
-          <div>
-            <p class="float-value">₦144,000</p>
-            <p class="float-label">$100 Deriv · settled in 6 min</p>
+              <div class="calc-field">
+                <label class="calc-label">You {{ tradeType === 'sell' ? 'receive' : 'pay' }}</label>
+                <div class="calc-payout-box">
+                  <span class="calc-payout-val">₦{{ estimatedPayout.toLocaleString('en-NG') }}</span>
+                  <span class="calc-asset-tag">NGN</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="terminal-meta-row">
+              <span class="meta-item"><AppIcon name="bolt" :size="14" /> {{ activeAsset.eta }} settlement</span>
+              <span class="meta-item"><AppIcon name="bank" :size="14" /> All Nigerian banks</span>
+              <span class="meta-item meta-item--fee">0% fee</span>
+            </div>
+
+            <NuxtLink :to="tradeType === 'sell' ? '/sell' : '/register'" class="btn btn-primary btn-block terminal-action">
+              {{ tradeType === 'sell' ? `Sell ${activeAsset.name} Now` : `Buy ${activeAsset.name}` }}
+              <AppIcon name="arrow" :size="17" />
+            </NuxtLink>
+          </div>
+
+          <!-- Recent Verified Settlements Strip -->
+          <div class="terminal-recent">
+            <div class="recent-title">
+              <span class="live-dot" />
+              <span>Recent Settlements</span>
+            </div>
+            <div class="recent-item">
+              <span class="recent-text">{{ currentFeedItem }}</span>
+              <span class="recent-tag">Verified</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- Bottom fade into next section -->
-    <div class="hero-fade" aria-hidden="true" />
   </section>
 </template>
 
 <script setup lang="ts">
-import { getFeaturedCards } from '~/data/cards'
+import { CARDS } from '~/data/cards'
 import { HERO_TRUST } from '~/data/site'
 
-const { liveRate, hasLiveRate, rateSource, format } = useDerivRate()
-const featured = getFeaturedCards()
+const { liveRate, hasLiveRate, rateSource } = useDerivRate()
 
 const heroRef = ref<HTMLElement | null>(null)
-const { el: quoteRef, bind } = useSpotlight()
-
 useReveal(heroRef)
 
-onMounted(() => bind(quoteRef.value))
+const activeTab = ref('deriv')
+const tradeType = ref<'sell' | 'buy'>('sell')
+const amount = ref<number>(100)
+
+const marketTabs = [
+  { id: 'deriv', label: 'Deriv USD' },
+  { id: 'usdt', label: 'USDT' },
+  { id: 'apple', label: 'Apple' },
+  { id: 'steam', label: 'Steam' },
+]
+
+const activeAsset = computed(() => {
+  return CARDS.find(c => c.id === activeTab.value) || CARDS[0]!
+})
+
+const unitPrice = computed(() => {
+  const rateFactor = tradeType.value === 'sell' ? activeAsset.value.sellRate : activeAsset.value.buyRate
+  return rateFactor * liveRate.value
+})
+
+const estimatedPayout = computed(() => {
+  const amt = amount.value || 0
+  return Math.round(amt * unitPrice.value)
+})
+
+const recentTrades = [
+  '$150 Deriv USD settled to GTBank (2m ago)',
+  '$200 Steam Card settled to OPay (4m ago)',
+  '$500 USDT settled to Access Bank (6m ago)',
+  '$100 Apple Card settled to Kuda (8m ago)',
+  '$300 Deriv USD settled to Zenith Bank (11m ago)',
+]
+
+const feedIndex = ref(0)
+const currentFeedItem = computed(() => recentTrades[feedIndex.value % recentTrades.length]!)
+
+onMounted(() => {
+  const timer = setInterval(() => {
+    feedIndex.value = (feedIndex.value + 1) % recentTrades.length
+  }, 4000)
+  onBeforeUnmount(() => clearInterval(timer))
+})
 </script>
 
 <style scoped>
 .hero {
   position: relative;
-  min-height: 100dvh;
+  min-height: calc(100dvh - var(--nav-h));
   display: flex;
   flex-direction: column;
   justify-content: center;
   overflow: hidden;
-  padding-block: calc(var(--nav-h) + clamp(48px, 7vw, 96px)) clamp(80px, 10vw, 140px);
+  padding-block: clamp(48px, 6vw, 84px) clamp(64px, 8vw, 100px);
+  background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(255, 68, 79, 0.05), transparent 70%);
 }
 
-/* ── Full-bleed background ─────────────────────────── */
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-.hero-bg-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 30%;
-  mix-blend-mode: luminosity;
-  opacity: 0.28;
-}
-.hero-bg-overlay {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 80% 60% at 70% 40%, rgb(var(--neon-2-rgb) / 0.12), transparent 65%),
-    radial-gradient(ellipse 60% 80% at 20% 60%, rgb(var(--neon-4-rgb) / 0.08), transparent 65%),
-    linear-gradient(to bottom, rgb(8 8 10 / 0.3) 0%, rgb(8 8 10 / 0.6) 60%, rgb(8 8 10 / 1) 100%);
-}
-
-/* ── Orbs ──────────────────────────────────────────── */
-.orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(90px);
-  pointer-events: none;
-  z-index: 1;
-}
-.orb-a {
-  width: 700px;
-  height: 700px;
-  top: -300px;
-  left: -200px;
-  background: radial-gradient(circle, rgb(var(--neon-2-rgb) / 0.28), transparent 70%);
-}
-.orb-b {
-  width: 600px;
-  height: 600px;
-  top: -100px;
-  right: -200px;
-  background: radial-gradient(circle, rgb(var(--neon-4-rgb) / 0.22), transparent 70%);
-}
-
-/* ── Layout ────────────────────────────────────────── */
 .hero-inner {
-  position: relative;
-  z-index: 2;
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: clamp(40px, 5vw, 80px);
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: clamp(36px, 5vw, 64px);
   align-items: center;
 }
 .hero-inner > * { min-width: 0; }
 
-/* ── Copy ──────────────────────────────────────────── */
-.hero-badge { margin-bottom: 28px; }
+/* ── Copy Column ─────────────────────────────────────────── */
+.hero-badge {
+  margin-bottom: 24px;
+}
 
 .hero-title {
-  font-size: clamp(48px, 7.5vw, 88px);
+  font-family: var(--font-display);
+  font-size: clamp(44px, 6.5vw, 76px);
   font-weight: 800;
-  letter-spacing: -0.045em;
-  line-height: 1.0;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  color: #ffffff;
+}
+
+.hero-accent {
+  color: var(--primary);
+  display: inline-block;
 }
 
 .hero-lede {
-  margin-top: 24px;
-  font-size: clamp(16px, 1.6vw, 19px);
+  margin-top: 22px;
+  font-size: clamp(16px, 1.4vw, 18px);
   color: var(--muted);
   max-width: 50ch;
-  line-height: 1.7;
+  line-height: 1.65;
+}
+
+.hero-actions {
+  margin-top: 32px;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
 }
 
 .hero-trust {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 24px;
-  margin-top: 32px;
+  gap: 12px 24px;
+  margin-top: 36px;
+  padding-top: 24px;
+  border-top: 1px solid var(--hairline);
 }
 .hero-trust li {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 8px;
   font-size: 13.5px;
+  font-weight: 500;
   color: var(--muted-2);
 }
 .hero-trust :deep(.icon) { color: var(--accent); }
 
-/* ── Visual ────────────────────────────────────────── */
+/* ── Right Column: Terminal ──────────────────────────────── */
 .hero-visual {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 16px;
 }
 
-.quote-card {
+.terminal-card {
   position: relative;
-  padding: 26px;
-  z-index: 1;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-xl);
+  box-shadow: 0 16px 48px -12px rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+  transition: border-color 0.2s var(--ease);
 }
-.quote-head {
+.terminal-card:hover {
+  border-color: #383e4d;
+}
+
+/* Terminal Tab Bar */
+.terminal-nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  padding: 12px 18px;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--hairline);
 }
-.quote-label {
-  font-size: 12px;
+
+.terminal-tabs {
+  display: flex;
+  gap: 4px;
+}
+
+.terminal-tab {
+  padding: 6px 14px;
+  border-radius: var(--r-sm);
+  font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.12em;
+  color: var(--muted);
+  background: transparent;
+  transition: all 0.15s;
+}
+.terminal-tab:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+}
+.terminal-tab--active {
+  color: #fff;
+  background: #111317;
+  border: 1px solid var(--hairline);
+}
+
+.terminal-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+/* Rate Header */
+.terminal-quote {
+  padding: 24px 24px 18px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.terminal-pair {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.terminal-symbol {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.terminal-badge {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent);
+  background: rgba(0, 167, 103, 0.1);
+  padding: 3px 8px;
+  border-radius: var(--r-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.terminal-rate-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.terminal-rate {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 4vw, 44px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+  font-variant-numeric: tabular-nums;
+}
+
+.terminal-unit {
+  font-size: 14px;
   color: var(--muted-2);
 }
-.quote-rate {
-  font-family: var(--font-display);
-  font-size: clamp(36px, 4vw, 48px);
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 1.05;
-  margin-top: 8px;
-  font-variant-numeric: tabular-nums;
-}
-.quote-sub {
+
+.terminal-source {
   font-size: 12.5px;
-  color: var(--muted-3);
+  color: var(--muted-2);
   margin-top: 4px;
 }
-.quote-list {
-  list-style: none;
-  margin: 22px 0 20px;
+
+/* Converter Form */
+.terminal-calc {
+  padding: 20px 24px;
+}
+
+.calc-type-bar {
+  display: flex;
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  padding: 3px;
+  margin-bottom: 16px;
+}
+
+.calc-type-btn {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: var(--r-sm);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  transition: all 0.15s;
+  text-align: center;
+}
+.calc-type-btn--active {
+  background: #111317;
+  color: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
+.terminal-inputs {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
-.quote-row {
+
+.calc-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.calc-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted-2);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.calc-input-wrap,
+.calc-payout-box {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
   border-radius: var(--r-md);
-  background: rgb(255 255 255 / 0.03);
-  border: 1px solid var(--glass-border);
-  transition: background 0.25s var(--ease), border-color 0.25s var(--ease), transform 0.25s var(--ease);
+  padding: 4px 14px;
+  transition: border-color 0.2s;
 }
-.quote-row:hover {
-  background: rgb(255 255 255 / 0.06);
-  border-color: rgb(var(--neon-2-rgb) / 0.35);
-  transform: translateX(3px);
+.calc-input-wrap:focus-within {
+  border-color: var(--primary);
 }
-.quote-meta { flex: 1; min-width: 0; }
-.quote-name {
-  font-size: 13.5px;
-  font-weight: 600;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.quote-cat { font-size: 11.5px; color: var(--muted-3); }
-.quote-val {
-  flex-shrink: 0;
-  font-size: 14px;
+
+.calc-currency {
+  font-size: 16px;
   font-weight: 700;
-  color: var(--neon-5);
+  color: var(--muted);
+  margin-right: 8px;
+}
+
+.calc-input {
+  flex: 1;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  padding: 8px 0;
+  border: none;
+  background: transparent;
+  outline: none;
+}
+
+.calc-payout-box {
+  padding: 12px 14px;
+  justify-content: space-between;
+}
+
+.calc-payout-val {
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
   font-variant-numeric: tabular-nums;
 }
-.quote-cta { font-size: 14px; }
 
-.float-card {
-  position: relative;
+.calc-asset-tag {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted-2);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 2px 7px;
+  border-radius: var(--r-xs);
+}
+
+.calc-arrow {
+  display: flex;
+  justify-content: center;
+  color: var(--muted-3);
+  margin-block: -4px;
+}
+
+.terminal-meta-row {
   display: flex;
   align-items: center;
-  gap: 13px;
-  align-self: flex-end;
-  padding: 13px 17px;
-  border-radius: var(--r-lg);
-  z-index: 2;
-  animation: float 7s var(--ease) 0.6s infinite;
+  justify-content: space-between;
+  margin-top: 14px;
+  font-size: 12.5px;
+  color: var(--muted);
 }
-.float-value { font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; }
-.float-label { font-size: 11.5px; color: var(--muted-3); }
-
-/* ── Bottom fade ───────────────────────────────────── */
-.hero-fade {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 180px;
-  background: linear-gradient(to bottom, transparent, var(--bg));
-  z-index: 2;
-  pointer-events: none;
+.meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.meta-item--fee {
+  color: var(--accent);
+  font-weight: 700;
 }
 
-/* ── Reveal overrides (hero items start visible after delay) */
+.terminal-action {
+  margin-top: 18px;
+  padding: 13px 20px;
+  font-size: 15px;
+}
+
+/* Recent Settlements Strip */
+.terminal-recent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  background: #0f1014;
+  border-top: 1px solid var(--hairline);
+  font-size: 12px;
+}
+
+.recent-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted-2);
+  font-weight: 600;
+}
+
+.recent-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.recent-text {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.recent-tag {
+  background: rgba(0, 167, 103, 0.12);
+  color: var(--accent);
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: var(--r-xs);
+  font-size: 10.5px;
+}
+
+/* Reveal transition */
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.75s var(--ease), transform 0.75s var(--ease);
+  transform: translateY(20px);
+  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
 }
 .reveal.is-in {
   opacity: 1;
   transform: none;
 }
 
-/* ── Responsive ────────────────────────────────────── */
-@media (max-width: 1024px) {
-  .hero-inner { grid-template-columns: 1fr; }
-  .hero-visual { max-width: 480px; }
+@media (max-width: 980px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
 }
-@media (max-width: 720px) {
-  .hero { min-height: 100svh; padding-block: calc(var(--nav-h) + 32px) 64px; }
-  .hero-bg-img { object-position: 65% 30%; }
-  .hero-visual { max-width: none; }
-  .quote-card { padding: 20px; }
-  .float-card { padding: 12px 14px; gap: 10px; animation: float-subtle 7.5s var(--ease) 0.6s infinite; }
-  .float-value { font-size: 14px; }
-  .float-label { font-size: 11px; }
+@media (max-width: 640px) {
+  .hero-title {
+    font-size: 40px;
+  }
+  .terminal-nav {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
 }
 </style>
+
