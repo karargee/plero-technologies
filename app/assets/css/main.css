@@ -113,10 +113,10 @@
   --nav-h: 68px;
 }
 
-/* Below 1024px the nav collapses to hamburger — single row, same height. */
+/* Below 1024px the nav bar gains a second row (rate + CTA strip). */
 @media (max-width: 1024px) {
   :root {
-    --nav-h: 64px;
+    --nav-h: 108px;
   }
 }
 

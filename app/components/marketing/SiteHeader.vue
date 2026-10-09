@@ -25,7 +25,7 @@
         </NuxtLink>
       </nav>
 
-      <!-- Desktop actions + hamburger -->
+      <!-- Desktop actions -->
       <div class="nav-actions">
         <NuxtLink to="/rates" class="rate-pill" :title="hasLiveRate ? 'Live Deriv rate' : 'Cached rate'">
           <span class="live-dot" :class="{ 'live-dot--off': !hasLiveRate }" />
@@ -34,6 +34,7 @@
         <NuxtLink to="/login" class="btn btn-ghost nav-auth">Log in</NuxtLink>
         <NuxtLink to="/register" class="btn btn-primary nav-cta">Get started</NuxtLink>
 
+        <!-- Hamburger (mobile only) -->
         <button
           type="button"
           class="burger"
@@ -47,9 +48,20 @@
         </button>
       </div>
     </div>
+
+    <!-- Mobile rate bar — visible below 1024px, above the drawer -->
+    <div class="mobile-rate-bar">
+      <NuxtLink to="/rates" class="mobile-rate-pill" @click="menuOpen = false">
+        <span class="live-dot" :class="{ 'live-dot--off': !hasLiveRate }" />
+        <span>$1 = ₦{{ liveRate.toLocaleString('en-NG') }}</span>
+        <span class="mobile-rate-label">{{ hasLiveRate ? 'Live rate' : 'Cached' }}</span>
+      </NuxtLink>
+      <NuxtLink to="/register" class="mobile-cta-btn" @click="menuOpen = false">
+        Get started
+      </NuxtLink>
+    </div>
   </header>
 
-  <!-- Teleport drawer + backdrop outside header to avoid stacking context issues -->
   <Teleport to="body">
     <Transition name="fade">
       <div v-if="menuOpen" class="backdrop" @click="menuOpen = false" aria-hidden="true" />
@@ -63,14 +75,9 @@
         aria-modal="true"
         aria-label="Navigation menu"
       >
-        <!-- Live rate -->
-        <div class="drawer-rate">
-          <span class="live-dot" :class="{ 'live-dot--off': !hasLiveRate }" />
-          <span class="drawer-rate-value">$1 = ₦{{ liveRate.toLocaleString('en-NG') }}</span>
-          <span class="drawer-rate-badge">{{ hasLiveRate ? 'Live' : 'Cached' }}</span>
-        </div>
+        <!-- Nav section label -->
+        <p class="drawer-section-label">Navigation</p>
 
-        <!-- Nav links -->
         <nav class="drawer-nav" aria-label="Mobile navigation">
           <NuxtLink
             v-for="link in NAV_LINKS"
@@ -80,21 +87,41 @@
             :class="{ 'drawer-link--active': isActive(link.to) }"
             @click="menuOpen = false"
           >
-            <span>{{ link.label }}</span>
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <span class="drawer-link-icon">
+              <svg v-if="link.to === '/markets'" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 12 6 7l3 3 5-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg v-else-if="link.to === '/rates'" width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M8 5v3l2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <svg v-else-if="link.to === '/cards'" width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="4" width="12" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M2 7h12" stroke="currentColor" stroke-width="1.5"/></svg>
+              <svg v-else-if="link.to === '/how-it-works'" width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M8 7.5V11M8 5.5v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <svg v-else width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2a6 6 0 1 0 0 12A6 6 0 0 0 8 2zM8 7v4M8 5.5v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </span>
+            <span class="drawer-link-label">{{ link.label }}</span>
+            <svg class="drawer-link-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M6 3.5 10.5 8 6 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </NuxtLink>
         </nav>
 
-        <!-- Auth -->
-        <div class="drawer-auth">
-          <NuxtLink to="/register" class="btn btn-primary btn-block" @click="menuOpen = false">
-            Get started — it's free
+        <!-- Divider -->
+        <div class="drawer-divider" />
+
+        <!-- Account section -->
+        <p class="drawer-section-label">Account</p>
+        <div class="drawer-account">
+          <NuxtLink to="/register" class="btn btn-primary btn-block drawer-btn" @click="menuOpen = false">
+            Create free account
           </NuxtLink>
-          <NuxtLink to="/login" class="btn btn-ghost btn-block" @click="menuOpen = false">
-            Log in
+          <NuxtLink to="/login" class="btn btn-ghost btn-block drawer-btn" @click="menuOpen = false">
+            Log in to Plero
           </NuxtLink>
+        </div>
+
+        <!-- Footer strip -->
+        <div class="drawer-footer">
+          <NuxtLink to="/support" class="drawer-support-link" @click="menuOpen = false">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M6.5 6.5a1.5 1.5 0 0 1 3 .5c0 1-1.5 1.5-1.5 2.5M8 11.5v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            Need help? Contact support
+          </NuxtLink>
+          <span class="drawer-version">Plero Technologies</span>
         </div>
       </div>
     </Transition>
@@ -145,12 +172,10 @@ onBeforeUnmount(() => {
   position: fixed;
   inset: 0 0 auto;
   z-index: 200;
-  height: var(--nav-h);
-  background: rgba(14, 14, 14, 0.95);
+  background: rgba(14, 14, 14, 0.97);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--hairline);
-  transition: border-color 0.25s;
 }
 
 .nav-progress {
@@ -163,15 +188,17 @@ onBeforeUnmount(() => {
   transform: scaleX(0);
   background: var(--primary);
   opacity: 0.9;
+  z-index: 1;
 }
 
 .nav-inner {
-  height: var(--nav-h);
+  height: 64px;
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
+/* ── Brand ─────────────────────────────────────────── */
 .brand {
   display: flex;
   align-items: center;
@@ -205,6 +232,7 @@ onBeforeUnmount(() => {
   color: var(--muted-2);
 }
 
+/* ── Desktop nav ───────────────────────────────────── */
 .nav-links {
   display: flex;
   align-items: center;
@@ -255,8 +283,8 @@ onBeforeUnmount(() => {
   justify-content: center;
   align-items: center;
   gap: 5px;
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
   border-radius: var(--r-md);
   border: 1px solid var(--hairline);
   background: var(--surface-2);
@@ -279,10 +307,56 @@ onBeforeUnmount(() => {
 .burger[aria-expanded="true"] .burger-line:nth-child(2) { opacity: 0; transform: scaleX(0); }
 .burger[aria-expanded="true"] .burger-line:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
+/* ── Mobile rate bar (shown below nav bar on mobile) ── */
+.mobile-rate-bar {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background: var(--surface);
+  border-top: 1px solid var(--hairline);
+}
+
+.mobile-rate-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.mobile-rate-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+  padding: 2px 7px;
+  border-radius: var(--r-full);
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+}
+
+.mobile-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 16px;
+  border-radius: var(--r-md);
+  background: var(--primary);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.mobile-cta-btn:hover { background: var(--primary-hover); }
+
 /* ── Responsive ────────────────────────────────────── */
 @media (max-width: 1024px) {
   .nav-links, .nav-auth, .nav-cta, .rate-pill { display: none; }
   .burger { display: flex; }
+  .mobile-rate-bar { display: flex; }
 }
 @media (max-width: 480px) {
   .brand-sub { display: none; }
@@ -291,13 +365,14 @@ onBeforeUnmount(() => {
 }
 </style>
 
-<!-- Unscoped styles for teleported elements (outside this component's DOM) -->
+<!-- Unscoped: teleported drawer lives outside this component's DOM -->
 <style>
 .backdrop {
   position: fixed;
   inset: 0;
   z-index: 201;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(2px);
 }
 
 .drawer {
@@ -307,54 +382,36 @@ onBeforeUnmount(() => {
   right: 0;
   height: calc(100dvh - var(--nav-h));
   z-index: 202;
-  background: #0a0a0c;
+  background: #0c0c0f;
   border-top: 1px solid var(--hairline);
   display: flex;
   flex-direction: column;
-  padding: 16px 20px 40px;
-  gap: 4px;
+  padding: 20px 16px 32px;
   overflow-y: auto;
 }
 
-.drawer-rate {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 13px 16px;
-  border-radius: 12px;
-  background: rgba(0, 167, 103, 0.08);
-  border: 1px solid rgba(0, 167, 103, 0.2);
-  margin-bottom: 10px;
-}
-.drawer-rate-value {
-  font-size: 15px;
+.drawer-section-label {
+  font-size: 10.5px;
   font-weight: 700;
-  color: var(--accent);
-  font-variant-numeric: tabular-nums;
-  flex: 1;
-}
-.drawer-rate-badge {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--accent);
-  background: rgba(0, 167, 103, 0.12);
-  padding: 3px 8px;
-  border-radius: 999px;
+  color: var(--muted-3);
+  padding: 0 4px;
+  margin-bottom: 8px;
 }
 
 .drawer-nav {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  flex: 1;
+  gap: 3px;
+  margin-bottom: 8px;
 }
+
 .drawer-link {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 14px 16px;
+  gap: 12px;
+  padding: 13px 14px;
   border-radius: 10px;
   font-size: 15px;
   font-weight: 600;
@@ -369,29 +426,100 @@ onBeforeUnmount(() => {
   border-color: var(--hairline);
 }
 .drawer-link--active {
-  background: rgba(255, 68, 79, 0.08);
+  background: rgba(255, 68, 79, 0.07);
   color: #fff;
-  border-color: rgba(255, 68, 79, 0.2);
+  border-color: rgba(255, 68, 79, 0.18);
 }
-.drawer-link svg { opacity: 0.25; flex-shrink: 0; }
-.drawer-link--active svg { opacity: 0.5; color: var(--primary); }
 
-.drawer-auth {
+.drawer-link-icon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  color: var(--muted);
+  flex-shrink: 0;
+  transition: background 0.15s, color 0.15s;
+}
+.drawer-link:hover .drawer-link-icon,
+.drawer-link--active .drawer-link-icon {
+  background: rgba(255, 68, 79, 0.1);
+  border-color: rgba(255, 68, 79, 0.2);
+  color: var(--primary);
+}
+
+.drawer-link-label {
+  flex: 1;
+}
+
+.drawer-link-arrow {
+  opacity: 0.2;
+  flex-shrink: 0;
+  transition: opacity 0.15s, transform 0.15s;
+}
+.drawer-link:hover .drawer-link-arrow {
+  opacity: 0.5;
+  transform: translateX(2px);
+}
+.drawer-link--active .drawer-link-arrow {
+  opacity: 0.4;
+  color: var(--primary);
+}
+
+.drawer-divider {
+  height: 1px;
+  background: var(--hairline);
+  margin: 16px 0;
+}
+
+.drawer-account {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding-top: 16px;
-  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.drawer-btn {
+  height: 48px;
+  font-size: 14.5px;
+  border-radius: var(--r-lg);
+}
+
+.drawer-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 20px;
   border-top: 1px solid var(--hairline);
 }
 
-/* Transitions */
-.drawer-enter-active { transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease; }
-.drawer-leave-active { transition: transform 0.25s ease, opacity 0.2s ease; }
-.drawer-enter-from  { transform: translateY(-16px); opacity: 0; }
-.drawer-leave-to    { transform: translateY(-8px);  opacity: 0; }
+.drawer-support-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted-2);
+  transition: color 0.15s;
+}
+.drawer-support-link:hover { color: var(--text); }
 
-.fade-enter-active { transition: opacity 0.25s ease; }
-.fade-leave-active { transition: opacity 0.2s ease; }
+.drawer-version {
+  font-size: 12px;
+  color: var(--muted-3);
+  font-weight: 500;
+}
+
+/* Transitions */
+.drawer-enter-active { transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.22s ease; }
+.drawer-leave-active { transition: transform 0.22s ease, opacity 0.18s ease; }
+.drawer-enter-from  { transform: translateY(-12px); opacity: 0; }
+.drawer-leave-to    { transform: translateY(-6px);  opacity: 0; }
+
+.fade-enter-active { transition: opacity 0.22s ease; }
+.fade-leave-active { transition: opacity 0.18s ease; }
 .fade-enter-from, .fade-leave-to { opacity: 0; }
 </style>
