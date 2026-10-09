@@ -116,7 +116,7 @@
 /* Below 1024px the nav collapses to hamburger — single row, same height. */
 @media (max-width: 1024px) {
   :root {
-    --nav-h: 68px;
+    --nav-h: 64px;
   }
 }
 
@@ -225,7 +225,7 @@ svg {
   width: 100%;
   max-width: 1200px;
   margin-inline: auto;
-  padding-inline: clamp(20px, 5vw, 40px);
+  padding-inline: clamp(16px, 5vw, 40px);
 }
 
 .section {
@@ -236,7 +236,16 @@ svg {
 /* Vertical rhythm is generous on desktop and wasteful on a phone. */
 @media (max-width: 720px) {
   .section {
-    padding-block: clamp(48px, 11vw, 68px);
+    padding-block: 48px 56px;
+  }
+  .section-title {
+    font-size: clamp(24px, 7vw, 34px);
+  }
+  .section-lede {
+    font-size: 15px;
+  }
+  .section-head {
+    margin-bottom: 28px;
   }
 }
 

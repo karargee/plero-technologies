@@ -303,6 +303,46 @@ useReveal(sectionRef)
     grid-row: auto;
   }
 }
+@media (max-width: 640px) {
+  .tile--hero,
+  .tile--crypto,
+  .tile--speed,
+  .tile--cards,
+  .tile--chart {
+    grid-column: span 12;
+    grid-row: auto;
+  }
+  .tile {
+    padding: 20px 18px;
+    gap: 14px;
+  }
+  .rates {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    padding: 12px;
+  }
+  .rate-value {
+    font-size: 14px;
+  }
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .category-tabs {
+    gap: 6px;
+  }
+  .cat-pill {
+    padding: 7px 14px;
+    font-size: 13px;
+  }
+  .metric {
+    font-size: 42px;
+  }
+  .tile-foot {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}
 
 .tile-top {
   display: flex;

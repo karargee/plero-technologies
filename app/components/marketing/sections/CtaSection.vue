@@ -72,6 +72,21 @@ withDefaults(
 .cta-actions {
   justify-content: center;
   margin-top: 32px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+  .cta {
+    padding-block: 56px;
+  }
+  .cta-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .cta-actions .btn-lg {
+    width: 100%;
+    justify-content: center;
+  }
 }
 </style>
 

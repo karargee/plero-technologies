@@ -97,9 +97,16 @@ useReveal(sectionRef)
     grid-template-columns: repeat(2, 1fr);
   }
 }
-@media (max-width: 600px) {
+@media (max-width: 560px) {
   .feature-grid {
     grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .feature-card {
+    padding: 22px 20px;
+  }
+  .feature-icon-wrap {
+    margin-bottom: 14px;
   }
 }
 </style>

@@ -568,14 +568,60 @@ const estimatedPayout = computed(() => {
 @media (max-width: 980px) {
   .hero-inner {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 36px;
+  }
+  .hero {
+    padding-block: clamp(40px, 6vw, 72px) clamp(48px, 7vw, 80px);
   }
 }
 @media (max-width: 640px) {
   .hero-title {
-    font-size: 40px;
+    font-size: clamp(36px, 10vw, 48px);
+  }
+  .hero-lede {
+    font-size: 15px;
+    margin-top: 16px;
+  }
+  .hero-actions {
+    margin-top: 24px;
+    gap: 10px;
+  }
+  .hero-actions .btn-lg {
+    padding: 12px 20px;
+    font-size: 14px;
+    flex: 1;
+    justify-content: center;
+  }
+  .hero-trust {
+    margin-top: 24px;
+    padding-top: 18px;
+    gap: 10px 18px;
+  }
+  .hero-trust li {
+    font-size: 13px;
   }
   .terminal-nav {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px 14px;
+  }
+  .terminal-tabs {
+    gap: 2px;
+  }
+  .terminal-tab {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+  .terminal-rate {
+    font-size: clamp(28px, 8vw, 38px);
+  }
+  .terminal-quote {
+    padding: 18px 18px 14px;
+  }
+  .terminal-calc {
+    padding: 16px 18px;
+  }
+  .terminal-meta-row {
     flex-wrap: wrap;
     gap: 8px;
   }

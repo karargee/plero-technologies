@@ -112,7 +112,10 @@ useReveal(sectionRef)
 @media (max-width: 860px) {
   .steps-grid {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 14px;
+  }
+  .step-card {
+    padding: 24px 20px;
   }
 }
 </style>

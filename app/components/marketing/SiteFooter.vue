@@ -238,16 +238,43 @@ const subscribed = ref(false)
 @media (max-width: 1024px) {
   .footer-top {
     grid-template-columns: 1fr 1fr;
+    gap: 32px;
   }
   .footer-brand,
   .footer-col--wide {
     grid-column: 1 / -1;
   }
 }
-@media (max-width: 560px) {
+@media (max-width: 640px) {
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px 20px;
+  }
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+  .footer-col--wide {
+    grid-column: 1 / -1;
+  }
+  .footer-desc {
+    max-width: 100%;
+  }
+}
+@media (max-width: 480px) {
+  .footer-top {
+    grid-template-columns: 1fr;
+  }
   .footer-bottom {
     flex-direction: column;
     align-items: flex-start;
+    gap: 12px;
+  }
+  .bottom-links {
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .footer-disclosure {
+    font-size: 11.5px;
   }
 }
 </style>

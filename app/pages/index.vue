@@ -67,7 +67,7 @@ useHead({
 
 <style scoped>
 .terminal-section {
-  padding-block: clamp(56px, 7vw, 96px);
+  padding-block: clamp(48px, 7vw, 96px);
   border-top: 1px solid var(--hairline);
   background: var(--bg-alt);
 }
@@ -78,6 +78,15 @@ useHead({
 
 .terminal-container {
   margin-top: 28px;
+  overflow: hidden;
+  border-radius: var(--r-xl);
+}
+
+@media (max-width: 640px) {
+  .terminal-container {
+    margin-top: 20px;
+    border-radius: var(--r-lg);
+  }
 }
 </style>
 
