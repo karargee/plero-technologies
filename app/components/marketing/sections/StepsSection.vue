@@ -9,7 +9,7 @@
         </p>
       </div>
 
-      <div class="steps-grid reveal" style="transition-delay:0.15s">
+      <div class="steps-grid reveal reveal-stagger" style="transition-delay:0.15s">
         <div
           v-for="step in STEPS"
           :key="step.num"
@@ -52,16 +52,20 @@ useReveal(sectionRef)
 
 .step-card {
   padding: 32px 28px;
-  background: var(--surface);
-  border: 1px solid var(--hairline);
+  background: var(--glass-surface);
+  backdrop-filter: var(--glass-blur-sm);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  border: 1px solid var(--glass-border-glow);
   border-radius: var(--r-xl);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
   display: flex;
   flex-direction: column;
-  transition: border-color 0.2s var(--ease), transform 0.2s var(--ease);
+  transition: border-color 0.25s var(--ease), transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
 }
 .step-card:hover {
-  border-color: #3b4254;
-  transform: translateY(-2px);
+  border-color: rgba(255,255,255,0.1);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px -10px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08);
 }
 
 .step-card-top {

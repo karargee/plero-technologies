@@ -11,7 +11,7 @@
         </p>
       </div>
 
-      <div class="feature-grid reveal" style="transition-delay:0.15s">
+      <div class="feature-grid reveal reveal-stagger" style="transition-delay:0.15s">
         <div
           v-for="feature in FEATURES"
           :key="feature.title"
@@ -55,14 +55,18 @@ useReveal(sectionRef)
 
 .feature-card {
   padding: 28px 24px;
-  background: var(--surface);
-  border: 1px solid var(--hairline);
+  background: var(--glass-surface);
+  backdrop-filter: var(--glass-blur-sm);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  border: 1px solid var(--glass-border-glow);
   border-radius: var(--r-lg);
-  transition: border-color 0.2s var(--ease), transform 0.2s var(--ease);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+  transition: border-color 0.25s var(--ease), transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
 }
 .feature-card:hover {
-  border-color: #3b4354;
-  transform: translateY(-2px);
+  border-color: rgba(255,255,255,0.1);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px -8px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08);
 }
 
 .feature-icon-wrap {

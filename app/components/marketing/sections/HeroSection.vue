@@ -219,22 +219,38 @@ const estimatedPayout = computed(() => {
     radial-gradient(ellipse 60% 80% at 20% 60%, rgb(var(--neon-4-rgb) / 0.07), transparent 65%),
     linear-gradient(to bottom, rgb(8 8 10 / 0.2) 0%, rgb(8 8 10 / 0.55) 60%, rgb(8 8 10 / 1) 100%);
 }
+
+/* Animated grid texture */
+.hero-bg-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: grid-pan 20s linear infinite;
+  opacity: 0.6;
+}
+
 .hero-orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(90px);
+  filter: blur(80px);
   pointer-events: none;
   z-index: 1;
 }
 .hero-orb--a {
-  width: 600px; height: 600px;
-  top: -280px; left: -160px;
-  background: radial-gradient(circle, rgb(var(--neon-2-rgb) / 0.22), transparent 70%);
+  width: 700px; height: 700px;
+  top: -320px; left: -200px;
+  background: radial-gradient(circle, rgb(var(--neon-2-rgb) / 0.28), transparent 70%);
+  animation: orb-drift 18s ease-in-out infinite;
 }
 .hero-orb--b {
-  width: 500px; height: 500px;
-  top: -100px; right: -180px;
-  background: radial-gradient(circle, rgb(var(--neon-4-rgb) / 0.18), transparent 70%);
+  width: 600px; height: 600px;
+  top: -80px; right: -220px;
+  background: radial-gradient(circle, rgb(var(--neon-4-rgb) / 0.22), transparent 70%);
+  animation: orb-drift-reverse 22s ease-in-out infinite;
 }
 
 .hero-inner {
@@ -305,19 +321,39 @@ const estimatedPayout = computed(() => {
   position: relative;
   display: flex;
   flex-direction: column;
+  animation: float-subtle 8s ease-in-out infinite;
 }
 
 .terminal-card {
   position: relative;
-  background: var(--surface);
-  border: 1px solid var(--hairline);
+  background: var(--glass-surface);
+  backdrop-filter: var(--glass-blur-lg);
+  -webkit-backdrop-filter: var(--glass-blur-lg);
+  border: 1px solid var(--glass-border-glow);
   border-radius: var(--r-xl);
-  box-shadow: 0 16px 48px -12px rgba(0, 0, 0, 0.7);
+  box-shadow:
+    0 24px 64px -16px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3);
   overflow: hidden;
-  transition: border-color 0.2s var(--ease);
+  transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease), transform 0.3s var(--ease);
 }
+.terminal-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--glass-shine);
+  pointer-events: none;
+  z-index: 0;
+}
+.terminal-card > * { position: relative; z-index: 1; }
 .terminal-card:hover {
-  border-color: #383e4d;
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 32px 80px -16px rgba(0, 0, 0, 0.85),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 0 0 1px rgba(255, 68, 79, 0.08);
+  transform: translateY(-2px);
 }
 
 /* Terminal Tab Bar */
@@ -326,8 +362,9 @@ const estimatedPayout = computed(() => {
   align-items: center;
   justify-content: space-between;
   padding: 12px 18px;
-  background: var(--surface-2);
-  border-bottom: 1px solid var(--hairline);
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(8px);
 }
 
 .terminal-tabs {

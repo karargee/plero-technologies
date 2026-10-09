@@ -257,13 +257,29 @@ useReveal(sectionRef)
   flex-direction: column;
   gap: 16px;
   padding: clamp(22px, 2.5vw, 30px);
-  background: var(--surface);
-  border: 1px solid var(--hairline);
+  background: var(--glass-surface);
+  backdrop-filter: var(--glass-blur-sm);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  border: 1px solid var(--glass-border-glow);
   border-radius: var(--r-xl);
-  transition: border-color 0.2s var(--ease);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+  transition: border-color 0.25s var(--ease), transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+  overflow: hidden;
 }
+.tile::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--glass-shine);
+  pointer-events: none;
+  z-index: 0;
+  border-radius: inherit;
+}
+.tile > * { position: relative; z-index: 1; }
 .tile:hover {
-  border-color: #383f4f;
+  border-color: rgba(255,255,255,0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px -10px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08);
 }
 
 .tile--hero {

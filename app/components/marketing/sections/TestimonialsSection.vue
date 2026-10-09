@@ -58,17 +58,21 @@ useReveal(sectionRef)
 
 .review-card {
   padding: 30px 26px;
-  background: var(--surface);
-  border: 1px solid var(--hairline);
+  background: var(--glass-surface);
+  backdrop-filter: var(--glass-blur-sm);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  border: 1px solid var(--glass-border-glow);
   border-radius: var(--r-xl);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: border-color 0.2s var(--ease), transform 0.2s var(--ease);
+  transition: border-color 0.25s var(--ease), transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
 }
 .review-card:hover {
-  border-color: #3b4254;
-  transform: translateY(-2px);
+  border-color: rgba(255,255,255,0.1);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px -10px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08);
 }
 
 .review-stars {

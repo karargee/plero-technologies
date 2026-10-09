@@ -111,6 +111,15 @@
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --spring: cubic-bezier(0.25, 1, 0.5, 1);
   --nav-h: 68px;
+
+  /* Glassmorphism tokens */
+  --glass-surface: rgba(21, 23, 28, 0.72);
+  --glass-surface-2: rgba(26, 29, 36, 0.80);
+  --glass-blur-sm: blur(12px);
+  --glass-blur-md: blur(20px);
+  --glass-blur-lg: blur(32px);
+  --glass-shine: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.01) 50%, transparent 100%);
+  --glass-border-glow: rgba(255, 255, 255, 0.08);
 }
 
 /* Below 1024px the nav bar gains a second row (rate + CTA strip). */
@@ -344,11 +353,41 @@ svg {
 }
 
 @keyframes float-subtle {
-  0%, 100% { transform: translateY(0); }
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33%       { transform: translateY(-8px) rotate(0.5deg); }
+  66%       { transform: translateY(-4px) rotate(-0.5deg); }
 }
 
 @keyframes float {
   0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-12px); }
+}
+
+@keyframes orb-drift {
+  0%   { transform: translate(0, 0) scale(1); }
+  25%  { transform: translate(30px, -20px) scale(1.05); }
+  50%  { transform: translate(10px, -40px) scale(0.97); }
+  75%  { transform: translate(-20px, -15px) scale(1.03); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes orb-drift-reverse {
+  0%   { transform: translate(0, 0) scale(1); }
+  25%  { transform: translate(-25px, 20px) scale(1.04); }
+  50%  { transform: translate(-10px, 35px) scale(0.98); }
+  75%  { transform: translate(20px, 10px) scale(1.02); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes grid-pan {
+  from { background-position: 0 0; }
+  to   { background-position: 40px 40px; }
+}
+
+@keyframes shine-sweep {
+  0%   { opacity: 0; transform: translateX(-100%) skewX(-15deg); }
+  50%  { opacity: 1; }
+  100% { opacity: 0; transform: translateX(200%) skewX(-15deg); }
 }
 
 .glow-orb {
@@ -677,13 +716,21 @@ svg {
 
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.75s var(--ease), transform 0.75s var(--ease);
+  transform: translateY(32px);
+  transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
 }
 .reveal.is-in {
   opacity: 1;
   transform: none;
 }
+
+/* Stagger helpers — apply to children inside a reveal container */
+.reveal-stagger > *:nth-child(1) { transition-delay: 0.05s; }
+.reveal-stagger > *:nth-child(2) { transition-delay: 0.12s; }
+.reveal-stagger > *:nth-child(3) { transition-delay: 0.19s; }
+.reveal-stagger > *:nth-child(4) { transition-delay: 0.26s; }
+.reveal-stagger > *:nth-child(5) { transition-delay: 0.33s; }
+.reveal-stagger > *:nth-child(6) { transition-delay: 0.40s; }
 
 .skeleton {
   background: linear-gradient(90deg, #16161c 25%, #1f1f28 50%, #16161c 75%);
@@ -714,30 +761,57 @@ svg {
    Deriv Institutional Fintech Primitives
    ═══════════════════════════════════════════════════════════ */
 
-/* ── Fintech Surfaces ────────────────────────────────────── */
+/* ── Glassmorphism Surfaces ──────────────────────────────── */
 
 .glass,
 .glass-soft {
   position: relative;
-  background: var(--surface);
-  border: 1px solid var(--hairline);
+  background: var(--glass-surface);
+  backdrop-filter: var(--glass-blur-md);
+  -webkit-backdrop-filter: var(--glass-blur-md);
+  border: 1px solid var(--glass-border-glow);
   border-radius: var(--r-lg);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255,255,255,0.05);
   overflow: hidden;
 }
+.glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--glass-shine);
+  pointer-events: none;
+  z-index: 0;
+}
+.glass > * { position: relative; z-index: 1; }
 
 .glass-soft {
-  background: var(--surface-2);
+  background: var(--glass-surface-2);
 }
+
+/* Panel gets glass treatment too */
+.panel {
+  position: relative;
+  overflow: hidden;
+}
+.panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--glass-shine);
+  pointer-events: none;
+  z-index: 0;
+  border-radius: inherit;
+}
+.panel > * { position: relative; z-index: 1; }
 
 /* Interactive hover */
 .glass-hover {
-  transition: transform 0.2s var(--ease), border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+  transition: transform 0.25s var(--ease), border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
 }
 .glass-hover:hover {
-  transform: translateY(-2px);
-  border-color: #383e4d;
-  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+  border-color: rgba(255,255,255,0.12);
+  box-shadow: var(--shadow-md), 0 0 0 1px rgba(255,255,255,0.06), inset 0 1px 0 rgba(255,255,255,0.08);
 }
 
 .glow-spot {
