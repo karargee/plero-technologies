@@ -27,8 +27,14 @@ type Listener = (message: DerivMessage) => void
 /** Re-run on every (re)connect so subscriptions survive a dropped socket. */
 type OpenHook = () => void
 
-const SOCKET_URL = 'wss://ws.binaryws.com/websockets/v3'
 const MAX_RETRY_DELAY = 30_000
+
+/** Candidate WebSocket endpoints — tried in order until one connects. */
+const WS_ENDPOINTS = [
+  'wss://ws.derivws.com/websockets/v3',
+  'wss://ws.binaryws.com/websockets/v3',
+  'wss://ws.derivws.com/websockets/v3',
+]
 
 interface Connection {
   socket: WebSocket | null
@@ -66,8 +72,12 @@ export function useDerivSocket() {
     if (connection) return connection
 
     const appId = config.public.derivAppId || '1089'
-    const baseUrl = SOCKET_URL
-    const url: string = `${baseUrl}?app_id=${appId}`
+    // Pick the base URL from config, fall back to the primary Deriv endpoint.
+    const configUrl = (config.public.derivWsUrl as string | undefined)?.trim()
+    const baseUrl = configUrl && configUrl.startsWith('wss://') && !configUrl.includes('api.derivws')
+      ? configUrl
+      : WS_ENDPOINTS[0]!
+    const url = `${baseUrl}?app_id=${appId}`
 
     const state: Connection = {
       socket: null,
@@ -148,6 +158,13 @@ export function useDerivSocket() {
       }
       state.socket = current
 
+      // Give the socket 10s to open before treating it as a failed attempt.
+      const openTimeout = setTimeout(() => {
+        if (current.readyState !== WebSocket.OPEN) {
+          current.close()
+        }
+      }, 10_000)
+
       // A superseded socket can still fire events; ignore anything that is
       // not the one we currently own, or a late close would reconnect twice.
       const isCurrent = () => state.socket === current
@@ -157,6 +174,7 @@ export function useDerivSocket() {
           current.close()
           return
         }
+        clearTimeout(openTimeout)
         state.retries = 0
         state.setConnected(true)
         lastError.value = null
@@ -185,11 +203,15 @@ export function useDerivSocket() {
       }
 
       current.onerror = () => {
-        if (isCurrent()) state.setConnected(false)
+        if (isCurrent()) {
+          clearTimeout(openTimeout)
+          state.setConnected(false)
+        }
       }
 
       current.onclose = () => {
         if (!isCurrent()) return
+        clearTimeout(openTimeout)
         state.socket = null
         state.setConnected(false)
         scheduleReconnect()

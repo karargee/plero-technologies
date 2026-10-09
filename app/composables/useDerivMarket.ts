@@ -128,11 +128,19 @@ export function useDerivMarket(initialSymbol = 'R_100') {
   if (import.meta.client && !subscribed.value) {
     subscribed.value = true
 
+    // If we get no candles within 12s of connecting, mark as error so the UI
+    // doesn't spin forever on a bad symbol or a blocked request.
+    let connectTimeout: ReturnType<typeof setTimeout> | null = null
+
     socket.onOpen(() => {
       candleSubscription = null
       quoteSubscription = null
       status.value = 'connecting'
       requestAll()
+      if (connectTimeout) clearTimeout(connectTimeout)
+      connectTimeout = setTimeout(() => {
+        if (status.value === 'connecting') status.value = 'error'
+      }, 12_000)
     })
 
     socket.subscribe((message) => {
@@ -170,6 +178,7 @@ export function useDerivMarket(initialSymbol = 'R_100') {
           candles.value = series
           pipSize.value = nested?.pip_size ?? message.pip_size ?? pipSize.value
           status.value = 'live'
+          if (connectTimeout) { clearTimeout(connectTimeout); connectTimeout = null }
         }
         const id = (message.subscription as { id?: string } | undefined)?.id
         if (id) candleSubscription = id

@@ -133,8 +133,22 @@
 
     <!-- Overlay states -->
     <div v-if="!series.length" class="overlay">
-      <span class="spinner" :class="{ 'spinner--idle': status === 'error' }" />
-      <p>{{ emptyMessage }}</p>
+      <template v-if="status === 'error'">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" class="overlay-icon">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M12 7v5M12 16v.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <p class="overlay-msg">{{ emptyMessage }}</p>
+        <p class="overlay-sub">Deriv's public feed may be temporarily unavailable.</p>
+        <button type="button" class="overlay-retry" @click="$emit('retry')">
+          Try again
+        </button>
+      </template>
+      <template v-else>
+        <span class="spinner" />
+        <p class="overlay-msg">Connecting to Deriv live feed…</p>
+        <p class="overlay-sub">Streaming from wss://ws.derivws.com</p>
+      </template>
     </div>
   </div>
 </template>
@@ -154,6 +168,8 @@ const props = defineProps<{
   errorMessage?: string | null
   formatPrice: (value: number | null | undefined) => string
 }>()
+
+defineEmits<{ retry: [] }>()
 
 const H = 420
 const PAD = { l: 10, r: 74, t: 34, b: 26 }
@@ -443,12 +459,38 @@ const emptyMessage = computed(() => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  font-size: 13.5px;
-  color: var(--muted-3);
+  gap: 10px;
   text-align: center;
   padding: 0 24px;
-  background: rgb(8 8 10 / 0.4);
+  background: rgb(8 8 10 / 0.5);
+  backdrop-filter: blur(4px);
+}
+.overlay-icon {
+  color: var(--gold);
+  opacity: 0.8;
+}
+.overlay-msg {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.overlay-sub {
+  font-size: 12px;
+  color: var(--muted-3);
+  font-family: var(--font-mono);
+}
+.overlay-retry {
+  margin-top: 6px;
+  padding: 8px 20px;
+  border-radius: var(--r-md);
+  background: var(--primary);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background 0.15s;
+}
+.overlay-retry:hover {
+  background: var(--primary-hover);
 }
 
 .spinner {

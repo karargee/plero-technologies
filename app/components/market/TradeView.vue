@@ -18,9 +18,9 @@
       </div>
 
       <div class="bar-right">
-        <span class="tag" :class="status === 'live' ? 'tag-green' : 'tag-yellow'">
+        <span class="tag" :class="status === 'live' ? 'tag-green' : status === 'error' ? 'tag-red' : 'tag-yellow'">
           <span class="live-dot" :class="{ 'live-dot--off': status !== 'live' }" />
-          {{ status === 'live' ? 'Live' : status === 'error' ? 'Unavailable' : 'Connecting' }}
+          {{ status === 'live' ? 'Live' : status === 'error' ? 'Unavailable' : 'Connecting…' }}
         </span>
 
         <div class="zoom">
@@ -106,6 +106,7 @@
           :status="status"
           :error-message="errorMessage"
           :format-price="formatPrice"
+          @retry="setSymbol(symbol)"
         />
 
         <p class="tv-foot">

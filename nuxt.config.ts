@@ -63,8 +63,7 @@ export default defineNuxtConfig({
     supabaseServiceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY || '',
     public: {
       derivAppId: process.env.NUXT_DERIV_APP_ID || '1089',
-      derivWsUrl:
-        process.env.NUXT_DERIV_WS_URL || 'wss://api.derivws.com/trading/v1/options/ws/public',
+      derivWsUrl: process.env.NUXT_DERIV_WS_URL || 'wss://ws.derivws.com/websockets/v3',
       supabaseUrl: process.env.SUPABASE_URL || '',
       supabaseAnonKey: process.env.SUPABASE_ANON_KEY || '',
     },
