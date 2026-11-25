@@ -17,8 +17,8 @@ const top = cards.slice(0, 6)
           See gift card rates <AppIcon name="arrow" :size="18" />
         </NuxtLink>
       </div>
-      <ul v-reveal class="teaser__list">
-        <li v-for="c in top" :key="c.id" class="card">
+      <ul class="teaser__list">
+        <li v-for="(c, i) in top" :key="c.id" v-reveal:zoom="i * 70" class="card">
           <CardMark :name="c.name" :color="c.color" :size="36" />
           <span>{{ c.name }}</span>
           <strong>{{ formatMoney(c.rate) }}/$</strong>
@@ -53,6 +53,13 @@ const top = cards.slice(0, 6)
   padding: 14px;
   font-size: 14.5px;
   font-weight: 500;
+}
+.teaser__list li {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.teaser__list li:hover {
+  transform: translateY(-3px) rotate(-0.6deg);
+  box-shadow: var(--shadow);
 }
 .teaser__list span {
   flex: 1;

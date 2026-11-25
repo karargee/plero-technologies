@@ -15,6 +15,7 @@ export default defineNuxtConfig({
     contactFrom: 'Plero Website <onboarding@resend.dev>',
   },
   app: {
+    pageTransition: { name: 'page', mode: 'out-in' },
     head: {
       htmlAttrs: { lang: 'en' },
       titleTemplate: '%s · Plero Technologies',

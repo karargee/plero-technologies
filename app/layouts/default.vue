@@ -1,5 +1,6 @@
 <template>
   <div class="layout">
+    <ScrollProgress />
     <SiteHeader />
     <main id="main">
       <slot />

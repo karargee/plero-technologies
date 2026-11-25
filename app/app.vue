@@ -8,9 +8,11 @@ const route = useRoute()
 useSeoMeta({
   ogSiteName: site.name,
   ogType: 'website',
-  ogImage: `${url.origin}/images/logo-full.jpg`,
+  ogImage: `${url.origin}/images/og.jpg`,
+  ogImageWidth: 1200,
+  ogImageHeight: 630,
   ogUrl: () => `${url.origin}${route.path}`,
-  twitterCard: 'summary',
+  twitterCard: 'summary_large_image',
 })
 
 useHead({

@@ -26,7 +26,7 @@ const steps = computed(() => (tab.value === 'deposit' ? depositSteps : withdrawS
       </div>
 
       <ol :key="tab" class="steps__list">
-        <li v-for="(s, i) in steps" :key="s.title" class="step">
+        <li v-for="(s, i) in steps" :key="s.title" class="step" :style="{ animationDelay: `${i * 90}ms` }">
           <span class="step__num">{{ String(i + 1).padStart(2, '0') }}</span>
           <h3>{{ s.title }}</h3>
           <p>{{ s.body }}</p>
@@ -82,29 +82,57 @@ const steps = computed(() => (tab.value === 'deposit' ? depositSteps : withdrawS
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
-  animation: fade 0.35s ease;
+  position: relative;
+}
+/* Glowing line connecting the steps */
+.steps__list::before {
+  content: '';
+  position: absolute;
+  top: 52px;
+  left: 40px;
+  right: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--indigo-400), #8ee0b9, var(--indigo-400), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 4s linear infinite;
+  opacity: 0.6;
 }
 @keyframes fade {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(14px);
   }
 }
 .step {
+  position: relative;
   padding: 28px 24px;
   border-radius: var(--radius);
   background: rgb(255 255 255 / 0.04);
   border: 1px solid rgb(255 255 255 / 0.1);
+  backdrop-filter: blur(6px);
+  animation: fade 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
+}
+.step:hover {
+  transform: translateY(-4px);
+  background: rgb(255 255 255 / 0.07);
+  border-color: rgb(149 153 255 / 0.4);
 }
 .step__num {
+  display: inline-grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
   font-family: var(--font-display);
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
-  color: var(--indigo-200);
-  letter-spacing: 0.08em;
+  color: #fff;
+  background: linear-gradient(135deg, var(--indigo-500), var(--navy-700));
+  box-shadow: 0 0 0 6px var(--navy-900), 0 0 24px rgb(108 112 209 / 0.6);
 }
 .step h3 {
-  margin-top: 28px;
+  margin-top: 22px;
   font-size: 20px;
 }
 .step p {
@@ -117,6 +145,9 @@ const steps = computed(() => (tab.value === 'deposit' ? depositSteps : withdrawS
 @media (max-width: 960px) {
   .steps__list {
     grid-template-columns: 1fr 1fr;
+  }
+  .steps__list::before {
+    display: none;
   }
 }
 @media (max-width: 560px) {

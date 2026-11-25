@@ -38,6 +38,7 @@ function pct(s: string) {
 <style scoped>
 .strip {
   overflow: hidden;
+  margin-top: -1px;
   background: var(--navy-950);
   border-block: 1px solid rgb(255 255 255 / 0.06);
   mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);

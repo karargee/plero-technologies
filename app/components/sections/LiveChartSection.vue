@@ -5,7 +5,7 @@ const symbol = ref('R_75')
 <template>
   <section class="section">
     <div class="container live">
-      <div v-reveal class="live__copy">
+      <div v-reveal:left class="live__copy">
         <span class="eyebrow">Live markets</span>
         <h2 class="section-title">Watch Deriv markets move in real time</h2>
         <p class="section-lead">
@@ -16,7 +16,7 @@ const symbol = ref('R_75')
           Open full charts <AppIcon name="arrow" :size="18" />
         </NuxtLink>
       </div>
-      <div v-reveal class="live__chart">
+      <div v-reveal:right="120" class="live__chart">
         <DerivChart v-model:symbol="symbol" compact :height="300" />
       </div>
     </div>

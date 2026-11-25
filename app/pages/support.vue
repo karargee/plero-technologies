@@ -45,7 +45,7 @@ async function submit() {
 
 <template>
   <div>
-    <section class="page-hero">
+    <section class="page-hero page-hero--photo" style="--hero-img: url('/images/lekki-bridge.webp')">
       <div class="container">
         <span class="eyebrow" style="color: var(--indigo-200)">Support</span>
         <h1>We're here to help.</h1>

@@ -5,8 +5,8 @@ import { stats } from '~/data/site'
 <template>
   <section v-if="stats.length" class="stats">
     <div class="container stats__grid">
-      <div v-for="s in stats" :key="s.label" v-reveal class="stat">
-        <strong>{{ s.value }}</strong>
+      <div v-for="(s, i) in stats" :key="s.label" v-reveal="i * 90" class="stat">
+        <strong><CountUp :value="s.value" /></strong>
         <span>{{ s.label }}</span>
       </div>
     </div>
@@ -36,7 +36,7 @@ strong {
   font-size: clamp(28px, 4vw, 38px);
   color: var(--navy-700);
 }
-span {
+.stat > span {
   font-size: 14.5px;
   color: var(--ink-mute);
 }

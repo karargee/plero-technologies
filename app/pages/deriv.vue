@@ -9,7 +9,7 @@ useSeoMeta({
 
 <template>
   <div>
-    <section class="page-hero">
+    <section class="page-hero page-hero--photo" style="--hero-img: url('/images/lagos-aerial.webp')">
       <div class="container">
         <span class="eyebrow" style="color: var(--indigo-200)">Deriv payment agent</span>
         <h1>Deposit and withdraw on Deriv — in Naira.</h1>
@@ -23,12 +23,12 @@ useSeoMeta({
     <section class="section">
       <div class="container rates">
         <div class="rates__cards">
-          <div v-reveal class="rate card">
+          <div v-reveal v-spotlight class="rate card">
             <span class="rate__label"><AppIcon name="up" :size="18" /> Deposit rate</span>
             <strong>{{ formatMoney(deriv.depositRate) }}</strong>
             <small>You pay this for every $1 added to your Deriv account.</small>
           </div>
-          <div v-reveal class="rate card">
+          <div v-reveal="100" v-spotlight class="rate card">
             <span class="rate__label rate__label--w"><AppIcon name="down" :size="18" /> Withdrawal rate</span>
             <strong>{{ formatMoney(deriv.withdrawRate) }}</strong>
             <small>You receive this for every $1 you withdraw to us.</small>

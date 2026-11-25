@@ -10,10 +10,11 @@ useSeoMeta({
   <div>
     <HeroSection />
     <LivePriceStrip />
-    <StatsBand />
     <LiveChartSection />
     <StepsSection />
+    <ShowcaseSection />
     <FeaturesSection />
+    <LagosBand />
     <RegisterBand />
     <ResourcesSection />
     <GiftCardsTeaser />

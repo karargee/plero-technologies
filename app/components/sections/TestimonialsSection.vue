@@ -11,7 +11,7 @@ import { testimonials } from '~/data/site'
       </div>
 
       <div class="grid">
-        <figure v-for="(t, i) in testimonials" :key="i" v-reveal class="quote card">
+        <figure v-for="(t, i) in testimonials" :key="i" v-reveal="i * 120" v-spotlight class="quote card">
           <div class="quote__stars" aria-label="5 out of 5 stars">
             <AppIcon v-for="n in 5" :key="n" name="star" :size="16" />
           </div>
@@ -41,6 +41,22 @@ import { testimonials } from '~/data/site'
   flex-direction: column;
   gap: 18px;
   padding: 28px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.quote:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+}
+.quote::after {
+  content: '\201C';
+  position: absolute;
+  top: 6px;
+  right: 22px;
+  font-family: Georgia, serif;
+  font-size: 96px;
+  line-height: 1;
+  color: var(--indigo-100);
+  pointer-events: none;
 }
 .quote__stars {
   display: flex;

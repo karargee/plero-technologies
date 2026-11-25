@@ -12,7 +12,7 @@ import { features } from '~/data/site'
       </div>
 
       <div class="grid">
-        <article v-for="f in features" :key="f.title" v-reveal class="feature card">
+        <article v-for="(f, i) in features" :key="f.title" v-reveal="(i % 3) * 100" v-spotlight class="feature card">
           <span class="feature__icon"><AppIcon :name="f.icon" /></span>
           <h3>{{ f.title }}</h3>
           <p>{{ f.body }}</p>
@@ -40,11 +40,17 @@ import { features } from '~/data/site'
 .feature__icon {
   display: inline-grid;
   place-items: center;
-  width: 48px;
-  height: 48px;
+  width: 50px;
+  height: 50px;
   border-radius: 14px;
   background: var(--indigo-50);
   color: var(--indigo-500);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.25s ease, color 0.25s ease;
+}
+.feature:hover .feature__icon {
+  transform: rotate(-8deg) scale(1.1);
+  background: linear-gradient(135deg, var(--indigo-500), var(--navy-700));
+  color: #fff;
 }
 h3 {
   margin-top: 20px;

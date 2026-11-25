@@ -57,7 +57,8 @@ const year = new Date().getFullYear()
 
 <style scoped>
 .footer {
-  background: var(--navy-950);
+  position: relative;
+  background: radial-gradient(700px 300px at 85% 0%, rgb(76 79 166 / 0.25), transparent 70%), var(--navy-950);
   color: rgb(255 255 255 / 0.7);
   padding-top: 72px;
   font-size: 15px;
@@ -67,6 +68,15 @@ const year = new Date().getFullYear()
   grid-template-columns: 1.6fr 1fr 1.3fr 1fr;
   gap: 40px;
   padding-bottom: 56px;
+}
+.footer::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--indigo-400), #8ee0b9, var(--indigo-400), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 6s linear infinite;
 }
 .footer__brand p {
   margin-top: 18px;

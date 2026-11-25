@@ -17,9 +17,9 @@ useSeoMeta({
 
     <section class="section">
       <div class="container tools">
-        <PositionSizeCalc v-reveal />
-        <ProfitCalc v-reveal />
-        <NairaConverter v-reveal class="tools__wide" />
+        <PositionSizeCalc v-reveal:left v-spotlight />
+        <ProfitCalc v-reveal:right v-spotlight />
+        <NairaConverter v-reveal v-spotlight class="tools__wide" />
       </div>
       <div class="container">
         <p class="risk">

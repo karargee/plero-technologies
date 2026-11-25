@@ -13,7 +13,7 @@ const values = [
 
 <template>
   <div>
-    <section class="page-hero">
+    <section class="page-hero page-hero--photo" style="--hero-img: url('/images/lagos-aerial.webp')">
       <div class="container">
         <span class="eyebrow" style="color: var(--indigo-200)">About</span>
         <h1>We make moving money in and out of Deriv simple.</h1>
@@ -26,10 +26,20 @@ const values = [
 
     <section class="section">
       <div class="container story">
-        <div v-reveal class="story__img">
-          <img src="/images/team.avif" alt="A customer completing a purchase at a shop counter" loading="lazy" />
+        <div v-reveal:left class="story__img">
+          <img
+            src="/images/lekki-bridge-sm.webp"
+            alt="The Lekki–Ikoyi Link Bridge in Lagos"
+            width="900"
+            height="522"
+            loading="lazy"
+          />
+          <div class="story__badge">
+            <LogoMark :size="34" />
+            <span><b>Deriv payment agent</b><small>Serving traders across Nigeria</small></span>
+          </div>
         </div>
-        <div v-reveal>
+        <div v-reveal:right>
           <span class="eyebrow">Our story</span>
           <h2 class="section-title">Fair rates, real people, fast transfers</h2>
           <p class="section-lead">
@@ -52,7 +62,7 @@ const values = [
           <h2 class="section-title">Our values</h2>
         </div>
         <div class="values">
-          <article v-for="v in values" :key="v.title" v-reveal class="card value">
+          <article v-for="(v, i) in values" :key="v.title" v-reveal="i * 110" v-spotlight class="card value">
             <span class="value__icon"><AppIcon :name="v.icon" /></span>
             <h3>{{ v.title }}</h3>
             <p>{{ v.body }}</p>
@@ -61,8 +71,12 @@ const values = [
       </div>
     </section>
 
-    <StatsBand />
+    <LagosBand />
     <CtaSection />
+    <p class="credits">
+      Photos via Wikimedia Commons: Victoria Island, Lagos by Ayorinde Ogundele (CC BY-SA 4.0); Lekki–Ikoyi Link
+      Bridge by Chippla (CC BY-SA 3.0).
+    </p>
   </div>
 </template>
 
@@ -92,6 +106,40 @@ const values = [
   z-index: -1;
   border-radius: var(--radius-lg);
   background: var(--indigo-100);
+}
+.story__img img {
+  transition: transform 0.6s ease;
+}
+.story__img:hover img {
+  transform: scale(1.02);
+}
+.story__badge {
+  position: absolute;
+  left: -18px;
+  bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px 12px 12px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: var(--shadow-lg);
+  animation: float 6s ease-in-out infinite;
+}
+.story__badge b {
+  display: block;
+  font-size: 14px;
+}
+.story__badge small {
+  color: var(--ink-mute);
+  font-size: 12.5px;
+}
+.credits {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter) 32px;
+  font-size: 12px;
+  color: var(--ink-mute);
 }
 .story__body {
   margin-top: 16px;

@@ -16,7 +16,7 @@ const items = [
         <h2 class="section-title">Everything you need to trade with confidence</h2>
       </div>
       <div class="grid">
-        <NuxtLink v-for="i in items" :key="i.to" v-reveal :to="i.to" class="res card">
+        <NuxtLink v-for="(i, n) in items" :key="i.to" v-reveal="n * 110" v-spotlight :to="i.to" class="res card">
           <span class="res__icon"><AppIcon :name="i.icon" /></span>
           <h3>{{ i.title }}</h3>
           <p>{{ i.body }}</p>

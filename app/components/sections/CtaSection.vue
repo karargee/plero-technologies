@@ -5,7 +5,7 @@ import { site } from '~/data/site'
 <template>
   <section class="section cta-wrap">
     <div class="container">
-      <div v-reveal class="cta">
+      <div v-reveal:zoom class="cta">
         <LogoMark class="cta__mark" :size="220" light />
         <div class="cta__copy">
           <h2>Ready to fund your Deriv account?</h2>
@@ -38,8 +38,22 @@ import { site } from '~/data/site'
   gap: 32px;
   padding: clamp(36px, 6vw, 64px);
   border-radius: 28px;
-  background: linear-gradient(120deg, var(--navy-800), var(--indigo-500));
+  background: linear-gradient(110deg, rgb(19 18 58 / 0.96) 0%, rgb(38 36 107 / 0.88) 50%, rgb(76 79 166 / 0.7) 100%),
+    url('/images/lekki-bridge-sm.webp') center 30% / cover no-repeat, var(--navy-800);
   color: #fff;
+  box-shadow: var(--shadow-lg);
+}
+.cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 20%, rgb(255 255 255 / 0.08) 45%, transparent 60%);
+  background-size: 250% 100%;
+  animation: shimmer 7s linear infinite;
+  pointer-events: none;
+}
+.cta__mark {
+  animation: float 9s ease-in-out infinite;
 }
 .cta__mark {
   position: absolute;

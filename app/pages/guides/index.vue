@@ -38,7 +38,7 @@ const list = computed(() => (active.value === 'All' ? guides : guides.filter((g)
         </div>
 
         <div class="grid">
-          <NuxtLink v-for="g in list" :key="g.slug" :to="`/guides/${g.slug}`" class="guide card">
+          <NuxtLink v-for="(g, i) in list" :key="g.slug" v-reveal="(i % 3) * 100" v-spotlight :to="`/guides/${g.slug}`" class="guide card">
             <span class="guide__cat">{{ g.category }}</span>
             <h2>{{ g.title }}</h2>
             <p>{{ g.summary }}</p>
