@@ -1,0 +1,84 @@
+.tool {
+  display: grid;
+  gap: 18px;
+  align-content: start;
+  padding: clamp(20px, 3vw, 28px);
+}
+h3 {
+  font-size: 20px;
+}
+.tool__lead {
+  margin-top: -10px;
+  color: var(--ink-soft);
+  font-size: 15px;
+}
+.tool__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.tool__out {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.tool__out > div {
+  display: grid;
+  gap: 2px;
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  background: var(--indigo-50);
+}
+.tool__out span {
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+.tool__out strong {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: var(--navy-700);
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+.tool__out strong.pos {
+  color: var(--success);
+}
+.tool__out strong.neg {
+  color: #b42318;
+}
+.tool__hint {
+  font-size: 13px;
+  color: var(--ink-mute);
+}
+.tool__warn {
+  font-size: 14px;
+  color: #b42318;
+}
+.seg {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 4px;
+  border-radius: 12px;
+  background: var(--surface-alt);
+  border: 1px solid var(--line);
+}
+.seg button {
+  height: 38px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  font-weight: 600;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+.seg button.on {
+  background: #fff;
+  color: var(--navy-700);
+  box-shadow: var(--shadow-sm);
+}
+@media (max-width: 480px) {
+  .tool__grid,
+  .tool__out {
+    grid-template-columns: 1fr;
+  }
+}

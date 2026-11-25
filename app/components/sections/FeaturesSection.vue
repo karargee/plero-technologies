@@ -7,8 +7,8 @@ import { features } from '~/data/site'
     <div class="container">
       <div v-reveal class="section-head section-head--center">
         <span class="eyebrow">Why Plero</span>
-        <h2 class="section-title">Built to make selling gift cards simple</h2>
-        <p class="section-lead">Fair rates, fast payouts and people who actually answer when you need them.</p>
+        <h2 class="section-title">The easy way to move money in and out of Deriv</h2>
+        <p class="section-lead">Fair rates, fast transfers and people who actually answer when you need them.</p>
       </div>
 
       <div class="grid">

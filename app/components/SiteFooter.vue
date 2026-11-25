@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { nav, site } from '~/data/site'
+import { deriv, footerNav as nav, site } from '~/data/site'
 const year = new Date().getFullYear()
 </script>
 
@@ -40,9 +40,17 @@ const year = new Date().getFullYear()
       </div>
     </div>
 
+    <div class="container footer__risk">
+      <p>
+        <strong>Risk warning:</strong> Deriv offers complex derivatives, such as options and CFDs, which carry a
+        high risk of losing money. Only trade with money you can afford to lose.
+        {{ site.name }} is an independent Deriv payment agent and does not provide investment advice. Market data
+        is supplied by Deriv. Deriv and gift card brand names are trademarks of their respective owners.
+      </p>
+    </div>
     <div class="container footer__bottom">
       <span>© {{ year }} {{ site.name }}. All rights reserved.</span>
-      <span>Gift card brand names belong to their respective owners.</span>
+      <a :href="deriv.signupUrl" target="_blank" rel="noopener">Register on Deriv</a>
     </div>
   </footer>
 </template>
@@ -86,6 +94,16 @@ a {
 }
 a:hover {
   color: #fff;
+}
+.footer__risk {
+  padding-block: 20px;
+  border-top: 1px solid rgb(255 255 255 / 0.1);
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: rgb(255 255 255 / 0.5);
+}
+.footer__risk strong {
+  color: rgb(255 255 255 / 0.75);
 }
 .footer__bottom {
   display: flex;

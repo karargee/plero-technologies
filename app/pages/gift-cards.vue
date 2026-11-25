@@ -2,8 +2,8 @@
 import { cards } from '~/data/site'
 
 useSeoMeta({
-  title: "Today's gift card rates",
-  description: 'Live gift card rates for Apple, Amazon, Steam, Google Play, Razer Gold and more.',
+  title: 'Sell gift cards',
+  description: 'Gift card rates for Apple, Amazon, Steam, Google Play, Razer Gold and more.',
 })
 
 const query = ref('')
@@ -18,8 +18,8 @@ const today = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'l
   <div>
     <section class="page-hero">
       <div class="container">
-        <span class="eyebrow" style="color: var(--indigo-200)">Rates</span>
-        <h1>Today's gift card rates</h1>
+        <span class="eyebrow" style="color: var(--indigo-200)">Gift cards</span>
+        <h1>Sell your gift cards</h1>
         <p>Updated {{ today }}. The rate you see is what you get paid — no hidden fees.</p>
       </div>
     </section>
@@ -75,7 +75,7 @@ const today = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'l
       </div>
     </section>
 
-    <FaqSection alt />
+    <RegisterBand />
   </div>
 </template>
 

@@ -5,6 +5,7 @@
       <slot />
     </main>
     <SiteFooter />
+    <WhatsAppFab />
   </div>
 </template>
 

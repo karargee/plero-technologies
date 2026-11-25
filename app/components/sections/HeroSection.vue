@@ -1,27 +1,31 @@
+<script setup lang="ts">
+import { deriv } from '~/data/site'
+</script>
+
 <template>
   <section class="hero">
     <div class="hero__glow" aria-hidden="true" />
     <div class="container hero__grid">
       <div class="hero__copy">
-        <span class="hero__badge"><AppIcon name="bolt" :size="15" /> Paid in as little as 15 minutes</span>
-        <h1>Turn unused gift cards into <span>real cash</span>.</h1>
+        <span class="hero__badge"><AppIcon name="shield" :size="15" /> Deriv payment agent</span>
+        <h1>Fund &amp; withdraw your Deriv account in <span>Naira</span>.</h1>
         <p>
-          Plero Technologies buys your Apple, Amazon, Steam and other gift cards at fair, transparent
-          rates — and sends the money straight to your bank.
+          Plero Technologies tops up your Deriv account in minutes and pays out your withdrawals straight
+          to your bank — with clear rates and a real person on WhatsApp.
         </p>
         <div class="hero__actions">
-          <NuxtLink to="/rates" class="btn btn--light">See today's rates <AppIcon name="arrow" :size="18" /></NuxtLink>
-          <NuxtLink to="/how-it-works" class="btn btn--ghost-dark">How it works</NuxtLink>
+          <NuxtLink to="/deriv" class="btn btn--light">Deposit or withdraw <AppIcon name="arrow" :size="18" /></NuxtLink>
+          <a :href="deriv.signupUrl" target="_blank" rel="noopener" class="btn btn--ghost-dark">Register on Deriv</a>
         </div>
         <ul class="hero__points">
-          <li><AppIcon name="check" :size="18" /> No hidden fees</li>
-          <li><AppIcon name="check" :size="18" /> Verified by real people</li>
-          <li><AppIcon name="check" :size="18" /> Direct bank payout</li>
+          <li><AppIcon name="check" :size="18" /> Funded in {{ deriv.speed }}</li>
+          <li><AppIcon name="check" :size="18" /> Fixed, published rates</li>
+          <li><AppIcon name="check" :size="18" /> Live Deriv charts</li>
         </ul>
       </div>
 
       <div class="hero__calc">
-        <RateCalculator />
+        <AgentCalculator />
       </div>
     </div>
   </section>
@@ -73,7 +77,7 @@
 }
 h1 {
   margin-top: 22px;
-  font-size: clamp(38px, 6vw, 66px);
+  font-size: clamp(36px, 5.6vw, 62px);
   font-weight: 800;
   letter-spacing: -0.03em;
 }

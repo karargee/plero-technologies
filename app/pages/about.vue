@@ -1,7 +1,7 @@
 <script setup lang="ts">
 useSeoMeta({
   title: 'About us',
-  description: 'Plero Technologies makes it fast, fair and safe to turn unused gift cards into cash.',
+  description: 'Plero Technologies is a Deriv payment agent helping traders deposit and withdraw in Naira.',
 })
 
 const values = [
@@ -16,10 +16,10 @@ const values = [
     <section class="page-hero">
       <div class="container">
         <span class="eyebrow" style="color: var(--indigo-200)">About</span>
-        <h1>We help people get real value from the gift cards they already have.</h1>
+        <h1>We make moving money in and out of Deriv simple.</h1>
         <p>
-          Plero Technologies started with a simple idea: selling a gift card should be as easy and as
-          trustworthy as sending a bank transfer.
+          Plero Technologies is a Deriv payment agent. We started with a simple idea: funding or withdrawing
+          from your trading account should be as easy and as trustworthy as sending a bank transfer.
         </p>
       </div>
     </section>
@@ -31,15 +31,15 @@ const values = [
         </div>
         <div v-reveal>
           <span class="eyebrow">Our story</span>
-          <h2 class="section-title">Fair trades, real people, fast payouts</h2>
+          <h2 class="section-title">Fair rates, real people, fast transfers</h2>
           <p class="section-lead">
-            Too many people lose money on unused gift cards — through unclear rates, slow payments or
-            traders who disappear. We built Plero to fix that.
+            Too many traders struggle to fund their Deriv accounts locally — unclear rates, slow transfers,
+            or agents who disappear. We built Plero to fix that.
           </p>
           <p class="story__body">
-            Our trade desk checks every card by hand, our rates are published openly every day, and our
-            support team is a real group of people you can message any time. Whether it's one card or
-            a hundred, you get the same honest treatment.
+            Every deposit and withdrawal runs through Deriv's own payment agent system, our rates are
+            published openly, and our support team is a real group of people you can message any time. We
+            also buy gift cards, with the same honest treatment.
           </p>
         </div>
       </div>

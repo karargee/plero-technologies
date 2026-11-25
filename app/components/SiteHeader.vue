@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { nav } from '~/data/site'
+import { deriv, nav } from '~/data/site'
 
 const open = ref(false)
 const scrolled = ref(false)
@@ -29,7 +29,7 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
       </nav>
 
       <div class="header__actions">
-        <NuxtLink to="/rates" class="btn btn--primary header__cta">Sell a card</NuxtLink>
+        <a :href="deriv.signupUrl" target="_blank" rel="noopener" class="btn btn--primary header__cta">Register on Deriv</a>
         <button
           class="header__toggle"
           type="button"
@@ -49,7 +49,7 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
           <NuxtLink v-for="item in nav" :key="item.to" :to="item.to" class="mobile-nav__link">
             {{ item.label }}
           </NuxtLink>
-          <NuxtLink to="/rates" class="btn btn--primary btn--block">Sell a card</NuxtLink>
+          <a :href="deriv.signupUrl" target="_blank" rel="noopener" class="btn btn--primary btn--block">Register on Deriv</a>
         </div>
       </nav>
     </Transition>
@@ -147,7 +147,7 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
   transform: translateY(-6px);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
   .header__nav {
     display: none;
   }
@@ -155,7 +155,7 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
     display: grid;
   }
 }
-@media (max-width: 480px) {
+@media (max-width: 560px) {
   .header__cta {
     display: none;
   }

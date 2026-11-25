@@ -1,17 +1,22 @@
 <script setup lang="ts">
 useSeoMeta({
-  title: 'Sell gift cards for cash',
-  description: 'Sell Apple, Amazon, Steam and other gift cards at fair rates and get paid to your bank in minutes.',
+  title: 'Deriv payment agent — deposit & withdraw in Naira',
+  description:
+    'Fund and withdraw your Deriv account in Naira through Plero Technologies, a Deriv payment agent. Live Deriv charts, clear rates, fast payouts.',
 })
 </script>
 
 <template>
   <div>
     <HeroSection />
-    <RateTicker />
+    <LivePriceStrip />
     <StatsBand />
-    <FeaturesSection />
+    <LiveChartSection />
     <StepsSection />
+    <FeaturesSection />
+    <RegisterBand />
+    <ResourcesSection />
+    <GiftCardsTeaser />
     <TestimonialsSection />
     <FaqSection />
     <CtaSection />

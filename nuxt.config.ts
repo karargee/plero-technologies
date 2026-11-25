@@ -3,6 +3,11 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   css: ['~/assets/css/main.css'],
   components: [{ path: '~/components', pathPrefix: false }],
+  // Old URLs keep working.
+  routeRules: {
+    '/rates': { redirect: { to: '/gift-cards', statusCode: 301 } },
+    '/how-it-works': { redirect: { to: '/deriv', statusCode: 301 } },
+  },
   // Server-only secrets; set via NUXT_RESEND_API_KEY, NUXT_CONTACT_TO, NUXT_CONTACT_FROM.
   runtimeConfig: {
     resendApiKey: '',
@@ -19,7 +24,7 @@ export default defineNuxtConfig({
         {
           name: 'description',
           content:
-            'Plero Technologies buys your unused gift cards at fair, transparent rates and pays you fast.',
+            'Plero Technologies is a Deriv payment agent. Fund and withdraw your Deriv account in Naira, watch live Deriv charts, and sell gift cards.',
         },
       ],
       link: [

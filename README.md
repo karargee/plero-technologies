@@ -1,6 +1,13 @@
 # Plero Technologies — website
 
-Nuxt 4 marketing site: Home, Rates, How it works, About, Support.
+Nuxt 4 site for a Deriv payment agent: Home, Deposit & Withdraw (`/deriv`), Live charts (`/markets`),
+Tools (`/tools`), Guides (`/guides`), Gift cards, About, Support. Also serves `/sitemap.xml` and `/robots.txt`.
+
+Add or edit guide articles in `app/data/guides.ts` — no page code needed.
+
+Live charts stream from Deriv's public WebSocket feed
+(`wss://api.derivws.com/trading/v1/options/ws/public`) — no API key needed. Logic is in
+`app/composables/useDeriv.ts`; the chart is `app/components/deriv/DerivChart.vue`.
 
 ## Run locally
 
@@ -13,6 +20,8 @@ npm run build      # production build
 ## Edit content
 
 All copy, rates, contacts, stats, testimonials and FAQs live in `app/data/site.ts`.
+The `deriv` block there holds your affiliate sign-up link, payment agent ID/email, deposit and
+withdrawal rates, limits and Deriv app id.
 Items marked `TODO` are placeholders — replace them before launch.
 Emptying the `stats` or `testimonials` arrays hides those sections.
 

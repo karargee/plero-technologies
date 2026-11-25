@@ -13,7 +13,7 @@ const channels = [
   { icon: 'clock', label: 'Hours', value: site.contact.hours },
 ]
 
-const form = reactive({ name: '', email: '', topic: 'A trade in progress', message: '', website: '' })
+const form = reactive({ name: '', email: '', topic: 'Deriv deposit', message: '', website: '' })
 const status = ref<'idle' | 'sending' | 'sent' | 'error'>('idle')
 const errorMsg = ref('')
 
@@ -49,7 +49,7 @@ async function submit() {
       <div class="container">
         <span class="eyebrow" style="color: var(--indigo-200)">Support</span>
         <h1>We're here to help.</h1>
-        <p>Questions about a trade, a rate or your payout? Reach a real person on any channel below.</p>
+        <p>Questions about a Deriv deposit, a withdrawal or a gift card? Reach a real person on any channel below.</p>
       </div>
     </section>
 
@@ -89,9 +89,10 @@ async function submit() {
           <div class="field">
             <label for="f-topic">Topic</label>
             <select id="f-topic" v-model="form.topic" class="input">
-              <option>A trade in progress</option>
-              <option>Rates</option>
-              <option>Payout</option>
+              <option>Deriv deposit</option>
+              <option>Deriv withdrawal</option>
+              <option>Opening a Deriv account</option>
+              <option>Gift cards</option>
               <option>Partnerships</option>
               <option>Something else</option>
             </select>

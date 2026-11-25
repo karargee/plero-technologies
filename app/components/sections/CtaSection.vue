@@ -8,11 +8,11 @@ import { site } from '~/data/site'
       <div v-reveal class="cta">
         <LogoMark class="cta__mark" :size="220" light />
         <div class="cta__copy">
-          <h2>Got a gift card you won't use?</h2>
-          <p>Check today's rate and get paid in minutes. It takes less time than making tea.</p>
+          <h2>Ready to fund your Deriv account?</h2>
+          <p>Message us with the amount and your Deriv ID — you could be trading in minutes.</p>
         </div>
         <div class="cta__actions">
-          <NuxtLink to="/rates" class="btn btn--light">Check rates</NuxtLink>
+          <NuxtLink to="/deriv" class="btn btn--light">Deposit now</NuxtLink>
           <a :href="site.contact.whatsapp" target="_blank" rel="noopener" class="btn btn--ghost-dark">
             Chat on WhatsApp
           </a>

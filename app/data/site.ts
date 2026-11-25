@@ -6,12 +6,12 @@
 export const site = {
   name: 'Plero Technologies',
   short: 'Plero',
-  tagline: 'Turn unused gift cards into cash — fast, fair and safe.',
-  currency: { code: 'NGN', symbol: '₦' }, // TODO: confirm your payout currency
+  tagline: 'Fund and withdraw your Deriv account in Naira — fast, safe and from a real person.',
+  currency: { code: 'NGN', symbol: '₦' },
   contact: {
     email: 'support@plerotechnologies.com', // TODO: real support email
     phone: '+234 800 000 0000', // TODO: real phone number
-    whatsapp: 'https://wa.me/2348000000000', // TODO: real WhatsApp link
+    whatsapp: 'https://wa.me/2348000000000', // TODO: real WhatsApp link (wa.me/<country code + number>)
     address: 'Lagos, Nigeria', // TODO: real address
     hours: 'Every day, 8:00am – 11:00pm',
   },
@@ -22,14 +22,77 @@ export const site = {
   ],
 }
 
+// ---------------------------------------------------------------------------
+// Deriv payment agent
+// ---------------------------------------------------------------------------
+export const deriv = {
+  /** Your Deriv affiliate / partner sign-up link. */
+  signupUrl: 'https://deriv.com/signup/', // TODO: paste your affiliate link here
+  /** Public market-data feed (no login needed). */
+  wsUrl: 'wss://api.derivws.com/trading/v1/options/ws/public',
+  /** 1089 is Deriv's public test app id — register your own at developers.deriv.com. */
+  appId: '1089', // TODO: your own Deriv app id
+  agent: {
+    name: 'Plero Technologies', // TODO: name exactly as listed on Deriv
+    loginId: 'CR0000000', // TODO: your payment agent account ID
+    email: 'payments@plerotechnologies.com', // TODO: payment agent email shown on Deriv
+  },
+  /** Naira the customer pays you for $1 deposited to Deriv. */
+  depositRate: 1650, // TODO
+  /** Naira you pay the customer for $1 withdrawn from Deriv. */
+  withdrawRate: 1580, // TODO
+  min: 5, // TODO: confirm your min (USD)
+  max: 2000, // TODO: confirm your max (USD)
+  speed: '5–15 minutes',
+}
+
+export interface Market {
+  symbol: string
+  name: string
+  group: 'Synthetics' | 'Forex' | 'Commodities' | 'Crypto'
+}
+
+export const markets: Market[] = [
+  { symbol: 'R_75', name: 'Volatility 75 Index', group: 'Synthetics' },
+  { symbol: 'R_100', name: 'Volatility 100 Index', group: 'Synthetics' },
+  { symbol: 'R_50', name: 'Volatility 50 Index', group: 'Synthetics' },
+  { symbol: 'R_25', name: 'Volatility 25 Index', group: 'Synthetics' },
+  { symbol: 'R_10', name: 'Volatility 10 Index', group: 'Synthetics' },
+  { symbol: '1HZ100V', name: 'Volatility 100 (1s) Index', group: 'Synthetics' },
+  { symbol: 'BOOM1000', name: 'Boom 1000 Index', group: 'Synthetics' },
+  { symbol: 'CRASH1000', name: 'Crash 1000 Index', group: 'Synthetics' },
+  { symbol: 'BOOM500', name: 'Boom 500 Index', group: 'Synthetics' },
+  { symbol: 'CRASH500', name: 'Crash 500 Index', group: 'Synthetics' },
+  { symbol: 'stpRNG', name: 'Step Index', group: 'Synthetics' },
+  { symbol: 'JD25', name: 'Jump 25 Index', group: 'Synthetics' },
+  { symbol: 'frxEURUSD', name: 'EUR/USD', group: 'Forex' },
+  { symbol: 'frxGBPUSD', name: 'GBP/USD', group: 'Forex' },
+  { symbol: 'frxXAUUSD', name: 'Gold/USD', group: 'Commodities' },
+  { symbol: 'cryBTCUSD', name: 'BTC/USD', group: 'Crypto' },
+  { symbol: 'cryETHUSD', name: 'ETH/USD', group: 'Crypto' },
+]
+
+export const featuredSymbols = ['R_75', 'R_100', 'BOOM1000', 'CRASH1000', 'stpRNG', 'frxEURUSD', 'frxXAUUSD', 'cryBTCUSD']
+
 export const nav = [
-  { label: 'Home', to: '/' },
-  { label: 'Rates', to: '/rates' },
-  { label: 'How it works', to: '/how-it-works' },
-  { label: 'About', to: '/about' },
+  { label: 'Deposit & Withdraw', to: '/deriv' },
+  { label: 'Live charts', to: '/markets' },
+  { label: 'Tools', to: '/tools' },
+  { label: 'Guides', to: '/guides' },
+  { label: 'Gift cards', to: '/gift-cards' },
   { label: 'Support', to: '/support' },
 ]
 
+/** Extra links shown in the footer only. */
+export const footerNav = [
+  { label: 'Home', to: '/' },
+  { label: 'About us', to: '/about' },
+  ...nav,
+]
+
+// ---------------------------------------------------------------------------
+// Gift cards (secondary service)
+// ---------------------------------------------------------------------------
 export interface GiftCard {
   id: string
   name: string
@@ -42,7 +105,7 @@ export interface GiftCard {
   max: number
 }
 
-// TODO: sample rates only — connect these to your live rate source.
+// TODO: sample rates only — replace with your real gift card rates.
 export const cards: GiftCard[] = [
   { id: 'apple', name: 'Apple / iTunes', color: '#1d1d1f', rate: 1180, change: 0.8, min: 25, max: 2000 },
   { id: 'amazon', name: 'Amazon', color: '#ff9900', rate: 1120, change: -0.4, min: 25, max: 1000 },
@@ -56,83 +119,78 @@ export const cards: GiftCard[] = [
   { id: 'vanilla', name: 'Vanilla Visa', color: '#6a3fb5', rate: 1080, change: -0.6, min: 25, max: 500 },
 ]
 
+// ---------------------------------------------------------------------------
+// Marketing copy
+// ---------------------------------------------------------------------------
 export const features = [
   {
     icon: 'bolt',
-    title: 'Paid in minutes',
-    body: 'Most trades are verified and paid out to your bank account in under 15 minutes.',
+    title: 'Funded in minutes',
+    body: 'Send Naira, and your Deriv account is topped up in minutes — not hours.',
   },
   {
-    icon: 'chart',
-    title: 'Transparent rates',
-    body: 'The rate you see is the rate you get. No hidden fees, no last-minute changes.',
+    icon: 'bank',
+    title: 'Withdraw to your bank',
+    body: 'Withdraw from Deriv to us and receive Naira straight into your local bank account.',
   },
   {
     icon: 'shield',
-    title: 'Safe & verified',
-    body: 'Every card is checked by our trade desk, and your details are never shared.',
+    title: 'Deriv payment agent',
+    body: 'We are listed as a payment agent on Deriv, so every transfer runs through Deriv’s own cashier.',
+  },
+  {
+    icon: 'chart',
+    title: 'Clear, fixed rates',
+    body: 'Our deposit and withdrawal rates are published openly. What you see is what you pay or get.',
   },
   {
     icon: 'chat',
     title: 'Real human support',
-    body: 'Talk to a real person on WhatsApp or email whenever you need help with a trade.',
+    body: 'Talk to a real person on WhatsApp whenever you need help with a deposit or withdrawal.',
   },
   {
     icon: 'cards',
-    title: 'Dozens of cards',
-    body: 'Apple, Amazon, Steam, Google Play, Razer Gold and many more — physical or e-code.',
-  },
-  {
-    icon: 'bank',
-    title: 'Direct to your bank',
-    body: 'Payouts go straight to any local bank account you choose.',
+    title: 'Gift cards too',
+    body: 'Got an unused gift card? We buy those as well, at fair rates.',
   },
 ]
 
-export const steps = [
-  {
-    title: 'Check the rate',
-    body: 'Pick your card type and enter the amount to see exactly what you will receive.',
-  },
-  {
-    title: 'Send your card',
-    body: 'Share a clear photo of the card or the e-code with our trade desk.',
-  },
-  {
-    title: 'We verify it',
-    body: 'Our team confirms the card balance — usually within a few minutes.',
-  },
-  {
-    title: 'Get paid',
-    body: 'The money lands in your bank account. Done.',
-  },
+export const depositSteps = [
+  { title: 'Message us', body: 'Tell us on WhatsApp how much you want to deposit and your Deriv account ID (CR number).' },
+  { title: 'Send Naira', body: 'Transfer the Naira amount to the account we give you and share the receipt.' },
+  { title: 'We fund Deriv', body: 'We transfer the USD to your Deriv account through Deriv’s payment agent system.' },
+  { title: 'Start trading', body: 'The balance appears in your Deriv account. Usually within 5–15 minutes.' },
+]
+
+export const withdrawSteps = [
+  { title: 'Open the cashier', body: 'Log in to Deriv and go to Cashier → Payment agents → Withdraw.' },
+  { title: 'Choose Plero', body: 'Select Plero Technologies, or enter our payment agent ID, then enter the amount.' },
+  { title: 'Confirm by email', body: 'Deriv emails you a confirmation link — click it to approve the withdrawal.' },
+  { title: 'Get paid in Naira', body: 'Send us your bank details on WhatsApp and we pay you out right away.' },
 ]
 
 // TODO: placeholder figures — replace with your real numbers before launch.
 export const stats = [
-  { value: '15 min', label: 'Average payout time' },
-  { value: '30+', label: 'Gift card types accepted' },
-  { value: '24/7', label: 'Trade desk availability' },
+  { value: '5–15 min', label: 'Typical deposit time' },
+  { value: '24/7', label: 'Live Deriv charts' },
+  { value: '7 days', label: 'Support every week' },
   { value: '4.8/5', label: 'Average customer rating' },
 ]
 
 // TODO: placeholder testimonials — replace with real customer reviews (with permission).
 export const testimonials = [
   {
-    quote:
-      'I sold an Apple card on my lunch break and the money was in my account before I finished eating.',
+    quote: 'I deposited to my Deriv account on a Sunday night and it was funded before I finished my tea.',
     name: 'Customer name',
     role: 'Lagos',
   },
   {
-    quote:
-      'The rate on the site was exactly what I got paid. No back-and-forth, no surprises. That is rare.',
+    quote: 'Withdrawals are smooth. I approve it on Deriv, send my bank details, and the Naira lands quickly.',
     name: 'Customer name',
     role: 'Abuja',
   },
   {
-    quote:
-      'Support answered me on WhatsApp in a minute and walked me through my first trade. Very easy.',
+    quote: 'They answered me on WhatsApp in a minute and walked me through my first withdrawal. Very easy.',
     name: 'Customer name',
     role: 'Port Harcourt',
   },
@@ -140,27 +198,27 @@ export const testimonials = [
 
 export const faqs = [
   {
-    q: 'How long does it take to get paid?',
-    a: 'Most trades are completed in under 15 minutes once your card is verified. Large or unusual cards can take a little longer.',
+    q: 'What is a Deriv payment agent?',
+    a: 'A payment agent is a business approved by Deriv to help clients deposit and withdraw using local payment methods. You pay us in Naira and we fund your Deriv account, or you withdraw to us on Deriv and we pay you in Naira.',
   },
   {
-    q: 'Which gift cards do you accept?',
-    a: 'We accept Apple/iTunes, Amazon, Steam, Google Play, Razer Gold, Sephora, eBay, Nordstrom, Walmart, Vanilla and more. Check the Rates page for the full list.',
+    q: 'How long does a deposit take?',
+    a: 'Most deposits are completed within 5–15 minutes after we confirm your payment.',
   },
   {
-    q: 'Are there any fees?',
-    a: 'No. The payout shown in the rate calculator is what you receive. We do not charge extra fees.',
+    q: 'How do I withdraw from Deriv to Plero?',
+    a: 'In Deriv go to Cashier → Payment agents → Withdraw, choose Plero Technologies (or enter our agent ID), enter the amount and confirm the email Deriv sends you. Then send us your bank details on WhatsApp.',
   },
   {
-    q: 'Do you accept e-codes and physical cards?',
-    a: 'Yes. Send a clear photo of a physical card (with the receipt if available) or paste the e-code.',
+    q: 'I don’t have a Deriv account yet. What do I do?',
+    a: 'Use the “Register on Deriv” button on this site to create a free account, then message us to make your first deposit.',
   },
   {
-    q: 'Why might a card be rejected?',
-    a: 'Cards that have already been redeemed, have a zero balance, or come from an unsupported region cannot be traded. We will always tell you why.',
+    q: 'Are the live charts real?',
+    a: 'Yes. The charts stream live prices directly from Deriv’s public market data feed.',
   },
   {
-    q: 'Is my information safe?',
-    a: 'Yes. We only use your details to process your trade and pay you, and we never share them with third parties.',
+    q: 'Do you still buy gift cards?',
+    a: 'Yes. Check the Gift cards page for today’s rates and use the calculator to see your payout.',
   },
 ]

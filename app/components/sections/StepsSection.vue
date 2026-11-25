@@ -1,27 +1,40 @@
 <script setup lang="ts">
-import { steps } from '~/data/site'
+import { depositSteps, withdrawSteps } from '~/data/site'
 withDefaults(defineProps<{ showLink?: boolean }>(), { showLink: true })
+
+const tab = ref<'deposit' | 'withdraw'>('deposit')
+const steps = computed(() => (tab.value === 'deposit' ? depositSteps : withdrawSteps))
 </script>
 
 <template>
   <section class="section section--dark steps">
     <div class="container">
-      <div v-reveal class="section-head">
-        <span class="eyebrow">How it works</span>
-        <h2 class="section-title">From gift card to bank account in four steps</h2>
-        <p class="section-lead">No app to install and no account needed for your first trade.</p>
+      <div class="steps__top">
+        <div v-reveal class="section-head">
+          <span class="eyebrow">How it works</span>
+          <h2 class="section-title">Deposit or withdraw in four simple steps</h2>
+          <p class="section-lead">Everything runs through Deriv's own payment agent system.</p>
+        </div>
+        <div class="seg" role="tablist" aria-label="Choose flow">
+          <button type="button" role="tab" :aria-selected="tab === 'deposit'" :class="{ on: tab === 'deposit' }" @click="tab = 'deposit'">
+            Deposit
+          </button>
+          <button type="button" role="tab" :aria-selected="tab === 'withdraw'" :class="{ on: tab === 'withdraw' }" @click="tab = 'withdraw'">
+            Withdraw
+          </button>
+        </div>
       </div>
 
-      <ol class="steps__list">
-        <li v-for="(s, i) in steps" :key="s.title" v-reveal class="step">
+      <ol :key="tab" class="steps__list">
+        <li v-for="(s, i) in steps" :key="s.title" class="step">
           <span class="step__num">{{ String(i + 1).padStart(2, '0') }}</span>
           <h3>{{ s.title }}</h3>
           <p>{{ s.body }}</p>
         </li>
       </ol>
 
-      <NuxtLink v-if="showLink" to="/how-it-works" class="btn btn--ghost-dark steps__link">
-        Learn more <AppIcon name="arrow" :size="18" />
+      <NuxtLink v-if="showLink" to="/deriv" class="btn btn--ghost-dark steps__link">
+        Full deposit & withdrawal guide <AppIcon name="arrow" :size="18" />
       </NuxtLink>
     </div>
   </section>
@@ -31,6 +44,37 @@ withDefaults(defineProps<{ showLink?: boolean }>(), { showLink: true })
 .steps {
   background: radial-gradient(800px 400px at 0% 100%, rgb(76 79 166 / 0.35), transparent 60%), var(--navy-900);
 }
+.steps__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: clamp(36px, 5vw, 56px);
+}
+.steps__top .section-head {
+  margin-bottom: 0;
+}
+.seg {
+  display: inline-flex;
+  padding: 4px;
+  border-radius: 12px;
+  background: rgb(255 255 255 / 0.06);
+  border: 1px solid rgb(255 255 255 / 0.1);
+}
+.seg button {
+  border: 0;
+  background: transparent;
+  color: rgb(255 255 255 / 0.7);
+  padding: 10px 20px;
+  border-radius: 9px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.seg button.on {
+  background: #fff;
+  color: var(--navy-800);
+}
 .steps__list {
   list-style: none;
   margin: 0;
@@ -38,10 +82,15 @@ withDefaults(defineProps<{ showLink?: boolean }>(), { showLink: true })
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
-  counter-reset: step;
+  animation: fade 0.35s ease;
+}
+@keyframes fade {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
 }
 .step {
-  position: relative;
   padding: 28px 24px;
   border-radius: var(--radius);
   background: rgb(255 255 255 / 0.04);
@@ -73,6 +122,11 @@ withDefaults(defineProps<{ showLink?: boolean }>(), { showLink: true })
 @media (max-width: 560px) {
   .steps__list {
     grid-template-columns: 1fr;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .steps__list {
+    animation: none;
   }
 }
 </style>
