@@ -92,6 +92,9 @@ async function submit() {
               <option>Deriv deposit</option>
               <option>Deriv withdrawal</option>
               <option>Opening a Deriv account</option>
+              <option>USDT</option>
+              <option>Airtm USD</option>
+              <option>China supplier payment</option>
               <option>Gift cards</option>
               <option>Partnerships</option>
               <option>Something else</option>

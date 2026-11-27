@@ -6,7 +6,8 @@
 export const site = {
   name: 'Plero Technologies',
   short: 'Plero',
-  tagline: 'Fund and withdraw your Deriv account in Naira — fast, safe and from a real person.',
+  tagline:
+    'Deriv deposits & withdrawals, USDT, Airtm USD and China supplier payments — all in Naira, fast and from a real person.',
   currency: { code: 'NGN', symbol: '₦' },
   contact: {
     email: 'support@plerotechnologies.com', // TODO: real support email
@@ -14,6 +15,15 @@ export const site = {
     whatsapp: 'https://wa.me/2348000000000', // TODO: real WhatsApp link (wa.me/<country code + number>)
     address: 'Lagos, Nigeria', // TODO: real address
     hours: 'Every day, 8:00am – 11:00pm',
+  },
+  /**
+   * Company registration — shown in the footer, About page and Plero Pay pages.
+   * Leave a value empty ('') to hide it.
+   */
+  registration: {
+    legalName: '', // TODO: e.g. 'Plero Technologies Limited'
+    rcNumber: '', // TODO: CAC RC number, e.g. 'RC 1234567'
+    licences: [] as string[], // TODO: e.g. ['Registered with the SEC Nigeria as …']
   },
   socials: [
     { label: 'Instagram', href: '#' }, // TODO
@@ -75,11 +85,11 @@ export const markets: Market[] = [
 export const featuredSymbols = ['R_75', 'R_100', 'BOOM1000', 'CRASH1000', 'stpRNG', 'frxEURUSD', 'frxXAUUSD', 'cryBTCUSD']
 
 export const nav = [
-  { label: 'Deposit & Withdraw', to: '/deriv' },
+  { label: 'Deriv', to: '/deriv' },
+  { label: 'Plero Pay', to: '/plero-pay' },
   { label: 'Live charts', to: '/markets' },
   { label: 'Tools', to: '/tools' },
   { label: 'Guides', to: '/guides' },
-  { label: 'Gift cards', to: '/gift-cards' },
   { label: 'Support', to: '/support' },
 ]
 
@@ -87,7 +97,20 @@ export const nav = [
 export const footerNav = [
   { label: 'Home', to: '/' },
   { label: 'About us', to: '/about' },
-  ...nav,
+  { label: 'Deriv deposit & withdraw', to: '/deriv' },
+  { label: 'Live charts', to: '/markets' },
+  { label: 'Tools', to: '/tools' },
+  { label: 'Guides', to: '/guides' },
+  { label: 'Support', to: '/support' },
+]
+
+/** Plero Pay links for the footer. */
+export const payNav = [
+  { label: 'Plero Pay', to: '/plero-pay' },
+  { label: 'Buy & sell USDT', to: '/plero-pay/usdt' },
+  { label: 'Buy & sell Airtm USD', to: '/plero-pay/airtm' },
+  { label: 'Pay Chinese suppliers', to: '/plero-pay/china' },
+  { label: 'Sell gift cards', to: '/gift-cards' },
 ]
 
 // ---------------------------------------------------------------------------
@@ -216,6 +239,10 @@ export const faqs = [
   {
     q: 'Are the live charts real?',
     a: 'Yes. The charts stream live prices directly from Deriv’s public market data feed.',
+  },
+  {
+    q: 'What is Plero Pay?',
+    a: 'Plero Pay is our payments service. You can buy and sell USDT and Airtm USD for Naira, and pay suppliers in China (Alipay, WeChat Pay or Chinese bank) in RMB.',
   },
   {
     q: 'Do you still buy gift cards?',

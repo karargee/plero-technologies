@@ -25,7 +25,7 @@ export default defineNuxtConfig({
         {
           name: 'description',
           content:
-            'Plero Technologies is a Deriv payment agent. Fund and withdraw your Deriv account in Naira, watch live Deriv charts, and sell gift cards.',
+            'Plero Technologies: Deriv payment agent and Plero Pay — buy & sell USDT and Airtm USD, pay Chinese suppliers, all in Naira. Live Deriv charts.',
         },
       ],
       link: [

@@ -16,8 +16,8 @@ useSeoMeta({
     <FeaturesSection />
     <LagosBand />
     <RegisterBand />
+    <PayServicesSection />
     <ResourcesSection />
-    <GiftCardsTeaser />
     <TestimonialsSection />
     <FaqSection />
     <CtaSection />

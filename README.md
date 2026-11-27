@@ -5,6 +5,9 @@ Tools (`/tools`), Guides (`/guides`), Gift cards, About, Support. Also serves `/
 
 Add or edit guide articles in `app/data/guides.ts` — no page code needed.
 
+**Plero Pay** (`/plero-pay`, `/plero-pay/usdt`, `/plero-pay/airtm`, `/plero-pay/china`): rates, limits,
+networks, payment methods, steps and FAQs all live in `app/data/pay.ts`.
+
 Live charts stream from Deriv's public WebSocket feed
 (`wss://api.derivws.com/trading/v1/options/ws/public`) — no API key needed. Logic is in
 `app/composables/useDeriv.ts`; the chart is `app/components/deriv/DerivChart.vue`.

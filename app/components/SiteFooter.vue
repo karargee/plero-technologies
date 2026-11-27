@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { deriv, footerNav as nav, site } from '~/data/site'
+import { deriv, footerNav as nav, payNav, site } from '~/data/site'
 const year = new Date().getFullYear()
 </script>
 
@@ -9,12 +9,22 @@ const year = new Date().getFullYear()
       <div class="footer__brand">
         <BrandLogo light />
         <p>{{ site.tagline }}</p>
+        <RegistrationBadge dark class="footer__reg" />
       </div>
 
       <div>
         <h4>Company</h4>
         <ul>
           <li v-for="item in nav" :key="item.to">
+            <NuxtLink :to="item.to">{{ item.label }}</NuxtLink>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Plero Pay</h4>
+        <ul>
+          <li v-for="item in payNav" :key="item.to">
             <NuxtLink :to="item.to">{{ item.label }}</NuxtLink>
           </li>
         </ul>
@@ -45,11 +55,16 @@ const year = new Date().getFullYear()
         <strong>Risk warning:</strong> Deriv offers complex derivatives, such as options and CFDs, which carry a
         high risk of losing money. Only trade with money you can afford to lose.
         {{ site.name }} is an independent Deriv payment agent and does not provide investment advice. Market data
-        is supplied by Deriv. Deriv and gift card brand names are trademarks of their respective owners.
+        is supplied by Deriv. Plero Pay is a service of {{ site.name }}. Crypto-asset prices can change quickly and
+        blockchain transfers cannot be reversed. Deriv, Tether/USDT, Airtm, Alipay, WeChat Pay and gift card brand
+        names are trademarks of their respective owners; we are not affiliated with or endorsed by them.
       </p>
     </div>
     <div class="container footer__bottom">
-      <span>© {{ year }} {{ site.name }}. All rights reserved.</span>
+      <span>
+        © {{ year }} {{ site.registration.legalName || site.name }}.
+        <template v-if="site.registration.rcNumber">{{ site.registration.rcNumber }}. </template>All rights reserved.
+      </span>
       <a :href="deriv.signupUrl" target="_blank" rel="noopener">Register on Deriv</a>
     </div>
   </footer>
@@ -65,7 +80,7 @@ const year = new Date().getFullYear()
 }
 .footer__grid {
   display: grid;
-  grid-template-columns: 1.6fr 1fr 1.3fr 1fr;
+  grid-template-columns: 1.4fr 1fr 1fr 1.3fr 0.8fr;
   gap: 40px;
   padding-bottom: 56px;
 }
@@ -77,6 +92,9 @@ const year = new Date().getFullYear()
   background: linear-gradient(90deg, transparent, var(--indigo-400), #8ee0b9, var(--indigo-400), transparent);
   background-size: 200% 100%;
   animation: shimmer 6s linear infinite;
+}
+.footer__reg {
+  margin-top: 18px;
 }
 .footer__brand p {
   margin-top: 18px;

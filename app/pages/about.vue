@@ -51,6 +51,7 @@ const values = [
             published openly, and our support team is a real group of people you can message any time. We
             also buy gift cards, with the same honest treatment.
           </p>
+          <RegistrationBadge class="story__reg" />
         </div>
       </div>
     </section>
@@ -133,6 +134,9 @@ const values = [
 .story__badge small {
   color: var(--ink-mute);
   font-size: 12.5px;
+}
+.story__reg {
+  margin-top: 22px;
 }
 .credits {
   max-width: var(--container);

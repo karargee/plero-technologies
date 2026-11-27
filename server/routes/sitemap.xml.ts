@@ -1,6 +1,19 @@
 import { guides } from '../../app/data/guides'
 
-const pages = ['/', '/deriv', '/markets', '/tools', '/guides', '/gift-cards', '/about', '/support']
+const pages = [
+  '/',
+  '/deriv',
+  '/plero-pay',
+  '/plero-pay/usdt',
+  '/plero-pay/airtm',
+  '/plero-pay/china',
+  '/markets',
+  '/tools',
+  '/guides',
+  '/gift-cards',
+  '/about',
+  '/support',
+]
 
 export default defineEventHandler((event) => {
   const origin = getRequestURL(event).origin
