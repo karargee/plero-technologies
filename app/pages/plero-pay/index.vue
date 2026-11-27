@@ -7,6 +7,9 @@ useSeoMeta({
   description: 'Plero Pay by Plero Technologies: buy and sell USDT and Airtm USD for Naira, and pay suppliers in China in RMB.',
 })
 
+const usdt = payServices.find((s) => s.id === 'usdt')
+const usdtSell = usdt?.kind === 'trade' ? usdt.sellRate : 0
+
 const rows = payServices.map((s) =>
   s.kind === 'trade'
     ? { s, a: { label: 'We sell at', value: formatMoney(s.buyRate) + ` / ${s.unit}` }, b: { label: 'We buy at', value: formatMoney(s.sellRate) + ` / ${s.unit}` } }
@@ -79,6 +82,13 @@ const rows = payServices.map((s) =>
             <li><AppIcon name="check" :size="18" /> Proof of every payment</li>
             <li><AppIcon name="check" :size="18" /> Real people, 7 days a week</li>
           </ul>
+          <div class="pay-photo">
+            <img src="/images/phone-hands.webp" alt="A man using Plero Pay on his phone" width="960" height="640" loading="lazy" />
+            <div class="pay-photo__chip" aria-hidden="true">
+              <PayMark symbol="₮" color="#1a9e75" :size="30" />
+              <span><b>Sell 100 USDT</b><small>You receive {{ formatMoney(100 * usdtSell) }}</small></span>
+            </div>
+          </div>
         </div>
         <div v-reveal:right="100">
           <PayCalculator />
@@ -219,6 +229,39 @@ const rows = payServices.map((s) =>
 }
 .ticks svg {
   color: var(--success);
+}
+.pay-photo {
+  position: relative;
+  margin-top: 28px;
+  max-width: 460px;
+}
+.pay-photo img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 22px;
+  box-shadow: var(--shadow-lg);
+}
+.pay-photo__chip {
+  position: absolute;
+  left: -12px;
+  bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px 10px 10px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: var(--shadow-lg);
+  animation: float 7s ease-in-out infinite;
+}
+.pay-photo__chip b {
+  display: block;
+  font-size: 13.5px;
+}
+.pay-photo__chip small {
+  color: var(--ink-mute);
+  font-size: 12.5px;
 }
 .trust {
   display: flex;

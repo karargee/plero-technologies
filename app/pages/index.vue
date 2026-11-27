@@ -12,6 +12,7 @@ useSeoMeta({
     <LivePriceStrip />
     <LiveChartSection />
     <StepsSection />
+    <InActionSection />
     <ShowcaseSection />
     <FeaturesSection />
     <LagosBand />

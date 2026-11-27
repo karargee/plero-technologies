@@ -17,7 +17,7 @@ watch(symbol, (s) => router.replace({ query: { ...route.query, symbol: s } }))
 
 <template>
   <div>
-    <section class="page-hero page-hero--tight">
+    <section class="page-hero page-hero--tight page-hero--photo" style="--hero-img: url('/images/trading-laptop.webp')">
       <div class="container">
         <span class="eyebrow" style="color: var(--indigo-200)">Live charts</span>
         <h1>Live Deriv markets</h1>
