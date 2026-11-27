@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { payServices } from '~/data/pay'
+const { payServices } = useRates()
 </script>
 
 <template>

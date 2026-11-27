@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { cards } from '~/data/site'
-const top = cards.slice(0, 6)
+const { cards } = useRates()
+const top = computed(() => cards.value.slice(0, 6))
 </script>
 
 <template>

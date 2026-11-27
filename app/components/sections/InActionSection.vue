@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // Two photo cards: someone trading (with a live Deriv price overlay)
 // and someone making a transaction on the site (with a real quote from our rates).
-import { deriv } from '~/data/site'
+const { deriv } = useRates()
 
 const symbol = ref('R_75')
 const mode = ref<'ticks' | 'candles'>('ticks')
@@ -28,7 +28,7 @@ const first = computed(() => ticks.value.at(-60)?.v ?? ticks.value[0]?.v)
 const pct = computed(() => (last.value && first.value ? ((last.value - first.value) / first.value) * 100 : 0))
 
 const demoUsd = 50
-const demoNaira = demoUsd * deriv.depositRate
+const demoNaira = computed(() => demoUsd * deriv.value.depositRate)
 </script>
 
 <template>

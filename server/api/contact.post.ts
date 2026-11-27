@@ -31,26 +31,49 @@ export default defineEventHandler(async (event) => {
   }
 
   const { resendApiKey, contactTo, contactFrom } = useRuntimeConfig(event)
-  if (!resendApiKey || !contactTo) {
+  const { url: sbUrl, serviceKey } = supabaseConfig(event)
+  const canEmail = Boolean(resendApiKey && contactTo)
+  const canStore = Boolean(sbUrl && serviceKey)
+
+  // Nothing set up yet → the browser falls back to opening the visitor's email app.
+  if (!canEmail && !canStore) {
     throw createError({ statusCode: 503, statusMessage: 'Contact form is not configured yet.' })
   }
 
-  try {
-    await $fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${resendApiKey}` },
-      body: {
-        from: contactFrom,
-        to: [contactTo],
-        reply_to: email,
-        subject: `[Website · ${topic}] ${name}`,
-        text: `Name: ${name}\nEmail: ${email}\nTopic: ${topic}\n\n${message}`,
-      },
-    })
-  } catch (err) {
-    console.error('[contact] Resend error', err)
-    throw createError({ statusCode: 502, statusMessage: 'Could not send your message. Please try again.' })
+  let delivered = false
+
+  // 1) Save to Supabase so it appears in /admin → Messages.
+  if (canStore) {
+    try {
+      await supabaseInsert(event, 'messages', { name, email, topic, message })
+      delivered = true
+    } catch (err) {
+      console.error('[contact] Supabase insert failed', err)
+    }
   }
 
+  // 2) Also email it, if Resend is set up.
+  if (canEmail) {
+    try {
+      await $fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${resendApiKey}` },
+        body: {
+          from: contactFrom,
+          to: [contactTo],
+          reply_to: email,
+          subject: `[Website · ${topic}] ${name}`,
+          text: `Name: ${name}\nEmail: ${email}\nTopic: ${topic}\n\n${message}`,
+        },
+      })
+      delivered = true
+    } catch (err) {
+      console.error('[contact] Resend error', err)
+    }
+  }
+
+  if (!delivered) {
+    throw createError({ statusCode: 502, statusMessage: 'Could not send your message. Please try again or use WhatsApp.' })
+  }
   return { ok: true }
 })

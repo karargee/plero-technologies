@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { payServices, type PayId } from '~/data/pay'
+import type { PayId } from '~/data/pay'
 import { site } from '~/data/site'
 
 const props = withDefaults(defineProps<{ fixed?: PayId; initial?: PayId }>(), { initial: 'usdt' })
 
 const active = ref<PayId>(props.fixed ?? props.initial)
-const service = computed(() => payServices.find((s) => s.id === active.value)!)
+const { payServices } = useRates()
+const service = computed(() => payServices.value.find((s) => s.id === active.value)!)
 const side = ref<'buy' | 'sell'>('buy')
 const amount = ref<number | null>(100)
 const network = ref('')

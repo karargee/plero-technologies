@@ -1,0 +1,35 @@
+.panel {
+  display: grid;
+  gap: 20px;
+}
+.panel__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px;
+}
+.panel__head h2 {
+  font-size: 26px;
+}
+.panel__head p {
+  margin-top: 4px;
+  color: var(--ink-soft);
+  font-size: 14.5px;
+}
+.panel__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.panel__actions .btn {
+  height: 42px;
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+.muted {
+  color: var(--ink-mute);
+}

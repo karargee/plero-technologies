@@ -1,17 +1,18 @@
 <script setup lang="ts">
-import { cards } from '~/data/site'
-
 useSeoMeta({
   title: 'Sell gift cards',
   description: 'Gift card rates for Apple, Amazon, Steam, Google Play, Razer Gold and more.',
 })
 
+const { cards, updatedAt } = useRates()
 const query = ref('')
 const filtered = computed(() => {
   const q = query.value.trim().toLowerCase()
-  return q ? cards.filter((c) => c.name.toLowerCase().includes(q)) : cards
+  return q ? cards.value.filter((c) => c.name.toLowerCase().includes(q)) : cards.value
 })
-const today = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+const today = computed(() =>
+  new Date(updatedAt.value ?? Date.now()).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
+)
 </script>
 
 <template>

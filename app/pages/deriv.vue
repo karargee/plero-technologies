@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { depositSteps, deriv, site, withdrawSteps } from '~/data/site'
+import { depositSteps, site, withdrawSteps } from '~/data/site'
+
+const { deriv } = useRates()
 
 useSeoMeta({
   title: 'Deposit & withdraw on Deriv',

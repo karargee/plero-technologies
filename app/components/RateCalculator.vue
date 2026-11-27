@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { cards, site } from '~/data/site'
+import { site } from '~/data/site'
 
 const props = withDefaults(defineProps<{ initialCard?: string }>(), { initialCard: 'apple' })
+const { cards } = useRates()
 
 const cardId = ref(props.initialCard)
 const amount = ref<number | null>(100)
 
-const card = computed(() => cards.find((c) => c.id === cardId.value) ?? cards[0]!)
+const card = computed(() => cards.value.find((c) => c.id === cardId.value) ?? cards.value[0]!)
 const tooLow = computed(() => amount.value != null && amount.value > 0 && amount.value < card.value.min)
 const tooHigh = computed(() => amount.value != null && amount.value > card.value.max)
 const payout = computed(() => {

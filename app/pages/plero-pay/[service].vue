@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { getPayService, payServices } from '~/data/pay'
 import { site } from '~/data/site'
 
 const route = useRoute()
-const service = computed(() => getPayService(String(route.params.service)))
+const { payServices } = useRates()
+const service = computed(() => payServices.value.find((x) => x.id === String(route.params.service)))
 if (!service.value) {
   throw createError({ statusCode: 404, statusMessage: 'Service not found', fatal: true })
 }
@@ -20,7 +20,7 @@ const steps = computed(() => {
   if (sv.kind === 'supplier') return sv.steps
   return flow.value === 'buy' ? sv.buySteps : sv.sellSteps
 })
-const others = computed(() => payServices.filter((x) => x.id !== service.value!.id))
+const others = computed(() => payServices.value.filter((x) => x.id !== service.value!.id))
 </script>
 
 <template>

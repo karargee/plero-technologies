@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { deriv, site } from '~/data/site'
+import { site } from '~/data/site'
 
 const props = withDefaults(defineProps<{ initial?: 'deposit' | 'withdraw' }>(), { initial: 'deposit' })
+const { deriv } = useRates()
 const type = ref<'deposit' | 'withdraw'>(props.initial)
 const amount = ref<number | null>(50)
 
-const rate = computed(() => (type.value === 'deposit' ? deriv.depositRate : deriv.withdrawRate))
-const tooLow = computed(() => amount.value != null && amount.value > 0 && amount.value < deriv.min)
-const tooHigh = computed(() => amount.value != null && amount.value > deriv.max)
+const rate = computed(() => (type.value === 'deposit' ? deriv.value.depositRate : deriv.value.withdrawRate))
+const tooLow = computed(() => amount.value != null && amount.value > 0 && amount.value < deriv.value.min)
+const tooHigh = computed(() => amount.value != null && amount.value > deriv.value.max)
 const naira = computed(() => {
   if (!amount.value || amount.value <= 0 || tooLow.value || tooHigh.value) return 0
   return amount.value * rate.value

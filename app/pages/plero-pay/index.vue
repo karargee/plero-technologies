@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { payBrand, payServices } from '~/data/pay'
+import { payBrand } from '~/data/pay'
 import { site } from '~/data/site'
 
 useSeoMeta({
@@ -7,13 +7,19 @@ useSeoMeta({
   description: 'Plero Pay by Plero Technologies: buy and sell USDT and Airtm USD for Naira, and pay suppliers in China in RMB.',
 })
 
-const usdt = payServices.find((s) => s.id === 'usdt')
-const usdtSell = usdt?.kind === 'trade' ? usdt.sellRate : 0
+const { payServices } = useRates()
 
-const rows = payServices.map((s) =>
-  s.kind === 'trade'
-    ? { s, a: { label: 'We sell at', value: formatMoney(s.buyRate) + ` / ${s.unit}` }, b: { label: 'We buy at', value: formatMoney(s.sellRate) + ` / ${s.unit}` } }
-    : { s, a: { label: 'Rate', value: formatMoney(s.rate) + ' / ¥1' }, b: { label: 'Service fee', value: formatMoney(s.fee) } },
+const usdtSell = computed(() => {
+  const usdt = payServices.value.find((s) => s.id === 'usdt')
+  return usdt?.kind === 'trade' ? usdt.sellRate : 0
+})
+
+const rows = computed(() =>
+  payServices.value.map((s) =>
+    s.kind === 'trade'
+      ? { s, a: { label: 'We sell at', value: formatMoney(s.buyRate) + ` / ${s.unit}` }, b: { label: 'We buy at', value: formatMoney(s.sellRate) + ` / ${s.unit}` } }
+      : { s, a: { label: 'Rate', value: formatMoney(s.rate) + ' / ¥1' }, b: { label: 'Service fee', value: formatMoney(s.fee) } },
+  ),
 )
 </script>
 

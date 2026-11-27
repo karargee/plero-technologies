@@ -7,12 +7,23 @@ export default defineNuxtConfig({
   routeRules: {
     '/rates': { redirect: { to: '/gift-cards', statusCode: 301 } },
     '/how-it-works': { redirect: { to: '/deriv', statusCode: 301 } },
+    // Admin runs only in the browser and is hidden from search engines.
+    '/admin/**': { ssr: false, headers: { 'X-Robots-Tag': 'noindex, nofollow' } },
+    '/admin': { ssr: false, headers: { 'X-Robots-Tag': 'noindex, nofollow' } },
   },
-  // Server-only secrets; set via NUXT_RESEND_API_KEY, NUXT_CONTACT_TO, NUXT_CONTACT_FROM.
+  // Server-only secrets come from env vars (NUXT_*). Public values (NUXT_PUBLIC_*) are sent to browsers.
   runtimeConfig: {
     resendApiKey: '',
     contactTo: '',
     contactFrom: 'Plero Website <onboarding@resend.dev>',
+    /** Supabase service-role key — server only, never exposed. Used to save contact messages. */
+    supabaseServiceKey: '',
+    public: {
+      /** e.g. https://abcd1234.supabase.co */
+      supabaseUrl: '',
+      /** Supabase "anon public" key — safe in the browser; Row Level Security protects data. */
+      supabaseAnonKey: '',
+    },
   },
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },

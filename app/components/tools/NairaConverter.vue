@@ -1,12 +1,12 @@
 <script setup lang="ts">
 // "I have ₦X — how many dollars is that on Deriv?" and the reverse, using Plero's rates.
-import { deriv } from '~/data/site'
+const { deriv } = useRates()
 
 const naira = ref<number | null>(100000)
 const usd = ref<number | null>(100)
 
-const depositUsd = computed(() => (naira.value ?? 0) / deriv.depositRate)
-const withdrawNaira = computed(() => (usd.value ?? 0) * deriv.withdrawRate)
+const depositUsd = computed(() => (naira.value ?? 0) / deriv.value.depositRate)
+const withdrawNaira = computed(() => (usd.value ?? 0) * deriv.value.withdrawRate)
 </script>
 
 <template>

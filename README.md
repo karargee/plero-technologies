@@ -28,6 +28,25 @@ withdrawal rates, limits and Deriv app id.
 Items marked `TODO` are placeholders — replace them before launch.
 Emptying the `stats` or `testimonials` arrays hides those sections.
 
+## Admin page (Supabase)
+
+`/admin` lets you edit all rates (Deriv, USDT, Airtm, China), gift cards, and read contact-form
+messages. Changes appear on the public site within ~30 seconds — no redeploy.
+
+One-time setup:
+
+1. **Create tables:** Supabase Dashboard → SQL Editor → paste `supabase/schema.sql` → Run.
+2. **Create your login:** Authentication → Users → Add user (email + password).
+3. **Make it an admin:** SQL Editor → `insert into public.admins (email) values ('YOUR EMAIL');`
+4. **Add env vars in Vercel** (Settings → Environment Variables), from Supabase → Project Settings → API:
+   - `NUXT_PUBLIC_SUPABASE_URL` — Project URL
+   - `NUXT_PUBLIC_SUPABASE_ANON_KEY` — `anon` `public` key
+   - `NUXT_SUPABASE_SERVICE_KEY` — `service_role` key (secret; saves contact messages)
+5. Redeploy, then open `/admin`.
+
+Security: Row Level Security only lets emails in `admins` change data. If Supabase isn't configured
+or is down, the site falls back to the built-in rates in `app/data/site.ts` and `app/data/pay.ts`.
+
 ## Deploy (Vercel)
 
 1. Push this folder to GitHub.
