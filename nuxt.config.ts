@@ -19,10 +19,12 @@ export default defineNuxtConfig({
     /** Supabase service-role key — server only, never exposed. Used to save contact messages. */
     supabaseServiceKey: '',
     public: {
-      /** e.g. https://abcd1234.supabase.co */
-      supabaseUrl: '',
-      /** Supabase "anon public" key — safe in the browser; Row Level Security protects data. */
-      supabaseAnonKey: '',
+      // Public by design (Row Level Security protects the data). Env vars
+      // NUXT_PUBLIC_SUPABASE_URL / NUXT_PUBLIC_SUPABASE_ANON_KEY override these if set.
+      /** Project URL, e.g. https://abcd1234.supabase.co */
+      supabaseUrl: 'https://mafwwnirwperxtbotlgq.supabase.co',
+      /** Supabase publishable key (project: plerotechnologies). */
+      supabaseAnonKey: 'sb_publishable__ce14Txy13KWHcpDej6KEg_0MPkvu63',
     },
   },
   app: {
