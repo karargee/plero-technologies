@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { features } from '~/data/site'
+const { features, home } = useContent()
 </script>
 
 <template>
   <section class="section">
     <div class="container">
       <div v-reveal class="section-head section-head--center">
-        <span class="eyebrow">Why Plero</span>
-        <h2 class="section-title">The easy way to move money in and out of Deriv</h2>
-        <p class="section-lead">Fair rates, fast transfers and people who actually answer when you need them.</p>
+        <span class="eyebrow">{{ home.features.eyebrow }}</span>
+        <h2 class="section-title">{{ home.features.title }}</h2>
+        <p class="section-lead">{{ home.features.text }}</p>
       </div>
 
       <div class="grid">

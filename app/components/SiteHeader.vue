@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { deriv, nav } from '~/data/site'
+import { nav } from '~/data/site'
+const { deriv } = useRates()
 
 const open = ref(false)
 const scrolled = ref(false)

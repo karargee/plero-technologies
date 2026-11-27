@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import type { PayId } from '~/data/pay'
-import { site } from '~/data/site'
 
 const props = withDefaults(defineProps<{ fixed?: PayId; initial?: PayId }>(), { initial: 'usdt' })
 
 const active = ref<PayId>(props.fixed ?? props.initial)
 const { payServices } = useRates()
+const { site } = useContent()
 const service = computed(() => payServices.value.find((s) => s.id === active.value)!)
 const side = ref<'buy' | 'sell'>('buy')
 const amount = ref<number | null>(100)
@@ -53,7 +53,7 @@ const whatsappHref = computed(() => {
   if (s.kind === 'supplier') text = `Hi Plero Pay, I want to pay a supplier in China: ¥${a} via ${method.value}. Quote: ${formatMoney(total.value)}.`
   else if (s.id === 'usdt') text = `Hi Plero Pay, I want to ${side.value} ${a} USDT (${network.value}). Quote: ${formatMoney(total.value)}.`
   else text = `Hi Plero Pay, I want to ${side.value} $${a} Airtm USD. Quote: ${formatMoney(total.value)}.`
-  return `${site.contact.whatsapp}?text=${encodeURIComponent(text)}`
+  return `${site.value.contact.whatsapp}?text=${encodeURIComponent(text)}`
 })
 </script>
 

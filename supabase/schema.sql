@@ -73,6 +73,17 @@ drop trigger if exists gift_cards_touch on public.gift_cards;
 create trigger gift_cards_touch before update on public.gift_cards
   for each row execute function public.touch_updated_at();
 
+-- ---------- Table access for the Data API ----------
+-- Newer Supabase projects don't grant these automatically. Row Level Security
+-- (below) still decides exactly which rows each role can see or change.
+grant usage on schema public to anon, authenticated, service_role;
+grant select on public.rates, public.gift_cards to anon, authenticated;
+grant insert, update, delete on public.rates, public.gift_cards to authenticated;
+grant select, update, delete on public.messages to authenticated;
+grant select on public.admins to authenticated;
+grant all on public.admins, public.rates, public.gift_cards, public.messages to service_role;
+grant execute on function public.is_admin() to anon, authenticated;
+
 -- ---------- Row Level Security ----------
 alter table public.admins enable row level security;
 alter table public.rates enable row level security;

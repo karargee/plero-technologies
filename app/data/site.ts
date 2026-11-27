@@ -192,31 +192,12 @@ export const withdrawSteps = [
   { title: 'Get paid in Naira', body: 'Send us your bank details on WhatsApp and we pay you out right away.' },
 ]
 
-// TODO: placeholder figures — replace with your real numbers before launch.
+// Default numbers shown on the site (editable in /admin → Content → Stats).
 export const stats = [
   { value: '5–15 min', label: 'Typical deposit time' },
   { value: '24/7', label: 'Live Deriv charts' },
   { value: '7 days', label: 'Support every week' },
-  { value: '4.8/5', label: 'Average customer rating' },
-]
-
-// TODO: placeholder testimonials — replace with real customer reviews (with permission).
-export const testimonials = [
-  {
-    quote: 'I deposited to my Deriv account on a Sunday night and it was funded before I finished my tea.',
-    name: 'Customer name',
-    role: 'Lagos',
-  },
-  {
-    quote: 'Withdrawals are smooth. I approve it on Deriv, send my bank details, and the Naira lands quickly.',
-    name: 'Customer name',
-    role: 'Abuja',
-  },
-  {
-    quote: 'They answered me on WhatsApp in a minute and walked me through my first withdrawal. Very easy.',
-    name: 'Customer name',
-    role: 'Port Harcourt',
-  },
+  { value: '17', label: 'Live markets to watch' },
 ]
 
 export const faqs = [

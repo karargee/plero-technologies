@@ -1,0 +1,361 @@
+/* ===========================================================================
+   Plero Admin — dark "midnight glass" theme. Only used on /admin.
+   =========================================================================== */
+.adm {
+  --a-bg: #090918;
+  --a-bg-2: #0e0e24;
+  --a-panel: rgb(255 255 255 / 0.045);
+  --a-panel-2: rgb(255 255 255 / 0.075);
+  --a-panel-3: rgb(255 255 255 / 0.11);
+  --a-line: rgb(255 255 255 / 0.09);
+  --a-line-2: rgb(255 255 255 / 0.16);
+  --a-text: #eef0ff;
+  --a-soft: rgb(238 240 255 / 0.72);
+  --a-mute: rgb(238 240 255 / 0.5);
+  --a-accent: #8187ff;
+  --a-accent-2: #5b60e6;
+  --a-green: #34d399;
+  --a-red: #ff6b81;
+  --a-amber: #fbbf24;
+  --a-field: rgb(255 255 255 / 0.06);
+  --a-radius: 18px;
+  --a-shadow: 0 24px 60px -24px rgb(0 0 0 / 0.6);
+
+  min-height: 100vh;
+  min-height: 100dvh;
+  color: var(--a-text);
+  background:
+    radial-gradient(900px 500px at 85% -10%, rgb(91 96 230 / 0.28), transparent 60%),
+    radial-gradient(700px 500px at -10% 110%, rgb(52 211 153 / 0.12), transparent 60%),
+    var(--a-bg);
+  background-attachment: fixed;
+  font-family: var(--font-body);
+  -webkit-tap-highlight-color: transparent;
+}
+.adm ::selection {
+  background: rgb(129 135 255 / 0.4);
+}
+.adm h1,
+.adm h2,
+.adm h3 {
+  color: var(--a-text);
+}
+
+/* ---------- Cards ---------- */
+.a-card {
+  background: var(--a-panel);
+  border: 1px solid var(--a-line);
+  border-radius: var(--a-radius);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.a-card--pad {
+  padding: clamp(16px, 2.5vw, 24px);
+}
+
+/* ---------- Page head ---------- */
+.a-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+.a-head h1 {
+  font-size: clamp(24px, 3vw, 30px);
+  letter-spacing: -0.02em;
+}
+.a-head p {
+  margin-top: 4px;
+  color: var(--a-soft);
+  font-size: 14.5px;
+  max-width: 620px;
+}
+.a-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ---------- Buttons ---------- */
+.a-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 42px;
+  padding: 0 16px;
+  border-radius: 12px;
+  border: 1px solid var(--a-line-2);
+  background: var(--a-panel-2);
+  color: var(--a-text);
+  font: inherit;
+  font-size: 14.5px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease, opacity 0.15s ease;
+}
+.a-btn:hover {
+  background: var(--a-panel-3);
+}
+.a-btn:active {
+  transform: translateY(1px);
+}
+.a-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+.a-btn--primary {
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--a-accent), var(--a-accent-2));
+  box-shadow: 0 10px 24px -10px rgb(91 96 230 / 0.8);
+}
+.a-btn--primary:hover {
+  background: linear-gradient(135deg, #9297ff, #6a6ff0);
+}
+.a-btn--green {
+  border-color: transparent;
+  background: rgb(52 211 153 / 0.16);
+  color: var(--a-green);
+}
+.a-btn--green:hover {
+  background: rgb(52 211 153 / 0.26);
+}
+.a-btn--danger {
+  border-color: rgb(255 107 129 / 0.3);
+  background: rgb(255 107 129 / 0.08);
+  color: var(--a-red);
+}
+.a-btn--danger:hover {
+  background: rgb(255 107 129 / 0.16);
+}
+.a-btn--sm {
+  height: 34px;
+  padding: 0 12px;
+  font-size: 13px;
+  border-radius: 10px;
+}
+.a-btn--icon {
+  width: 36px;
+  padding: 0;
+}
+
+/* ---------- Form controls ---------- */
+.a-label {
+  display: grid;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--a-soft);
+}
+.a-label small {
+  font-weight: 400;
+  color: var(--a-mute);
+}
+.a-input {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid var(--a-line-2);
+  border-radius: 12px;
+  background: var(--a-field);
+  color: var(--a-text);
+  font: inherit;
+  font-size: 15px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+.a-input::placeholder {
+  color: var(--a-mute);
+}
+.a-input:focus {
+  outline: none;
+  border-color: var(--a-accent);
+  background: rgb(255 255 255 / 0.08);
+  box-shadow: 0 0 0 4px rgb(129 135 255 / 0.18);
+}
+textarea.a-input {
+  resize: vertical;
+  line-height: 1.55;
+}
+select.a-input {
+  appearance: none;
+  padding-right: 36px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%23c9cbf2' stroke-width='1.8'%3E%3Cpath d='m1 1 5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+}
+select.a-input option {
+  background: #16163a;
+  color: #fff;
+}
+.a-input--dirty {
+  border-color: rgb(251 191 36 / 0.7);
+  background: rgb(251 191 36 / 0.07);
+}
+
+/* Toggle switch */
+.a-switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--a-soft);
+}
+.a-switch input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+.a-switch i {
+  position: relative;
+  flex: none;
+  width: 44px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--a-panel-3);
+  transition: background-color 0.15s ease;
+}
+.a-switch i::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.3);
+  transition: transform 0.18s ease;
+}
+.a-switch input:checked + i {
+  background: var(--a-green);
+}
+.a-switch input:checked + i::after {
+  transform: translateX(18px);
+}
+.a-switch input:focus-visible + i {
+  outline: 2px solid var(--a-accent);
+  outline-offset: 2px;
+}
+
+/* ---------- Chips / badges ---------- */
+.a-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--a-panel-2);
+  color: var(--a-soft);
+  white-space: nowrap;
+}
+.a-chip--green {
+  background: rgb(52 211 153 / 0.14);
+  color: var(--a-green);
+}
+.a-chip--amber {
+  background: rgb(251 191 36 / 0.14);
+  color: var(--a-amber);
+}
+.a-chip--red {
+  background: rgb(255 107 129 / 0.14);
+  color: var(--a-red);
+}
+.a-chip--accent {
+  background: rgb(129 135 255 / 0.16);
+  color: #b5b8ff;
+}
+
+/* Segmented control */
+.a-seg {
+  display: inline-flex;
+  padding: 4px;
+  border-radius: 14px;
+  background: var(--a-panel);
+  border: 1px solid var(--a-line);
+  gap: 2px;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.a-seg::-webkit-scrollbar {
+  display: none;
+}
+.a-seg button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  background: transparent;
+  color: var(--a-soft);
+  padding: 8px 14px;
+  border-radius: 10px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.a-seg button.on {
+  background: var(--a-panel-3);
+  color: var(--a-text);
+  box-shadow: inset 0 0 0 1px var(--a-line-2);
+}
+.a-count {
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--a-red);
+  color: #fff;
+  font-size: 11.5px;
+  font-weight: 700;
+  line-height: 20px;
+  text-align: center;
+}
+
+.a-muted {
+  color: var(--a-mute);
+}
+.a-empty {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--a-mute);
+}
+.a-note {
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: rgb(251 191 36 / 0.1);
+  border: 1px solid rgb(251 191 36 / 0.25);
+  color: #fde68a;
+  font-size: 14px;
+}
+.a-skel {
+  border-radius: 14px;
+  background: linear-gradient(90deg, var(--a-panel) 0%, var(--a-panel-3) 50%, var(--a-panel) 100%);
+  background-size: 200% 100%;
+  animation: a-shimmer 1.3s linear infinite;
+}
+@keyframes a-shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+.a-fade-enter-active,
+.a-fade-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.a-fade-enter-from,
+.a-fade-leave-to {
+  opacity: 0;
+  transform: translateY(6px);
+}

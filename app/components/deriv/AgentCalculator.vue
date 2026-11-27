@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { site } from '~/data/site'
 
 const props = withDefaults(defineProps<{ initial?: 'deposit' | 'withdraw' }>(), { initial: 'deposit' })
 const { deriv } = useRates()
+const { site } = useContent()
 const type = ref<'deposit' | 'withdraw'>(props.initial)
 const amount = ref<number | null>(50)
 
@@ -18,7 +18,7 @@ const whatsappHref = computed(() => {
     type.value === 'deposit'
       ? `Hi Plero, I want to deposit $${amount.value ?? 0} to my Deriv account. My Deriv ID (CR number) is: `
       : `Hi Plero, I have withdrawn $${amount.value ?? 0} from Deriv to you. My bank details are: `
-  return `${site.contact.whatsapp}?text=${encodeURIComponent(text)}`
+  return `${site.value.contact.whatsapp}?text=${encodeURIComponent(text)}`
 })
 </script>
 

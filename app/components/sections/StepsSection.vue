@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { depositSteps, withdrawSteps } from '~/data/site'
 withDefaults(defineProps<{ showLink?: boolean }>(), { showLink: true })
+const { home, steps: stepsDoc } = useContent()
 
 const tab = ref<'deposit' | 'withdraw'>('deposit')
-const steps = computed(() => (tab.value === 'deposit' ? depositSteps : withdrawSteps))
+const steps = computed(() => (tab.value === 'deposit' ? stepsDoc.value.deposit : stepsDoc.value.withdraw))
 </script>
 
 <template>
@@ -11,9 +11,9 @@ const steps = computed(() => (tab.value === 'deposit' ? depositSteps : withdrawS
     <div class="container">
       <div class="steps__top">
         <div v-reveal class="section-head">
-          <span class="eyebrow">How it works</span>
-          <h2 class="section-title">Deposit or withdraw in four simple steps</h2>
-          <p class="section-lead">Everything runs through Deriv's own payment agent system.</p>
+          <span class="eyebrow">{{ home.steps.eyebrow }}</span>
+          <h2 class="section-title">{{ home.steps.title }}</h2>
+          <p class="section-lead">{{ home.steps.text }}</p>
         </div>
         <div class="seg" role="tablist" aria-label="Choose flow">
           <button type="button" role="tab" :aria-selected="tab === 'deposit'" :class="{ on: tab === 'deposit' }" @click="tab = 'deposit'">

@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { site } from '~/data/site'
+const { site, home, images, bg } = useContent()
 </script>
 
 <template>
   <section class="section cta-wrap">
     <div class="container">
-      <div v-reveal:zoom class="cta">
+      <div v-reveal:zoom class="cta" :style="{ '--img': bg(images.cta) }">
         <LogoMark class="cta__mark" :size="220" light />
         <div class="cta__copy">
-          <h2>Ready to fund your Deriv account?</h2>
-          <p>Message us with the amount and your Deriv ID — you could be trading in minutes.</p>
+          <h2>{{ home.cta.title }}</h2>
+          <p>{{ home.cta.text }}</p>
         </div>
         <div class="cta__actions">
           <NuxtLink to="/deriv" class="btn btn--light">Deposit now</NuxtLink>
@@ -39,7 +39,7 @@ import { site } from '~/data/site'
   padding: clamp(36px, 6vw, 64px);
   border-radius: 28px;
   background: linear-gradient(110deg, rgb(19 18 58 / 0.96) 0%, rgb(38 36 107 / 0.88) 50%, rgb(76 79 166 / 0.7) 100%),
-    url('/images/lekki-bridge-sm.webp') center 30% / cover no-repeat, var(--navy-800);
+    var(--img) center 30% / cover no-repeat, var(--navy-800);
   color: #fff;
   box-shadow: var(--shadow-lg);
 }

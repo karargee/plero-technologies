@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { guides } from '~/data/guides'
+const { guides } = useContent()
 
 const route = useRoute()
-const guide = computed(() => guides.find((g) => g.slug === route.params.slug))
+const guide = computed(() => guides.value.find((g) => g.slug === route.params.slug))
 if (!guide.value) {
   throw createError({ statusCode: 404, statusMessage: 'Guide not found', fatal: true })
 }
 
-const others = computed(() => guides.filter((g) => g.slug !== guide.value!.slug).slice(0, 3))
+const others = computed(() => guides.value.filter((g) => g.slug !== guide.value!.slug).slice(0, 3))
+const lines = (t: string) => t.split('\n').map((x) => x.trim()).filter(Boolean)
 
 useSeoMeta({
   title: () => guide.value!.title,
@@ -31,18 +32,18 @@ useSeoMeta({
       <div class="container article-wrap">
         <article class="article">
           <template v-for="(b, i) in guide.body" :key="i">
-            <h2 v-if="'h' in b">{{ b.h }}</h2>
-            <p v-else-if="'p' in b">{{ b.p }}</p>
-            <ol v-else-if="'ol' in b">
-              <li v-for="item in b.ol" :key="item">{{ item }}</li>
+            <h2 v-if="b.type === 'h'">{{ b.text }}</h2>
+            <ol v-else-if="b.type === 'ol'">
+              <li v-for="item in lines(b.text)" :key="item">{{ item }}</li>
             </ol>
-            <ul v-else-if="'ul' in b">
-              <li v-for="item in b.ul" :key="item">{{ item }}</li>
+            <ul v-else-if="b.type === 'ul'">
+              <li v-for="item in lines(b.text)" :key="item">{{ item }}</li>
             </ul>
-            <aside v-else-if="'note' in b" class="note">
+            <aside v-else-if="b.type === 'note'" class="note">
               <AppIcon name="shield" :size="20" />
-              <span>{{ b.note }}</span>
+              <span>{{ b.text }}</span>
             </aside>
+            <p v-else>{{ b.text }}</p>
           </template>
         </article>
 

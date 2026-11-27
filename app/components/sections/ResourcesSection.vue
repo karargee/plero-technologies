@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { guides } from '~/data/guides'
+const { guides } = useContent()
 
-const items = [
+const items = computed(() => [
   { to: '/tools', icon: 'chart', title: 'Trading tools', body: 'Position size, profit & loss and Naira converter calculators.' },
-  { to: '/guides', icon: 'cards', title: `${guides.length} beginner guides`, body: 'Open, verify, fund and withdraw from your Deriv account.' },
+  { to: '/guides', icon: 'cards', title: `${guides.value.length} beginner guides`, body: 'Open, verify, fund and withdraw from your Deriv account.' },
   { to: '/markets', icon: 'bolt', title: 'Live charts', body: '17 Deriv markets streaming live, with open/closed status.' },
-]
+])
 </script>
 
 <template>

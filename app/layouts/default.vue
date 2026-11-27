@@ -1,6 +1,7 @@
 <template>
   <div class="layout">
     <ScrollProgress />
+    <AnnouncementBar />
     <SiteHeader />
     <main id="main">
       <slot />

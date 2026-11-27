@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { home, images, bg } = useContent()
 // Two photo cards: someone trading (with a live Deriv price overlay)
 // and someone making a transaction on the site (with a real quote from our rates).
 const { deriv } = useRates()
@@ -35,9 +36,9 @@ const demoNaira = computed(() => demoUsd * deriv.value.depositRate)
   <section class="section action">
     <div class="container">
       <div v-reveal class="section-head section-head--center">
-        <span class="eyebrow">See it in action</span>
-        <h2 class="section-title">Trade on Deriv. Pay with Plero. All from your phone.</h2>
-        <p class="section-lead">Fund your account, watch the markets and move your money — in minutes, not days.</p>
+        <span class="eyebrow">{{ home.action.eyebrow }}</span>
+        <h2 class="section-title">{{ home.action.title }}</h2>
+        <p class="section-lead">{{ home.action.text }}</p>
       </div>
 
       <div class="action__grid">
@@ -45,7 +46,7 @@ const demoNaira = computed(() => demoUsd * deriv.value.depositRate)
         <figure v-reveal:left class="shot">
           <div class="shot__media">
           <div class="shot__img">
-            <img src="/images/trader.webp" alt="A smiling trader at his desk with his phone and laptop" width="960" height="640" loading="lazy" />
+            <img :src="images.trader" alt="A smiling trader at his desk with his phone and laptop" width="960" height="640" loading="lazy" />
           </div>
           <div class="float float--price" aria-hidden="true">
             <div class="float__row">
@@ -73,7 +74,7 @@ const demoNaira = computed(() => demoUsd * deriv.value.depositRate)
         <figure v-reveal:right="120" class="shot">
           <div class="shot__media">
           <div class="shot__img">
-            <img src="/images/paying.webp" alt="A smiling woman making a payment on her phone" width="960" height="760" loading="lazy" />
+            <img :src="images.paying" alt="A smiling woman making a payment on her phone" width="960" height="760" loading="lazy" />
           </div>
           <div class="float float--quote" aria-hidden="true">
             <div class="q__head">

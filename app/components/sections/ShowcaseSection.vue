@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { deriv } from '~/data/site'
+const { home } = useContent()
+const { deriv } = useRates()
 
 const points = [
   { icon: 'bolt', title: 'Deposit in minutes', body: 'Send Naira, trade on Deriv shortly after.' },
@@ -16,12 +17,9 @@ const points = [
         <PhoneMockup />
       </div>
       <div>
-        <span v-reveal class="eyebrow">Built for your phone</span>
-        <h2 v-reveal="60" class="section-title">Everything you need, wherever you trade</h2>
-        <p v-reveal="120" class="section-lead">
-          Check live prices, work out your rate and message us to deposit or withdraw — all from your phone,
-          in a couple of taps.
-        </p>
+        <span v-reveal class="eyebrow">{{ home.showcase.eyebrow }}</span>
+        <h2 v-reveal="60" class="section-title">{{ home.showcase.title }}</h2>
+        <p v-reveal="120" class="section-lead">{{ home.showcase.text }}</p>
         <ul class="show__list">
           <li v-for="(p, i) in points" :key="p.title" v-reveal:right="180 + i * 90">
             <span class="show__icon"><AppIcon :name="p.icon" /></span>

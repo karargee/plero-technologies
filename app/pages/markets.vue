@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { deriv, markets } from '~/data/site'
+import { markets } from '~/data/site'
+const { deriv } = useRates()
+const { pages, images, bg } = useContent()
 
 useSeoMeta({
   title: 'Live Deriv charts',
@@ -17,11 +19,11 @@ watch(symbol, (s) => router.replace({ query: { ...route.query, symbol: s } }))
 
 <template>
   <div>
-    <section class="page-hero page-hero--tight page-hero--photo" style="--hero-img: url('/images/trading-laptop.webp')">
+    <section class="page-hero page-hero--tight page-hero--photo" :style="{ '--hero-img': bg(images.marketsHeader) }">
       <div class="container">
-        <span class="eyebrow" style="color: var(--indigo-200)">Live charts</span>
-        <h1>Live Deriv markets</h1>
-        <p>Real-time prices streamed from Deriv. Pick a market, switch between ticks and 1-minute candles.</p>
+        <span class="eyebrow" style="color: var(--indigo-200)">{{ pages.markets.eyebrow }}</span>
+        <h1>{{ pages.markets.title }}</h1>
+        <p>{{ pages.markets.text }}</p>
       </div>
     </section>
 

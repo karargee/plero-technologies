@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { pages } = useContent()
 useSeoMeta({
   title: 'Sell gift cards',
   description: 'Gift card rates for Apple, Amazon, Steam, Google Play, Razer Gold and more.',
@@ -19,9 +20,9 @@ const today = computed(() =>
   <div>
     <section class="page-hero">
       <div class="container">
-        <span class="eyebrow" style="color: var(--indigo-200)">Gift cards</span>
-        <h1>Sell your gift cards</h1>
-        <p>Updated {{ today }}. The rate you see is what you get paid — no hidden fees.</p>
+        <span class="eyebrow" style="color: var(--indigo-200)">{{ pages.giftCards.eyebrow }}</span>
+        <h1>{{ pages.giftCards.title }}</h1>
+        <p>Updated {{ today }}. {{ pages.giftCards.text }}</p>
       </div>
     </section>
 

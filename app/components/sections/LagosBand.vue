@@ -1,18 +1,15 @@
 <script setup lang="ts">
-import { stats } from '~/data/site'
+const { stats, home, images, bg } = useContent()
 </script>
 
 <template>
   <section class="band">
-    <div class="band__img" aria-hidden="true" />
+    <div class="band__img" aria-hidden="true" :style="{ '--img': bg(images.lagosBand) }" />
     <div class="container band__inner">
       <div v-reveal:left class="band__copy">
-        <span class="eyebrow">Proudly Nigerian</span>
-        <h2>Built in Lagos. Serving Deriv traders across Nigeria.</h2>
-        <p>
-          From Lagos to Abuja to Port Harcourt — wherever you trade, your deposits and withdrawals are handled by a
-          local team that understands Naira, local banks and your time.
-        </p>
+        <span class="eyebrow">{{ home.lagos.eyebrow }}</span>
+        <h2>{{ home.lagos.title }}</h2>
+        <p>{{ home.lagos.text }}</p>
       </div>
       <div class="band__stats">
         <div v-for="(s, i) in stats" :key="s.label" v-reveal:zoom="i * 90" class="band__stat">
@@ -38,7 +35,7 @@ import { stats } from '~/data/site'
   inset: -12% 0;
   z-index: -1;
   background: linear-gradient(100deg, rgb(12 12 36 / 0.94) 0%, rgb(27 26 74 / 0.82) 45%, rgb(61 63 147 / 0.45) 100%),
-    url('/images/lagos-aerial.webp') center / cover no-repeat;
+    var(--img) center / cover no-repeat;
   animation: band-zoom 30s ease-in-out infinite alternate;
 }
 @keyframes band-zoom {

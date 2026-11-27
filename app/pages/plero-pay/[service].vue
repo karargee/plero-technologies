@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { site } from '~/data/site'
+const { site } = useContent()
 
 const route = useRoute()
 const { payServices } = useRates()

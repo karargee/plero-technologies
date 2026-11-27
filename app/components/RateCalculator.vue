@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { site } from '~/data/site'
 
 const props = withDefaults(defineProps<{ initialCard?: string }>(), { initialCard: 'apple' })
 const { cards } = useRates()
+const { site } = useContent()
 
 const cardId = ref(props.initialCard)
 const amount = ref<number | null>(100)
@@ -16,7 +16,7 @@ const payout = computed(() => {
 })
 const whatsappHref = computed(() => {
   const text = `Hi Plero, I'd like to sell a $${amount.value ?? 0} ${card.value.name} gift card.`
-  return `${site.contact.whatsapp}?text=${encodeURIComponent(text)}`
+  return `${site.value.contact.whatsapp}?text=${encodeURIComponent(text)}`
 })
 </script>
 

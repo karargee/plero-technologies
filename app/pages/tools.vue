@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { pages } = useContent()
 useSeoMeta({
   title: 'Trading tools',
   description: 'Free position size, profit & loss and Naira converter calculators for Deriv traders.',
@@ -9,9 +10,9 @@ useSeoMeta({
   <div>
     <section class="page-hero">
       <div class="container">
-        <span class="eyebrow" style="color: var(--indigo-200)">Tools</span>
-        <h1>Free calculators for Deriv traders.</h1>
-        <p>Size your trades, check your profit or loss, and plan deposits and withdrawals in Naira.</p>
+        <span class="eyebrow" style="color: var(--indigo-200)">{{ pages.tools.eyebrow }}</span>
+        <h1>{{ pages.tools.title }}</h1>
+        <p>{{ pages.tools.text }}</p>
       </div>
     </section>
 

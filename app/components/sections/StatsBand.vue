@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { stats } from '~/data/site'
+const { stats } = useContent()
 </script>
 
 <template>

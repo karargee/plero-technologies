@@ -146,3 +146,27 @@ export const guides: Guide[] = [
     ],
   },
 ]
+
+// ---------------------------------------------------------------------------
+// Editable format used by /admin → Content → Guides.
+// Lists are stored as text with one item per line.
+// ---------------------------------------------------------------------------
+export type BlockType = 'h' | 'p' | 'ol' | 'ul' | 'note'
+export interface EditableBlock {
+  type: BlockType
+  text: string
+}
+export interface EditableGuide extends Omit<Guide, 'body' | 'category'> {
+  category: string
+  body: EditableBlock[]
+}
+
+function toEditable(b: Block): EditableBlock {
+  if ('h' in b) return { type: 'h', text: b.h }
+  if ('p' in b) return { type: 'p', text: b.p }
+  if ('ol' in b) return { type: 'ol', text: b.ol.join('\n') }
+  if ('ul' in b) return { type: 'ul', text: b.ul.join('\n') }
+  return { type: 'note', text: b.note }
+}
+
+export const guideDefaults: EditableGuide[] = guides.map((g) => ({ ...g, body: g.body.map(toEditable) }))

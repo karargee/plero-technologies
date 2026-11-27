@@ -109,163 +109,168 @@ onMounted(load)
 </script>
 
 <template>
-  <div class="panel">
-    <div class="panel__head">
+  <div>
+    <div class="a-head">
       <div>
-        <h2>Gift cards</h2>
-        <p>Edit rates (₦ per $1), limits and visibility. Turn a card off to hide it without deleting it.</p>
+        <h1>Gift cards</h1>
+        <p>Rates are ₦ per $1. Switch a card off to hide it from the website without deleting it.</p>
       </div>
-      <div class="panel__actions">
-        <button class="btn btn--ghost" type="button" @click="addCard">+ Add card</button>
-        <button class="btn btn--primary" type="button" :disabled="!changedRows.length || saving" @click="save">
-          {{ saving ? 'Saving…' : changedRows.length ? `Save changes (${changedRows.length})` : 'Saved' }}
-        </button>
+      <div class="a-actions">
+        <button class="a-btn" type="button" @click="addCard">+ Add card</button>
       </div>
     </div>
 
-    <p v-if="loading" class="muted">Loading gift cards…</p>
+    <div v-if="loading" class="cards">
+      <div v-for="n in 4" :key="n" class="a-skel" style="height: 150px" />
+    </div>
+    <div v-else-if="!rows.length" class="a-card a-empty">No gift cards yet. Tap “Add card”.</div>
 
-    <div v-else class="table card">
-      <div class="tr th">
-        <span>Card</span><span>Rate ₦/$</span><span>24h %</span><span>Min $</span><span>Max $</span><span>Order</span><span>Live</span><span />
-      </div>
-      <div v-for="(r, i) in rows" :key="r.id || `new-${i}`" class="tr" :class="{ off: !r.active, dirty: changedRows.includes(r) }">
-        <span class="name">
+    <div v-else class="cards">
+      <article
+        v-for="(r, i) in rows"
+        :key="r.id || `new-${i}`"
+        class="gc a-card"
+        :class="{ off: !r.active, dirty: changedRows.includes(r) }"
+      >
+        <div class="gc__top">
           <input v-model="r.color" type="color" class="color" :aria-label="`Colour for ${r.name || 'new card'}`" />
-          <input v-model="r.name" type="text" placeholder="Card name" class="in" />
-        </span>
-        <input v-model.number="r.rate" type="number" min="0" step="any" class="in num" aria-label="Rate" />
-        <input v-model.number="r.change" type="number" step="0.1" class="in num" aria-label="24h change" />
-        <input v-model.number="r.min" type="number" min="0" class="in num" aria-label="Minimum" />
-        <input v-model.number="r.max" type="number" min="0" class="in num" aria-label="Maximum" />
-        <input v-model.number="r.sort" type="number" class="in num" aria-label="Order" />
-        <label class="switch">
-          <input v-model="r.active" type="checkbox" />
-          <i />
-        </label>
-        <button type="button" class="del" :aria-label="`Delete ${r.name}`" @click="remove(r)">✕</button>
-      </div>
-      <p v-if="!rows.length" class="muted empty">No gift cards yet. Click “Add card”.</p>
+          <input v-model="r.name" type="text" class="a-input name" placeholder="Card name, e.g. Apple / iTunes" aria-label="Card name" />
+          <label class="a-switch" :title="r.active ? 'Shown on site' : 'Hidden'">
+            <input v-model="r.active" type="checkbox" :aria-label="`Show ${r.name || 'this card'} on the website`" />
+            <i />
+          </label>
+        </div>
+        <div class="gc__nums">
+          <label class="a-label">Rate ₦/$<input v-model.number="r.rate" type="number" min="0" step="any" inputmode="decimal" class="a-input num" /></label>
+          <label class="a-label">24h %<input v-model.number="r.change" type="number" step="0.1" inputmode="decimal" class="a-input num" /></label>
+          <label class="a-label">Min $<input v-model.number="r.min" type="number" min="0" inputmode="decimal" class="a-input num" /></label>
+          <label class="a-label">Max $<input v-model.number="r.max" type="number" min="0" inputmode="decimal" class="a-input num" /></label>
+          <label class="a-label">Order<input v-model.number="r.sort" type="number" inputmode="numeric" class="a-input num" /></label>
+        </div>
+        <div class="gc__foot">
+          <span class="a-chip" :class="r.active ? 'a-chip--green' : ''">{{ r.active ? 'On the website' : 'Hidden' }}</span>
+          <span v-if="r._new" class="a-chip a-chip--amber">New — not saved</span>
+          <button type="button" class="a-btn a-btn--sm a-btn--danger" @click="remove(r)">Delete</button>
+        </div>
+      </article>
     </div>
+
+    <Transition name="a-fade">
+      <div v-if="changedRows.length" class="savebar">
+        <span><i class="pulse" /> {{ changedRows.length }} card{{ changedRows.length > 1 ? 's' : '' }} changed</span>
+        <div class="a-actions">
+          <button type="button" class="a-btn a-btn--sm" :disabled="saving" @click="load">Undo</button>
+          <button type="button" class="a-btn a-btn--sm a-btn--primary" :disabled="saving" @click="save">
+            {{ saving ? 'Saving…' : 'Save & publish' }}
+          </button>
+        </div>
+      </div>
+    </Transition>
   </div>
 </template>
 
-<style scoped src="./admin.css"></style>
 <style scoped>
-.table {
-  overflow-x: auto;
-  padding: 6px;
-}
-.tr {
+.cards {
   display: grid;
-  grid-template-columns: minmax(200px, 2fr) repeat(5, minmax(84px, 1fr)) 60px 40px;
-  gap: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 12px;
+  margin-bottom: 90px;
+}
+.gc {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  transition: border-color 0.15s ease, opacity 0.15s ease;
+}
+.gc.dirty {
+  border-color: rgb(251 191 36 / 0.55);
+}
+.gc.off {
+  opacity: 0.62;
+}
+.gc__top {
+  display: flex;
   align-items: center;
-  padding: 8px;
-  border-radius: 10px;
-  min-width: 860px;
-}
-.tr + .tr {
-  border-top: 1px solid var(--line);
-}
-.th {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-}
-.tr.dirty {
-  background: #fffbeb;
-}
-.tr.off .name .in {
-  color: var(--ink-mute);
-  text-decoration: line-through;
+  gap: 10px;
 }
 .name {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-.in {
-  width: 100%;
-  height: 38px;
-  padding: 0 10px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  font-size: 14px;
-}
-.in:focus {
-  outline: none;
-  border-color: var(--indigo-400);
-}
-.num {
-  font-variant-numeric: tabular-nums;
-  text-align: right;
+  flex: 1;
+  min-width: 0;
+  font-weight: 700;
 }
 .color {
   flex: none;
-  width: 34px;
-  height: 34px;
+  width: 44px;
+  height: 44px;
   padding: 0;
-  border: 1px solid var(--line);
-  border-radius: 8px;
+  border: 1px solid var(--a-line-2);
+  border-radius: 12px;
   background: none;
   cursor: pointer;
 }
-.switch {
-  position: relative;
-  width: 42px;
-  height: 24px;
-  cursor: pointer;
+.gc__nums {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr 0.8fr;
+  gap: 8px;
 }
-.switch input {
-  position: absolute;
-  opacity: 0;
+.gc__nums .a-label {
+  font-size: 11.5px;
 }
-.switch i {
-  position: absolute;
-  inset: 0;
-  border-radius: 999px;
-  background: var(--line);
-  transition: background-color 0.15s ease;
+.num {
+  padding: 8px 10px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
 }
-.switch i::after {
-  content: '';
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 18px;
-  height: 18px;
+.gc__foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.gc__foot .a-btn {
+  margin-left: auto;
+}
+.savebar {
+  position: fixed;
+  z-index: 40;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(18px + env(safe-area-inset-bottom));
+  width: min(640px, calc(100% - 24px));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 10px 10px 18px;
+  border-radius: 18px;
+  background: rgb(20 20 50 / 0.92);
+  border: 1px solid var(--a-line-2);
+  backdrop-filter: blur(16px);
+  box-shadow: var(--a-shadow);
+  font-size: 14px;
+  font-weight: 600;
+}
+.savebar > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.pulse {
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: #fff;
-  box-shadow: var(--shadow-sm);
-  transition: transform 0.15s ease;
+  background: var(--a-amber);
 }
-.switch input:checked + i {
-  background: var(--success);
+@media (max-width: 1023px) {
+  .savebar {
+    bottom: calc(84px + env(safe-area-inset-bottom));
+  }
 }
-.switch input:checked + i::after {
-  transform: translateX(18px);
-}
-.switch input:focus-visible + i {
-  outline: 2px solid var(--indigo-400);
-  outline-offset: 2px;
-}
-.del {
-  width: 34px;
-  height: 34px;
-  border: 0;
-  border-radius: 8px;
-  background: transparent;
-  color: var(--ink-mute);
-  cursor: pointer;
-}
-.del:hover {
-  background: #fdecea;
-  color: #b42318;
-}
-.empty {
-  padding: 20px;
+@media (max-width: 480px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+  .gc__nums {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 </style>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { faqs } from '~/data/site'
+const { faqs, home } = useContent()
 withDefaults(defineProps<{ alt?: boolean }>(), { alt: false })
 </script>
 
@@ -7,11 +7,11 @@ withDefaults(defineProps<{ alt?: boolean }>(), { alt: false })
   <section id="faq" class="section" :class="{ 'section--alt': alt }">
     <div class="container faq">
       <div v-reveal class="section-head">
-        <span class="eyebrow">FAQ</span>
-        <h2 class="section-title">Questions, answered</h2>
+        <span class="eyebrow">{{ home.faq.eyebrow }}</span>
+        <h2 class="section-title">{{ home.faq.title }}</h2>
         <p class="section-lead">
-          Can't find what you need?
-          <NuxtLink to="/support" class="faq__link">Contact support</NuxtLink>.
+          {{ home.faq.text }}
+          <NuxtLink to="/support" class="faq__link">Contact support →</NuxtLink>
         </p>
       </div>
 

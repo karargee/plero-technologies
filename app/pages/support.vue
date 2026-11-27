@@ -1,17 +1,20 @@
 <script setup lang="ts">
-import { site } from '~/data/site'
+const { site, pages, images, bg } = useContent()
 
 useSeoMeta({
   title: 'Support',
   description: 'Get help with a trade or contact the Plero Technologies team.',
 })
 
-const channels = [
-  { icon: 'chat', label: 'WhatsApp', value: 'Chat with the trade desk', href: site.contact.whatsapp, external: true },
-  { icon: 'mail', label: 'Email', value: site.contact.email, href: `mailto:${site.contact.email}` },
-  { icon: 'phone', label: 'Phone', value: site.contact.phone, href: `tel:${site.contact.phone.replace(/\s/g, '')}` },
-  { icon: 'clock', label: 'Hours', value: site.contact.hours },
-]
+const channels = computed(() => {
+  const c = site.value.contact
+  return [
+    { icon: 'chat', label: 'WhatsApp', value: 'Chat with the trade desk', href: c.whatsapp, external: true },
+    { icon: 'mail', label: 'Email', value: c.email, href: `mailto:${c.email}` },
+    { icon: 'phone', label: 'Phone', value: c.phone, href: `tel:${c.phone.replace(/\s/g, '')}` },
+    { icon: 'clock', label: 'Hours', value: c.hours },
+  ].filter((x) => x.value)
+})
 
 const form = reactive({ name: '', email: '', topic: 'Deriv deposit', message: '', website: '' })
 const status = ref<'idle' | 'sending' | 'sent' | 'error'>('idle')
@@ -20,7 +23,7 @@ const errorMsg = ref('')
 function openMailFallback() {
   const subject = `[${form.topic}] Message from ${form.name}`
   const body = `${form.message}\n\n— ${form.name} (${form.email})`
-  window.location.href = `mailto:${site.contact.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+  window.location.href = `mailto:${site.value.contact.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
 }
 
 async function submit() {
@@ -45,11 +48,11 @@ async function submit() {
 
 <template>
   <div>
-    <section class="page-hero page-hero--photo" style="--hero-img: url('/images/lekki-bridge.webp')">
+    <section class="page-hero page-hero--photo" :style="{ '--hero-img': bg(images.supportHeader) }">
       <div class="container">
-        <span class="eyebrow" style="color: var(--indigo-200)">Support</span>
-        <h1>We're here to help.</h1>
-        <p>Questions about a Deriv deposit, a withdrawal or a gift card? Reach a real person on any channel below.</p>
+        <span class="eyebrow" style="color: var(--indigo-200)">{{ pages.support.eyebrow }}</span>
+        <h1>{{ pages.support.title }}</h1>
+        <p>{{ pages.support.text }}</p>
       </div>
     </section>
 

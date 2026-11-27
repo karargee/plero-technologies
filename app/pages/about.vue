@@ -1,26 +1,20 @@
 <script setup lang="ts">
+const { about, images, bg } = useContent()
 useSeoMeta({
   title: 'About us',
   description: 'Plero Technologies is a Deriv payment agent helping traders deposit and withdraw in Naira.',
 })
 
-const values = [
-  { icon: 'chart', title: 'Honest pricing', body: 'We publish our rates openly and stick to them.' },
-  { icon: 'bolt', title: 'Speed matters', body: 'Your time is valuable, so we pay out as fast as we can verify.' },
-  { icon: 'shield', title: 'Trust first', body: 'We protect your data and treat every trade with care.' },
-]
+const values = computed(() => about.value.values.filter((v) => v.title))
 </script>
 
 <template>
   <div>
-    <section class="page-hero page-hero--photo" style="--hero-img: url('/images/lagos-aerial.webp')">
+    <section class="page-hero page-hero--photo" :style="{ '--hero-img': bg(images.aboutHeader) }">
       <div class="container">
-        <span class="eyebrow" style="color: var(--indigo-200)">About</span>
-        <h1>We make moving money in and out of Deriv simple.</h1>
-        <p>
-          Plero Technologies is a Deriv payment agent. We started with a simple idea: funding or withdrawing
-          from your trading account should be as easy and as trustworthy as sending a bank transfer.
-        </p>
+        <span class="eyebrow" style="color: var(--indigo-200)">{{ about.hero.eyebrow }}</span>
+        <h1>{{ about.hero.title }}</h1>
+        <p>{{ about.hero.text }}</p>
       </div>
     </section>
 
@@ -28,7 +22,7 @@ const values = [
       <div class="container story">
         <div v-reveal:left class="story__img">
           <img
-            src="/images/lekki-bridge-sm.webp"
+            :src="images.about"
             alt="The Lekki–Ikoyi Link Bridge in Lagos"
             width="900"
             height="522"
@@ -40,17 +34,10 @@ const values = [
           </div>
         </div>
         <div v-reveal:right>
-          <span class="eyebrow">Our story</span>
-          <h2 class="section-title">Fair rates, real people, fast transfers</h2>
-          <p class="section-lead">
-            Too many traders struggle to fund their Deriv accounts locally — unclear rates, slow transfers,
-            or agents who disappear. We built Plero to fix that.
-          </p>
-          <p class="story__body">
-            Every deposit and withdrawal runs through Deriv's own payment agent system, our rates are
-            published openly, and our support team is a real group of people you can message any time. We
-            also buy gift cards, with the same honest treatment.
-          </p>
+          <span class="eyebrow">{{ about.story.eyebrow }}</span>
+          <h2 class="section-title">{{ about.story.title }}</h2>
+          <p class="section-lead">{{ about.story.lead }}</p>
+          <p class="story__body">{{ about.story.body }}</p>
           <RegistrationBadge class="story__reg" />
         </div>
       </div>

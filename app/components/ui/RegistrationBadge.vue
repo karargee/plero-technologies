@@ -1,11 +1,13 @@
 <script setup lang="ts">
-// Shows company registration details from site.ts — renders nothing until they are filled in.
-import { site } from '~/data/site'
-
+// Company registration details (edited in /admin → Content → Settings). Hidden until filled in.
 withDefaults(defineProps<{ dark?: boolean }>(), { dark: false })
 
-const r = site.registration
-const lines = [r.legalName && r.rcNumber ? `${r.legalName} · ${r.rcNumber}` : r.legalName || r.rcNumber, ...r.licences].filter(Boolean)
+const { site } = useContent()
+const lines = computed(() => {
+  const r = site.value.registration
+  const main = r.legalName && r.rcNumber ? `${r.legalName} · ${r.rcNumber}` : r.legalName || r.rcNumber
+  return [main, ...r.licences].filter(Boolean)
+})
 </script>
 
 <template>

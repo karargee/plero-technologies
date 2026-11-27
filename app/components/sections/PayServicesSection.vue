@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const { payServices } = useRates()
+const { home } = useContent()
 </script>
 
 <template>
@@ -8,11 +9,8 @@ const { payServices } = useRates()
     <div class="container pay-sec__grid">
       <div class="pay-sec__copy">
         <div v-reveal><PayLogo :size="38" /></div>
-        <h2 v-reveal="60" class="section-title">More ways to move your money</h2>
-        <p v-reveal="120" class="section-lead">
-          Beyond Deriv, Plero Pay helps you buy and sell USDT and Airtm USD, and pay your suppliers in China — all
-          in Naira, with the same fast, honest service.
-        </p>
+        <h2 v-reveal="60" class="section-title">{{ home.pay.title }}</h2>
+        <p v-reveal="120" class="section-lead">{{ home.pay.text }}</p>
         <div v-reveal="180" class="pay-sec__cta">
           <NuxtLink to="/plero-pay" class="btn btn--primary">Explore Plero Pay <AppIcon name="arrow" :size="18" /></NuxtLink>
           <NuxtLink to="/plero-pay#calculator" class="btn btn--ghost">Get a quote</NuxtLink>

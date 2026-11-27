@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { deriv, footerNav as nav, payNav, site } from '~/data/site'
+import { footerNav as nav, payNav } from '~/data/site'
+const { site } = useContent()
+const { deriv } = useRates()
 const year = new Date().getFullYear()
 </script>
 

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { home } = useContent()
 const symbol = ref('R_75')
 </script>
 
@@ -6,12 +7,9 @@ const symbol = ref('R_75')
   <section class="section">
     <div class="container live">
       <div v-reveal:left class="live__copy">
-        <span class="eyebrow">Live markets</span>
-        <h2 class="section-title">Watch Deriv markets move in real time</h2>
-        <p class="section-lead">
-          Follow Volatility indices, Boom &amp; Crash, forex, gold and crypto — streamed live from Deriv,
-          right here on our site.
-        </p>
+        <span class="eyebrow">{{ home.live.eyebrow }}</span>
+        <h2 class="section-title">{{ home.live.title }}</h2>
+        <p class="section-lead">{{ home.live.text }}</p>
         <NuxtLink to="/markets" class="btn btn--primary live__btn">
           Open full charts <AppIcon name="arrow" :size="18" />
         </NuxtLink>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { deriv } from '~/data/site'
+const { home } = useContent()
+const { deriv } = useRates()
 </script>
 
 <template>
@@ -7,12 +8,9 @@ import { deriv } from '~/data/site'
     <div class="container">
       <div v-reveal class="register">
         <div>
-          <span class="eyebrow">New to Deriv?</span>
-          <h2>Create your free Deriv account in 2 minutes</h2>
-          <p>
-            Sign up with our link, then message us to fund your account in Naira. We'll guide you through
-            your first deposit step by step.
-          </p>
+          <span class="eyebrow">{{ home.register.eyebrow }}</span>
+          <h2>{{ home.register.title }}</h2>
+          <p>{{ home.register.text }}</p>
           <ul>
             <li><AppIcon name="check" :size="18" /> Free to open</li>
             <li><AppIcon name="check" :size="18" /> Practice with a demo account</li>

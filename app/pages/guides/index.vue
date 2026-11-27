@@ -1,23 +1,25 @@
 <script setup lang="ts">
-import { guides } from '~/data/guides'
+const { pages, guides } = useContent()
 
 useSeoMeta({
   title: 'Guides',
   description: 'Simple guides to opening, verifying, funding and withdrawing from your Deriv account.',
 })
 
-const categories = ['All', ...new Set(guides.map((g) => g.category))]
+const categories = computed(() => ['All', ...new Set(guides.value.map((g) => g.category).filter(Boolean))])
 const active = ref('All')
-const list = computed(() => (active.value === 'All' ? guides : guides.filter((g) => g.category === active.value)))
+const list = computed(() =>
+  active.value === 'All' ? guides.value : guides.value.filter((g) => g.category === active.value),
+)
 </script>
 
 <template>
   <div>
     <section class="page-hero">
       <div class="container">
-        <span class="eyebrow" style="color: var(--indigo-200)">Guides</span>
-        <h1>Learn the basics, step by step.</h1>
-        <p>Plain-English guides to opening a Deriv account, moving money in and out, and trading more safely.</p>
+        <span class="eyebrow" style="color: var(--indigo-200)">{{ pages.guides.eyebrow }}</span>
+        <h1>{{ pages.guides.title }}</h1>
+        <p>{{ pages.guides.text }}</p>
       </div>
     </section>
 

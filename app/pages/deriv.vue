@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { depositSteps, site, withdrawSteps } from '~/data/site'
+const { site, steps: stepsDoc, pages, images, bg } = useContent()
+const depositSteps = computed(() => stepsDoc.value.deposit)
+const withdrawSteps = computed(() => stepsDoc.value.withdraw)
 
 const { deriv } = useRates()
 
@@ -11,14 +13,11 @@ useSeoMeta({
 
 <template>
   <div>
-    <section class="page-hero page-hero--photo" style="--hero-img: url('/images/lagos-aerial.webp')">
+    <section class="page-hero page-hero--photo" :style="{ '--hero-img': bg(images.derivHeader) }">
       <div class="container">
-        <span class="eyebrow" style="color: var(--indigo-200)">Deriv payment agent</span>
-        <h1>Deposit and withdraw on Deriv — in Naira.</h1>
-        <p>
-          Today's rates, step-by-step guides and our payment agent details. Funded in {{ deriv.speed }},
-          with a real person on WhatsApp if you need help.
-        </p>
+        <span class="eyebrow" style="color: var(--indigo-200)">{{ pages.deriv.eyebrow }}</span>
+        <h1>{{ pages.deriv.title }}</h1>
+        <p>{{ pages.deriv.text }}</p>
       </div>
     </section>
 

@@ -95,67 +95,81 @@ onMounted(load)
 </script>
 
 <template>
-  <div class="panel">
-    <div class="panel__head">
+  <div>
+    <div class="a-head">
       <div>
-        <h2>Rates</h2>
-        <p>Change a number and press <b>Save changes</b>. The public site updates within about 30 seconds.</p>
-      </div>
-      <div class="panel__actions">
-        <button class="btn btn--ghost" type="button" :disabled="!changed.length || saving" @click="reset">Undo</button>
-        <button class="btn btn--primary" type="button" :disabled="!changed.length || saving" @click="save">
-          {{ saving ? 'Saving…' : changed.length ? `Save changes (${changed.length})` : 'Saved' }}
-        </button>
+        <h1>Rates</h1>
+        <p>Type a new number and press <b>Save</b>. The website updates within about 30 seconds.</p>
       </div>
     </div>
 
-    <p v-if="loading" class="muted">Loading rates…</p>
-    <p v-if="!loading && missing.length" class="note">
-      {{ missing.length }} rate{{ missing.length > 1 ? 's are' : ' is' }} not saved in Supabase yet, so the website is
-      using its built-in value (filled in below, highlighted). Check them and press <b>Save changes</b>.
-    </p>
-
-    <div v-if="!loading" class="groups">
-      <section v-for="g in rateGroups" :key="g.id" class="group card">
-        <header>
-          <span class="sym" :style="{ background: g.color }">{{ g.symbol }}</span>
-          <div>
-            <h3>{{ g.title }}</h3>
-            <small>Last updated: {{ lastUpdated(g.fields.map((f) => f.key)) }}</small>
-          </div>
-          <span v-if="g.spread && spread(g.spread[0], g.spread[1]) != null" class="spread" :class="{ bad: spread(g.spread[0], g.spread[1])! < 0 }">
-            Spread {{ formatMoney(spread(g.spread[0], g.spread[1])!) }}
-          </span>
-        </header>
-        <div class="fields">
-          <label v-for="f in g.fields" :key="f.key" class="f" :class="{ dirty: changed.includes(f.key) }">
-            <span>{{ f.label }}</span>
-            <span class="inp">
-              <i v-if="f.prefix">{{ f.prefix }}</i>
-              <input v-model.number="values[f.key]" type="number" min="0" step="any" inputmode="decimal" :class="{ pad: f.prefix }" />
+    <div v-if="loading" class="groups">
+      <div v-for="n in 4" :key="n" class="a-skel" style="height: 260px" />
+    </div>
+    <template v-else>
+      <p v-if="missing.length" class="a-note" style="margin-bottom: 16px">
+        {{ missing.length }} rate{{ missing.length > 1 ? 's are' : ' is' }} not saved yet — the site is using its built-in value
+        (highlighted). Check and press <b>Save</b>.
+      </p>
+      <div class="groups">
+        <section v-for="g in rateGroups" :key="g.id" class="group a-card">
+          <header>
+            <span class="sym" :style="{ background: g.color }">{{ g.symbol }}</span>
+            <div class="group__t">
+              <h2>{{ g.title }}</h2>
+              <small>Updated {{ lastUpdated(g.fields.map((f) => f.key)) }}</small>
+            </div>
+            <span
+              v-if="g.spread && spread(g.spread[0], g.spread[1]) != null"
+              class="a-chip"
+              :class="spread(g.spread[0], g.spread[1])! < 0 ? 'a-chip--red' : 'a-chip--green'"
+              title="Your margin per unit"
+            >
+              Spread {{ formatMoney(spread(g.spread[0], g.spread[1])!) }}
             </span>
-            <small>{{ f.hint }}</small>
-          </label>
+          </header>
+          <div class="fields">
+            <label v-for="f in g.fields" :key="f.key" class="a-label">
+              {{ f.label }}
+              <span class="inp">
+                <i v-if="f.prefix">{{ f.prefix }}</i>
+                <input
+                  v-model.number="values[f.key]"
+                  class="a-input"
+                  :class="{ 'a-input--dirty': changed.includes(f.key), pad: f.prefix }"
+                  type="number"
+                  min="0"
+                  step="any"
+                  inputmode="decimal"
+                />
+              </span>
+              <small>{{ f.hint }}</small>
+            </label>
+          </div>
+        </section>
+      </div>
+    </template>
+
+    <Transition name="a-fade">
+      <div v-if="changed.length" class="savebar">
+        <span><i class="pulse" /> {{ changed.length }} unsaved change{{ changed.length > 1 ? 's' : '' }}</span>
+        <div class="a-actions">
+          <button type="button" class="a-btn a-btn--sm" :disabled="saving" @click="reset">Undo</button>
+          <button type="button" class="a-btn a-btn--sm a-btn--primary" :disabled="saving" @click="save">
+            {{ saving ? 'Saving…' : 'Save & publish' }}
+          </button>
         </div>
-      </section>
-    </div>
+      </div>
+    </Transition>
   </div>
 </template>
 
-<style scoped src="./admin.css"></style>
 <style scoped>
-.note {
-  padding: 12px 16px;
-  border-radius: 12px;
-  background: #fffbeb;
-  border: 1px solid #f5dfa3;
-  color: #7a5200;
-  font-size: 14.5px;
-}
 .groups {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 90px;
 }
 .group {
   padding: 20px;
@@ -164,52 +178,35 @@ onMounted(load)
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
-.group h3 {
+.group__t {
+  flex: 1;
+  min-width: 0;
+}
+.group h2 {
   font-size: 17px;
 }
 .group small {
-  color: var(--ink-mute);
+  color: var(--a-mute);
   font-size: 12.5px;
 }
 .sym {
+  flex: none;
   display: grid;
   place-items: center;
-  width: 38px;
-  height: 38px;
-  border-radius: 11px;
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
   color: #fff;
   font-weight: 800;
-}
-.spread {
-  margin-left: auto;
-  font-size: 12.5px;
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: #e7f6ef;
-  color: var(--success);
-  white-space: nowrap;
-}
-.spread.bad {
-  background: #fdecea;
-  color: #b42318;
+  font-size: 18px;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.2);
 }
 .fields {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-.f {
-  display: grid;
-  gap: 4px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--ink-soft);
-}
-.f small {
-  font-weight: 400;
+  gap: 14px;
 }
 .inp {
   position: relative;
@@ -220,38 +217,55 @@ onMounted(load)
   position: absolute;
   left: 12px;
   font-style: normal;
-  color: var(--ink-mute);
+  color: var(--a-mute);
+  pointer-events: none;
 }
-.inp input {
-  width: 100%;
-  height: 44px;
-  padding: 0 12px;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--ink);
+.inp .a-input {
+  font-size: 17px;
+  font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
-.inp input.pad {
-  padding-left: 28px;
+.inp .a-input.pad {
+  padding-left: 30px;
 }
-.inp input:focus {
-  outline: none;
-  border-color: var(--indigo-400);
-  box-shadow: 0 0 0 3px rgb(108 112 209 / 0.18);
+.savebar {
+  position: fixed;
+  z-index: 40;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(18px + env(safe-area-inset-bottom));
+  width: min(640px, calc(100% - 24px));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 10px 10px 18px;
+  border-radius: 18px;
+  background: rgb(20 20 50 / 0.92);
+  border: 1px solid var(--a-line-2);
+  backdrop-filter: blur(16px);
+  box-shadow: var(--a-shadow);
+  font-size: 14px;
+  font-weight: 600;
 }
-.f.dirty input {
-  border-color: #f0b429;
-  background: #fffbeb;
+.savebar > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--a-amber);
+}
+@media (max-width: 1023px) {
+  .savebar {
+    bottom: calc(84px + env(safe-area-inset-bottom));
+  }
 }
 @media (max-width: 900px) {
   .groups {
-    grid-template-columns: 1fr;
-  }
-}
-@media (max-width: 420px) {
-  .fields {
     grid-template-columns: 1fr;
   }
 }

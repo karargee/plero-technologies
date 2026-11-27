@@ -28,6 +28,21 @@ withdrawal rates, limits and Deriv app id.
 Items marked `TODO` are placeholders — replace them before launch.
 Emptying the `stats` or `testimonials` arrays hides those sections.
 
+## Admin = full CMS
+
+`/admin` (works on phone and desktop; installable to the home screen):
+
+- **Overview** — pending reviews, unread messages, live rates, quick actions
+- **Rates / Gift cards** — every price and limit
+- **Content** — every text on the site (hero, section headings, page headers, About, features, stats,
+  steps, FAQs, guides, Plero Pay text, business/contact details, Deriv agent details, announcement
+  banner) and **photos** (upload to Supabase Storage)
+- **Reviews** — visitors submit, you approve / reject / feature / edit; you can also write them
+- **Messages** — contact-form inbox
+
+Database setup: run `supabase/schema.sql`, then `supabase/002_content_testimonials.sql`.
+Defaults for all content live in `app/data/*.ts`; admin edits override them.
+
 ## Admin page (Supabase)
 
 `/admin` lets you edit all rates (Deriv, USDT, Airtm, China), gift cards, and read contact-form

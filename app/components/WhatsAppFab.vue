@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { site } from '~/data/site'
-const href = `${site.contact.whatsapp}?text=${encodeURIComponent('Hi Plero, I need help with ')}`
+const { site } = useContent()
+const href = computed(() => `${site.value.contact.whatsapp}?text=${encodeURIComponent('Hi Plero, I need help with ')}`)
 </script>
 
 <template>

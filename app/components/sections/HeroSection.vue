@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { deriv } from '~/data/site'
+const { deriv } = useRates()
+const { home, images, bg } = useContent()
+const hero = computed(() => home.value.hero)
 </script>
 
 <template>
   <section class="hero">
     <!-- Background layers -->
-    <div class="hero__photo" aria-hidden="true" />
+    <div class="hero__photo" aria-hidden="true" :style="{ backgroundImage: bg(images.hero) }" />
     <div class="hero__aurora" aria-hidden="true">
       <span class="a1" />
       <span class="a2" />
@@ -19,23 +21,18 @@ import { deriv } from '~/data/site'
     <div class="container hero__grid">
       <div class="hero__copy">
         <span class="hero__badge in" style="--d: 0s">
-          <span class="dot" /> Deriv payment agent · Nigeria
+          <span class="dot" /> {{ hero.badge }}
         </span>
         <h1 class="in" style="--d: 0.08s">
-          Fund &amp; withdraw your Deriv account in <span class="shine">Naira</span>.
+          {{ hero.titleStart }} <span v-if="hero.highlight" class="shine">{{ hero.highlight }}</span>{{ hero.titleEnd }}
         </h1>
-        <p class="in" style="--d: 0.16s">
-          Plero Technologies tops up your Deriv account in minutes and pays out your withdrawals straight
-          to your bank — with clear rates and a real person on WhatsApp.
-        </p>
+        <p class="in" style="--d: 0.16s">{{ hero.text }}</p>
         <div class="hero__actions in" style="--d: 0.24s">
-          <NuxtLink to="/deriv" class="btn btn--light">Deposit or withdraw <AppIcon name="arrow" :size="18" /></NuxtLink>
-          <a :href="deriv.signupUrl" target="_blank" rel="noopener" class="btn btn--ghost-dark">Register on Deriv</a>
+          <NuxtLink to="/deriv" class="btn btn--light">{{ hero.primaryCta }} <AppIcon name="arrow" :size="18" /></NuxtLink>
+          <a :href="deriv.signupUrl" target="_blank" rel="noopener" class="btn btn--ghost-dark">{{ hero.secondaryCta }}</a>
         </div>
         <ul class="hero__points in" style="--d: 0.32s">
-          <li><AppIcon name="check" :size="18" /> Funded in {{ deriv.speed }}</li>
-          <li><AppIcon name="check" :size="18" /> Fixed, published rates</li>
-          <li><AppIcon name="check" :size="18" /> Live Deriv charts</li>
+          <li v-for="p in hero.points" :key="p"><AppIcon name="check" :size="18" /> {{ p }}</li>
         </ul>
       </div>
 
@@ -74,7 +71,7 @@ import { deriv } from '~/data/site'
   position: absolute;
   inset: 0;
   z-index: -3;
-  background: url('/images/lagos-aerial.webp') center 40% / cover no-repeat;
+  background: center 40% / cover no-repeat;
   opacity: 0.16;
   mix-blend-mode: luminosity;
   mask-image: linear-gradient(90deg, transparent 0%, #000 55%, #000 100%);

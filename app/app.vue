@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { deriv, site } from '~/data/site'
+const { site } = useContent()
+const { deriv } = useRates()
 
 const url = useRequestURL()
 const route = useRoute()
 
 // Link previews (WhatsApp, Facebook, X) and Google business details.
 useSeoMeta({
-  ogSiteName: site.name,
+  ogSiteName: () => site.value.name,
   ogType: 'website',
   ogImage: `${url.origin}/images/og.jpg`,
   ogImageWidth: 1200,
@@ -20,20 +21,20 @@ useHead({
   script: [
     {
       type: 'application/ld+json',
-      innerHTML: JSON.stringify({
+      innerHTML: computed(() => JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'FinancialService',
-        name: site.name,
-        ...(site.registration.legalName ? { legalName: site.registration.legalName } : {}),
-        ...(site.registration.rcNumber ? { identifier: site.registration.rcNumber } : {}),
-        description: site.tagline,
+        name: site.value.name,
+        ...(site.value.registration.legalName ? { legalName: site.value.registration.legalName } : {}),
+        ...(site.value.registration.rcNumber ? { identifier: site.value.registration.rcNumber } : {}),
+        description: site.value.tagline,
         url: url.origin,
         logo: `${url.origin}/images/logo-full.jpg`,
-        email: site.contact.email,
-        telephone: site.contact.phone,
+        email: site.value.contact.email,
+        telephone: site.value.contact.phone,
         areaServed: 'NG',
-        address: { '@type': 'PostalAddress', addressLocality: site.contact.address },
-        sameAs: site.socials.map((s) => s.href).filter((h) => h.startsWith('http')),
+        address: { '@type': 'PostalAddress', addressLocality: site.value.contact.address },
+        sameAs: site.value.socials.map((s) => s.href).filter((h) => h.startsWith('http')),
         knowsAbout: [
           'Deriv payment agent',
           'Deriv deposits',
@@ -44,8 +45,8 @@ useHead({
           'Gift cards',
         ],
         brand: { '@type': 'Brand', name: 'Plero Pay' },
-        potentialAction: { '@type': 'RegisterAction', target: deriv.signupUrl },
-      }),
+        potentialAction: { '@type': 'RegisterAction', target: deriv.value.signupUrl },
+      })),
     },
   ],
 })

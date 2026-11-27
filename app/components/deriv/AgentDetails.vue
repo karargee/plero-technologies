@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { deriv } from '~/data/site'
+const { deriv } = useRates()
 
-const rows = [
-  { label: 'Payment agent name', value: deriv.agent.name },
-  { label: 'Payment agent ID', value: deriv.agent.loginId },
-  { label: 'Agent email', value: deriv.agent.email },
-]
+const rows = computed(() =>
+  [
+    { label: 'Payment agent name', value: deriv.value.agent.name },
+    { label: 'Payment agent ID', value: deriv.value.agent.loginId },
+    { label: 'Agent email', value: deriv.value.agent.email },
+  ].filter((r) => r.value),
+)
 const copied = ref<string | null>(null)
 async function copy(v: string) {
   try {

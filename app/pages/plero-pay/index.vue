@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { payBrand } from '~/data/pay'
-import { site } from '~/data/site'
+const { site, pages, images, bg } = useContent()
 
 useSeoMeta({
   title: 'Plero Pay — USDT, Airtm & China supplier payments',
@@ -31,8 +31,8 @@ const rows = computed(() =>
       </div>
       <div class="container">
         <PayLogo light :size="40" />
-        <h1>Move money your way — in Naira.</h1>
-        <p>{{ payBrand.tagline }} Clear rates, fast delivery and a real person on WhatsApp.</p>
+        <h1>{{ pages.pleroPay.title }}</h1>
+        <p>{{ pages.pleroPay.text }}</p>
         <div class="pay-hero__cta">
           <a href="#calculator" class="btn btn--light">Get a quote <AppIcon name="arrow" :size="18" /></a>
           <a :href="site.contact.whatsapp" target="_blank" rel="noopener" class="btn btn--ghost-dark">Chat on WhatsApp</a>
@@ -89,7 +89,7 @@ const rows = computed(() =>
             <li><AppIcon name="check" :size="18" /> Real people, 7 days a week</li>
           </ul>
           <div class="pay-photo">
-            <img src="/images/phone-hands.webp" alt="A man using Plero Pay on his phone" width="960" height="640" loading="lazy" />
+            <img :src="images.phone" alt="A man using Plero Pay on his phone" width="960" height="640" loading="lazy" />
             <div class="pay-photo__chip" aria-hidden="true">
               <PayMark symbol="₮" color="#1a9e75" :size="30" />
               <span><b>Sell 100 USDT</b><small>You receive {{ formatMoney(100 * usdtSell) }}</small></span>
